@@ -3,17 +3,17 @@
 </p>
 
 <p align="center">
-  <img src="docs/img/case-tilt.png" alt="DS-2000 rev A in its enclosure" width="820">
+  <img src="docs/img/case-tilt.png" alt="DS2000 rev A in its enclosure" width="820">
 </p>
 
-<h1 align="center">DS-2000 PCB</h1>
+<h1 align="center">DS2000 PCB</h1>
 
 <p align="center">
   <b>Three keys for Discord: mute, deafen, disconnect.</b><br>
   RP2350A · Kailh Choc V1 · reverse-mounted RGB · USB-C · the board <i>is</i> the top face
 </p>
 
-KiCad design for the DS-2000, a three-key Discord control deck. Mute and deafen are lit from
+KiCad design for the DS2000, a three-key Discord control deck. Mute and deafen are lit from
 underneath by an RGB LED; disconnect has none. The board is also the device's visible top face: the
 RP2350A, the logos and the legends are meant to be seen. It sits in a 3D-printed tray
 ([DS2000-Enclosure](https://github.com/Mechanix97/DS2000-Enclosure)).
@@ -83,7 +83,7 @@ and SWD, keys, and the LED chain with its 5 V level shifter.
 
 ## Pinout
 
-The pinout is defined by the firmware (`DS-2000-Firmware/include/pins.h`). Change it there first.
+The pinout is defined by the firmware (`DS2000-Firmware/include/pins.h`). Change it there first.
 
 | Function | GPIO |
 |---|---|
@@ -101,8 +101,8 @@ kicad-cli sch export netlist --format kicadsexpr -o /tmp/ds2000.net DS2000.kicad
 
 ## Related repositories
 
-- [DS-2000](https://github.com/Mechanix97/DS-2000): desktop application
-- [DS-2000-Firmware](https://github.com/Mechanix97/DS-2000-Firmware): firmware
+- [DS2000](https://github.com/Mechanix97/DS2000): desktop application
+- [DS2000-Firmware](https://github.com/Mechanix97/DS2000-Firmware): firmware
 - [DS2000-Enclosure](https://github.com/Mechanix97/DS2000-Enclosure): enclosure (Fusion 360)
 
 ## License
