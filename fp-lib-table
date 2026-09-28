@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "DS2000") (type "KiCad") (uri "${KIPRJMOD}/DS2000.pretty") (options "") (descr "DS-2000 project footprints"))
+)
