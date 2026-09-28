@@ -9,7 +9,7 @@
 		(date "2026-09-28")
 		(rev "A")
 		(company "Mechardo Labs")
-		(comment 1 "RP2350A, 3x MX keys, SK6812MINI-E per key, USB-C")
+		(comment 1 "RP2350A, 3x Choc V1 keys, SK6812MINI-E per key, USB-C")
 		(comment 2 "Pinout follows DS-2000-Firmware/include/pins.h")
 	)
 	(lib_symbols
@@ -13880,7 +13880,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB"
+		(property "Footprint" "DS2000:SW_Kailh_Choc_V1_1.00u"
 			(at 238.76 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -16391,7 +16391,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB"
+		(property "Footprint" "DS2000:SW_Kailh_Choc_V1_1.00u"
 			(at 238.76 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -19268,7 +19268,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB"
+		(property "Footprint" "DS2000:SW_Kailh_Choc_V1_1.00u"
 			(at 238.76 124.46 0)
 			(hide yes)
 			(show_name no)

@@ -13,8 +13,8 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 | Bottom side | The two reverse-mount LEDs, the **USB-C receptacle** and **all debug pads** (SWD, BOOT, RST) | The plug and cable sit low, level with the tray, the top strip gains space, and debug stays off the visible face. Assembly is two-sided |
 | Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Routes mostly on inner layers so the face stays clean, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
 | Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
-| Keys | 3× Cherry MX, **soldered, no plate**, in a row | Footprint drilled for 5-pin (PCB-mount); 3-pin switches also fit. 5-pin is steadier without a plate |
-| Size | 72 × 46 mm | 3 × 19.05 mm keys plus corner M2 holes; the extra depth is the component strip behind the keys |
+| Keys | 3× Kailh Choc V1 (low profile), **soldered, no plate**, in a row, MBK-style keycaps | Changed from Cherry MX for a lower, flatter device. Choc V1 has two locating posts, so it sits steady without a plate |
+| Size | 72 × 46 mm | 3 keys at the Choc 18 mm pitch plus corner M2 holes; the extra depth is the component strip behind the keys. Kept from the MX layout so the enclosure's numbers stay put |
 | Status | **SK6812MINI-E** reverse-mount under the mute and deafen keys; **disconnect has no LED** | Lights the key through the switch LED window; needs shine-through or translucent keycaps |
 | Pinout | Owned by `DS-2000-Firmware/include/pins.h` | See below |
 
@@ -85,7 +85,7 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 | TP1-TP3 | SWD pads, not in BOM | — | 1.5 mm SMD pads, bottom |
 | J3 | USB wire holes, not in BOM | — | 1×4 2.54 mm holes |
 | F1 | PTC 500 mA hold | Littelfuse 1206L050YR | 1206 |
-| SW1-SW3 | Keys | Cherry MX compatible | MX 1u PCB |
+| SW1-SW3 | Keys | Kailh Choc V1 (CPG1350) | `DS2000:SW_Kailh_Choc_V1_1.00u` |
 | JP1, JP2 | BOOTSEL and RESET pads, not in BOM | — | open solder jumper, 1.3 mm pitch |
 | C1, C2 | 10 µF | | 0805 |
 | C3-C5 | 4.7 µF | | 0402 |
@@ -113,8 +113,8 @@ item left is the intended USB-C footprint change described under *Face and brand
 | Item | Position |
 |---|---|
 | Outline | 72 × 46 mm, 3 mm corner radius |
-| Keys | row of 3 at 19.05 mm pitch, centres 17 mm from the front edge, middle key on the board's centre line |
-| LEDs | D1/D2 on the bottom, 5.08 mm south of the switch centre (the MX LED window, opposite the switch pins), turned so DOUT faces the next LED |
+| Keys | row of 3 at 18 mm pitch, centres 16 mm from the front edge, middle key on the board's centre line |
+| LEDs | D1/D2 on the bottom, 4.7 mm south of the switch centre (the Choc V1 LED window, opposite the switch pins), turned so DOUT faces the next LED |
 | Holes | 4 × M2, 4 mm in from each edge, clear of the keycaps |
 | USB-C | bottom side, centred on the back edge, face **1.2 mm past the edge** (its front shield tabs keep 0.6 mm of board), opening facing back |
 | Debug | **all on the bottom**, back right: SWD pads TP1-TP3 (CK, G, IO), BOOT (JP1), RST (JP2) |
@@ -163,15 +163,21 @@ each decoupling capacitor in line with its supply pin and its supply pad facing 
    kept only when KiCad's own DRC counts fewer unconnected items, and `cleanup_vias.py` drops any
    via left dangling.
 5. `branding.py` finishes the face (see above) and `stitch.py` ties the F.Cu and B.Cu GND pours to
-   In1 with a 3.5 mm grid of vias wherever they clear everything else (119 on rev A).
+   In1 with a 3.5 mm grid of vias wherever they clear everything else (113 on rev A).
 
 `pipeline.py` writes to `build/` and never overwrites the committed board: from now on the
 `.kicad_pcb` is edited by hand in KiCad.
 
-**3D models:** KiCad's library has no STEP for the MX switch, the HRO USB-C or the QFN-60, so
+**3D models:** KiCad's library has no STEP for the Choc V1 switch, the HRO USB-C or the QFN-60, so
 `tools/3d-models/gen_models.py` generates simplified ones from datasheet dimensions into
 `3dmodels/DS2000.3dshapes/` (referenced through `${KIPRJMOD}`, so they travel with the project). The
-switches also carry a 1u keycap model for previews and for fitting the enclosure.
+switches also carry an MBK-style keycap model for previews and for fitting the enclosure. The Cherry MX
+models stay in the generator for reference.
+
+**Choc V1 footprint:** `DS2000.pretty/SW_Kailh_Choc_V1_1.00u`, written by `tools/footprints/gen_choc_v1.py`
+from Kailh's CPG1350 datasheet; the geometry matches kiswitch's footprint of the same name (MIT). Its
+courtyard follows the 13.8 mm lower housing: the 15 mm flange is 2.2 mm up, so the crystal and C18
+tuck under its edge.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
@@ -194,10 +200,10 @@ lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (
   of Raspberry Pi's reference, which is the one area they say not to improvise.
 - USB: confirm the 90 Ω pair geometry with JLC's impedance calculator for this stackup.
 - Visible face: the autorouter used F.Cu freely. Moving long runs to B.Cu makes the top cleaner.
-- Under the keycaps (outside each switch's 14 mm housing) parts are hidden but must stay under
-  ~2 mm high so a fully pressed keycap clears them.
+- Under the keycaps (outside each switch's 13.8 mm lower housing) parts are hidden but must stay under
+  ~2 mm high: the switch flange is 2.2 mm up and a pressed Choc keycap comes down close to it.
 - Confirm the LED side against your switches: the footprint assumes the LED window is on the side
-  opposite the two switch pins, which is standard for MX.
+  opposite the two switch pins, as in Kailh's CPG1350 drawing.
 
 ## Open items
 

@@ -72,9 +72,36 @@ def keycap():
     cap = cap - (Pos(cx, cy, z0 + hgt + 20.0 - 0.6) * Sphere(20.0))
     return Compound(children=[colored(cap, KEYCAP)])
 
+# ---------------------------------------------------------------- Kailh Choc V1 (CPG1350), soldered
+# Footprint origin is the switch centre. Heights from the CPG1350 datasheet: 2.2 mm lower housing
+# (plate side), 15 x 15 flange, housing top at 5.0 mm, stem to 8.0 mm, 3 mm travel. Pins at
+# footprint (0, -5.9) and (5, -3.8) = model (0, 5.9) and (5, 3.8); LED window 4.7 mm south = model -y.
+def choc_v1():
+    lower = colored(Pos(0, 0, 1.1) * Box(13.8, 13.8, 2.2), BLACK)
+    flange = colored(Pos(0, 0, 2.6) * Box(15.0, 15.0, 0.8), BLACK)
+    upper = loft([Plane.XY.offset(3.0) * Rectangle(14.5, 14.5), Plane.XY.offset(5.0) * Rectangle(12.0, 12.0)])
+    upper = upper - Pos(0, -4.7, 4.0) * Box(5.0, 3.15, 2.2)            # LED window
+    upper = colored(upper, GREY)
+    stem = colored(Pos(-2.85, 0, 6.5) * Box(1.2, 3.0, 3.0) + Pos(2.85, 0, 6.5) * Box(1.2, 3.0, 3.0), RED)
+    posts = [colored(Pos(x, 0, -1.2) * Cylinder(0.9, 2.4), BLACK) for x in (-5.5, 5.5)]
+    posts.append(colored(Pos(0, 0, -1.4) * Cylinder(1.6, 2.8), BLACK))
+    pins = [colored(Pos(x, y, -1.5) * Cylinder(0.5, 3.0), SILVER) for x, y in [(0, 5.9), (5, 3.8)]]
+    return Compound(children=[lower, flange, upper, stem] + posts + pins)
+
+def keycap_mbk():
+    """MBK-style low-profile cap: 17.5 x 16.5 mm, 2.2 mm thick with a shallow spherical dish,
+    sitting on the stem (underside at 6.5 mm, top ~8.7 mm above the board)."""
+    z0, hgt = 6.5, 2.2
+    cap = loft([Plane.XY.offset(z0) * RectangleRounded(17.5, 16.5, 1.2),
+                Plane.XY.offset(z0 + hgt) * RectangleRounded(16.7, 15.7, 1.6)])
+    from build123d import Sphere
+    cap = cap - Pos(0, 0, z0 + hgt + 60.0 - 0.35) * Sphere(60.0)
+    return Compound(children=[colored(cap, KEYCAP)])
+
 if __name__ == "__main__":
     for name, fn in [("QFN-60-1EP_7x7mm_P0.4mm", qfn60), ("USB_C_Receptacle_HRO_TYPE-C-31-M-12", usb_c),
-                     ("SW_Cherry_MX_1.00u_PCB", mx_switch), ("Keycap_1u_MX", keycap)]:
+                     ("SW_Cherry_MX_1.00u_PCB", mx_switch), ("Keycap_1u_MX", keycap),
+                     ("SW_Kailh_Choc_V1", choc_v1), ("Keycap_1u_MBK", keycap_mbk)]:
         shape = fn()
         bb = shape.bounding_box()
         export_step(shape, f"{OUT}/{name}.step")
