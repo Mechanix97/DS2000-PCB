@@ -10,11 +10,11 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 | MCU | Discrete **RP2350A** (QFN-60) | Same family as the RP2350-Zero test module the firmware runs on |
 | Look | **Exposed PCB as the top face**, enclosure is a tray underneath | The board is the product's face: logo, art, legends in silkscreen |
 | Top side | Switches, and **the RP2350A and its circuitry on show** in a strip behind the keys | The visible chip is part of the look |
-| Bottom side | The two reverse-mount LEDs and the **USB-C receptacle** | The plug and cable sit low, level with the tray, and the top strip gains space. Assembly is two-sided |
+| Bottom side | The two reverse-mount LEDs, the **USB-C receptacle** and **all debug pads** (SWD, BOOT, RST) | The plug and cable sit low, level with the tray, the top strip gains space, and debug stays off the visible face. Assembly is two-sided |
 | Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Routes mostly on inner layers so the face stays clean, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
 | Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
 | Keys | 3× Cherry MX, **soldered, no plate**, in a row | Footprint drilled for 5-pin (PCB-mount); 3-pin switches also fit. 5-pin is steadier without a plate |
-| Size | ~72 × 50 mm | 3 × 19.05 mm keys plus corner M2 holes; the extra depth is the component strip behind the keys |
+| Size | 72 × 46 mm | 3 × 19.05 mm keys plus corner M2 holes; the extra depth is the component strip behind the keys |
 | Status | **SK6812MINI-E** reverse-mount under the mute and deafen keys; **disconnect has no LED** | Lights the key through the switch LED window; needs shine-through or translucent keycaps |
 | Pinout | Owned by `DS-2000-Firmware/include/pins.h` | See below |
 
@@ -44,7 +44,7 @@ a 4.75 V VBUS after the fuse.
   R8 1 kΩ when bridged with tweezers or a wire while USB is plugged in (or RESET pressed).
   RESET: likewise pads, JP2, from `RUN` to GND; R9 10 kΩ keeps `RUN` high. Firmware updates do not
   need either: the running firmware reboots itself into USB boot (DS-2000-Firmware#14, #15; DS-2000#35).
-- SWD on J2, JST-SH 3-pin in the Raspberry Pi Debug Probe pinout (SWCLK, GND, SWDIO).
+- SWD on three bare pads on the bottom, TP1-TP3 (SWCLK, GND, SWDIO, the Debug Probe order); no connector.
 
 **Keys and LEDs.** SW1-SW3 to GPIO0-2 and GND; the firmware uses the internal pull-ups (not
 affected by the RP2350-E9 erratum, which concerns pull-downs). The LED data line leaves GPIO5 at
@@ -82,7 +82,7 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 | U5 | Buffer, TTL in | 74AHCT1G125GW | SOT-353 |
 | D1, D2 | RGB LED | SK6812MINI-E | reverse mount 3.2×2.8 |
 | J1 | USB-C 16P | HRO TYPE-C-31-M-12 | |
-| J2 | SWD | JST SM03B-SRSS-TB | JST-SH 1×3 horizontal |
+| TP1-TP3 | SWD pads, not in BOM | — | 1.5 mm SMD pads, bottom |
 | J3 | USB wire holes, not in BOM | — | 1×4 2.54 mm holes |
 | F1 | PTC 500 mA hold | Littelfuse 1206L050YR | 1206 |
 | SW1-SW3 | Keys | Cherry MX compatible | MX 1u PCB |
@@ -102,26 +102,41 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 
 ## Layout
 
-![rev A, starting placement](img/rev-a-iso.png)
+![rev A, routed](img/rev-a-iso.png)
 
-The board was started by `tools/pcb-generator/gen_pcb.py`, which loads footprints, nets and symbol
-links from the schematic's netlist, so **Update PCB from Schematic (F8) reports no changes** and DRC's
-schematic-parity check is clean. From here the `.kicad_pcb` is edited by hand.
+**State:** placed and fully routed. ERC is clean; DRC reports no unconnected pads, no clearance or
+edge errors and full schematic parity (Update PCB from Schematic reports no changes). What remains in
+the DRC output is silkscreen overlap from the footprints' default reference texts, to tidy while
+designing the visible face.
 
 **Fixed (mechanical, agreed with the enclosure):**
 
 | Item | Position |
 |---|---|
-| Outline | 72 × 50 mm, 3 mm corner radius |
+| Outline | 72 × 46 mm, 3 mm corner radius |
 | Keys | row of 3 at 19.05 mm pitch, centres 17 mm from the front edge, middle key on the board's centre line |
-| LEDs | D1/D2 on the bottom, 5.08 mm south of the switch centre (the MX LED window, opposite the switch pins) |
+| LEDs | D1/D2 on the bottom, 5.08 mm south of the switch centre (the MX LED window, opposite the switch pins), turned so DOUT faces the next LED |
 | Holes | 4 × M2, 4 mm in from each edge, clear of the keycaps |
-| USB-C | bottom side, centred on the back edge, mating face flush, opening facing back |
-| SWD (J2) | back edge, right, opening facing back |
+| USB-C | bottom side, centred on the back edge, face **1.2 mm past the edge** (its front shield tabs keep 0.6 mm of board), opening facing back |
+| Debug | **all on the bottom**, back right: SWD pads TP1-TP3 (CK, G, IO), BOOT (JP1), RST (JP2) |
 | USB wire holes (J3) | back edge, left |
 
-**Starting positions only:** everything in the strip between the keys and the back edge, grouped
-around the RP2350A by function. Expect to move all of it.
+**Top side, around the RP2350A:** flash top-left by the QSPI pins, core regulator top-right by the
+VREG pins, USB series resistors between the USB-C pegs straight above D+/D-, crystal below XIN/XOUT,
+each decoupling capacitor in line with its supply pin and its supply pad facing it.
+
+**How it was routed** (`tools/pcb-generator/`, see `pipeline.py`):
+
+1. `gen_pcb.py` builds the board from the schematic's netlist (footprints, nets, fields, symbol
+   links), places it, and sets stackup, rules and net classes.
+2. `fanout.py` connects every GND and +3V3 pad to its plane: RP2350A supply pins go by a short
+   track straight to their decoupling capacitor, pins 53/54 share one via between the USB and QSPI
+   escapes, and every other pad gets its own via, each checked for clearance before it is placed.
+3. Freerouting routes the rest on F.Cu and B.Cu (In1 and In2 are planes), with incremental passes
+   until nothing is left, and `cleanup_vias.py` drops any via it leaves dangling.
+
+`pipeline.py` writes to `build/` and never overwrites the committed board: from now on the
+`.kicad_pcb` is edited by hand in KiCad.
 
 **3D models:** KiCad's library has no STEP for the MX switch, the HRO USB-C or the QFN-60, so
 `tools/3d-models/gen_models.py` generates simplified ones from datasheet dimensions into
@@ -129,20 +144,18 @@ around the RP2350A by function. Expect to move all of it.
 switches also carry a 1u keycap model for previews and for fitting the enclosure.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
-In1 is a GND plane, In2 a +3V3 plane, B.Cu a GND pour. Minimums set for JLC: 0.1 mm track and
-clearance, 0.2 mm drill, 0.3 mm copper to edge (0.2 mm only for the LED cut-outs, in
-`DS2000.kicad_dru`). Net classes: *Power* (GND, +5V, +3V3, +1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm
-tracks / 0.2 mm gap as a starting point for 90 Ω; confirm with JLC's impedance calculator for this
-stackup before routing.
+In1 is the GND plane, In2 the +3V3 plane, B.Cu a GND pour with solid pad joins. Minimums set for
+JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge (0.2 mm only for the LED
+cut-outs, in `DS2000.kicad_dru`). Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
++1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm tracks / 0.2 mm gap.
 
-**When placing and routing:**
+**Review before ordering:**
 
-- Core regulator (L1, C3, C4, R5, C5 and VREG_PGND) copied from the RP2350 minimal design's layout,
-  inductor orientation included. This is the one area not to improvise.
-- Crystal, R6, C17, C18 tight against XIN/XOUT; nothing else routed under the crystal.
-- Decoupling caps at their pins; C16 serves both USB_OTP_VDD and QSPI_IOVDD.
-- U1 (ESD) next to J1, R3/R4 next to the RP2350; D+/D- as a pair over unbroken GND.
-- Keep the visible face tidy: route on the inner layers and B.Cu where possible.
+- Core regulator: compare L1, C3, C4, R5, C5 and VREG_PGND against the RP2350 minimal design's layout,
+  inductor orientation included. The autorouted version is electrically complete but is not a copy
+  of Raspberry Pi's reference, which is the one area they say not to improvise.
+- USB: confirm the 90 Ω pair geometry with JLC's impedance calculator for this stackup.
+- Visible face: the autorouter used F.Cu freely. Moving long runs to B.Cu makes the top cleaner.
 - Under the keycaps (outside each switch's 14 mm housing) parts are hidden but must stay under
   ~2 mm high so a fully pressed keycap clears them.
 - Confirm the LED side against your switches: the footprint assumes the LED window is on the side
@@ -150,7 +163,7 @@ stackup before routing.
 
 ## Open items
 
-- [ ] Routing (#11); outline, keys and holes are fixed, see Layout
+- [ ] Review the routed board (see Layout, *Review before ordering*), then tidy silkscreen
 - [ ] L1 footprint: `L_Murata_DFE201610P` is a stand-in with the same 2.0×1.6 mm body. Check its
       pads against the Abracon datasheet or draw a dedicated footprint
 - [ ] Mute and deafen keycaps must be shine-through or translucent for their LEDs to be visible

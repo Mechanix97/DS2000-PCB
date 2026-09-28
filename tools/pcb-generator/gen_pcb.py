@@ -37,51 +37,58 @@ for n in find(first(root, "nets"), "net"):
 
 # ---------------------------------------------------------------- geometry
 # Board: x 64..136, y 67..117 (y grows towards the user). Keys centred on y = 100.
-X0, X1, Y0, Y1, RAD = 64.0, 136.0, 67.0, 117.0, 3.0
+X0, X1, Y0, Y1, RAD = 64.0, 136.0, 71.0, 117.0, 3.0
 KEY_Y, PITCH = 100.0, 19.05
 KEYS = {"SW1": 100 - PITCH, "SW2": 100.0, "SW3": 100 + PITCH}
 LED_UNDER = {"D1": "SW1", "D2": "SW2"}
 MX_CENTER_FROM_ORIGIN = (-2.54, 5.08)     # SW_Cherry_MX_1.00u_PCB: origin is pin 1
 LED_FROM_CENTER = (0.0, 5.08)             # MX LED window, opposite the switch pins
 HOLE = 4.0                                # hole centre from each edge
+USB_OVERHANG = 1.2                        # receptacle face past the back edge
 
+MCU = (100.0, 84.3)
 # ref: (x, y, rotation_deg, side)   side "F" or "B"
 P = {
     # mechanical
     "H1": (X0 + HOLE, Y0 + HOLE, 0, "F"), "H2": (X1 - HOLE, Y0 + HOLE, 0, "F"),
     "H3": (X0 + HOLE, Y1 - HOLE, 0, "F"), "H4": (X1 - HOLE, Y1 - HOLE, 0, "F"),
-    "J1": (100.0, Y0 + 3.65, 180, "B"),          # underneath: plug and cable sit low, face flush with the back edge
-    "J3": (76.0, 70.0, 90, "F"),                 # USB wire holes, along the back edge
-    "J2": (124.0, 70.5, 180, "F"),               # SWD, back edge, right
+    "J1": (100.0, Y0 - USB_OVERHANG + 3.65, 180, "B"),   # underneath, sticking out past the back edge
+    "J3": (74.5, 73.5, 90, "F"),                         # USB wire holes, along the back edge
     # USB input
-    "F1": (89.5, 70.5, 0, "F"), "R1": (93.5, 73.5, 90, "F"), "R2": (106.5, 73.5, 90, "F"),
-    "U1": (100.0, 77.8, 0, "F"), "R4": (97.3, 77.8, 90, "F"), "R3": (102.7, 77.8, 90, "F"),
+    "F1": (88.5, 73.0, 0, "F"), "R1": (93.3, 74.2, 90, "F"), "R2": (106.7, 74.2, 90, "F"),
+    "U1": (100.0, 73.2, 0, "F"),
+    "R3": (99.5, 76.8, 270, "F"), "R4": (100.7, 76.8, 270, "F"),   # between the USB-C pegs, chip side (pad 2) down
     # 3.3 V regulator
-    "C1": (109.5, 73.5, 90, "F"), "U2": (113.0, 73.5, 0, "F"), "C2": (116.5, 73.5, 90, "F"),
-    # RP2350A and its core regulator (to be laid out as in the RP2350 guide)
-    "U3": (100.0, 84.0, 0, "F"),
-    "L1": (107.0, 78.2, 0, "F"), "C3": (110.0, 78.2, 90, "F"), "C4": (107.0, 75.9, 0, "F"),
-    "R5": (112.5, 78.2, 90, "F"), "C5": (114.0, 78.2, 90, "F"),
-    "C6": (94.3, 81.7, 90, "F"), "C12": (94.3, 83.7, 90, "F"), "C7": (94.3, 85.7, 90, "F"),
-    "C11": (105.7, 81.2, 90, "F"), "C14": (105.7, 83.6, 90, "F"), "C10": (107.4, 84.0, 90, "F"),
-    "C15": (107.4, 81.4, 90, "F"), "C16": (95.6, 78.6, 90, "F"),
-    "C8": (98.6, 89.7, 0, "F"), "C13": (100.6, 89.7, 0, "F"), "C9": (103.3, 89.7, 0, "F"),
-    # flash and BOOTSEL
-    "U4": (84.0, 79.0, 0, "F"), "C19": (84.0, 74.5, 0, "F"), "JP1": (80.0, 74.5, 0, "F"),
-    "R7": (90.5, 77.0, 90, "F"), "R8": (90.5, 79.8, 90, "F"),
-    # crystal
-    "Y1": (95.0, 91.5, 0, "F"), "R6": (98.8, 92.2, 0, "F"), "C17": (91.8, 90.7, 90, "F"), "C18": (91.8, 93.2, 90, "F"),
-    # reset
-    "R9": (106.5, 89.7, 0, "F"), "JP2": (110.0, 90.0, 0, "F"),
+    "C1": (109.4, 73.5, 90, "F"), "U2": (113.0, 73.5, 0, "F"), "C2": (116.6, 73.5, 90, "F"),
+    # RP2350A, core regulator top-right next to VREG pins 46-50
+    "U3": (MCU[0], MCU[1], 0, "F"),
+    "C4": (101.9, 78.6, 90, "F"), "L1": (106.6, 79.4, 0, "F"), "C3": (109.4, 79.4, 90, "F"),   # C4 straight above VREG_VIN (pin 49)
+    "R5": (111.5, 79.4, 90, "F"), "C5": (113.0, 79.4, 90, "F"),
+    "C16": (96.4, 78.2, 0, "F"),     # USB_OTP_VDD + QSPI_IOVDD, through the plane (pins share a via)                                              # USB_OTP_VDD + QSPI_IOVDD
+    # decoupling: supply pad faces its pin and lines up with it (pad 1 is the supply side)
+    "C6": (94.3, 81.5, 180, "F"), "C12": (94.3, 83.5, 180, "F"), "C7": (94.3, 85.5, 180, "F"),   # left: pins 1, 6, 11
+    "C11": (105.8, 81.3, 0, "F"), "C15": (107.9, 82.1, 0, "F"),                                # right: pins 45, 44
+    "C14": (105.8, 83.9, 0, "F"), "C10": (107.9, 84.7, 0, "F"),                                # right: pins 39, 38
+    "C8": (98.0, 89.9, 270, "F"), "C13": (101.4, 89.9, 270, "F"), "C9": (102.8, 89.9, 270, "F"), # bottom: 20, 23, 30
+    # flash, top-left next to the QSPI pins
+    "U4": (86.5, 79.5, 0, "F"), "C19": (86.5, 76.0, 0, "F"),
+    "R7": (92.8, 78.2, 90, "F"), "R8": (92.8, 80.6, 90, "F"),
+    # crystal, below XIN/XOUT (low parts may sit under the keycap edge, outside the switch)
+    "Y1": (95.3, 91.0, 0, "F"), "R6": (99.6, 91.9, 0, "F"), "C17": (92.1, 89.9, 90, "F"), "C18": (92.1, 92.3, 90, "F"),
+    "R9": (105.6, 89.6, 0, "F"),
     # LED data
-    "U5": (90.5, 86.5, 0, "F"), "C20": (90.5, 83.3, 0, "F"), "R10": (87.5, 86.5, 90, "F"),
+    "U5": (89.5, 86.2, 0, "F"), "C20": (89.5, 83.6, 0, "F"), "R10": (86.2, 86.2, 90, "F"),
+    # debug, all on the bottom, grouped at the back right
+    "TP1": (118.0, 77.0, 0, "B"), "TP2": (120.54, 77.0, 0, "B"), "TP3": (123.08, 77.0, 0, "B"),
+    "JP1": (118.8, 81.0, 0, "B"), "JP2": (123.3, 81.0, 0, "B"),
 }
 for ref, cx in KEYS.items():
     P[ref] = (cx - MX_CENTER_FROM_ORIGIN[0], KEY_Y - MX_CENTER_FROM_ORIGIN[1], 0, "F")
 for led, sw in LED_UNDER.items():
     cx = KEYS[sw]
-    P[led] = (cx + LED_FROM_CENTER[0], KEY_Y + LED_FROM_CENTER[1], 0, "B")
-    P["C21" if led == "D1" else "C22"] = (cx, KEY_Y + 8.2, 0, "B")
+    P[led] = (cx + LED_FROM_CENTER[0], KEY_Y + LED_FROM_CENTER[1], 180, "B")   # DOUT faces the next LED
+    # beside the LED's VDD pad (bottom-right once flipped and turned), clear of the light cut-out
+    P["C21" if led == "D1" else "C22"] = (cx + 3.55, KEY_Y + 8.2, 270, "B")
 
 missing = set(comps) - set(P)
 extra = set(P) - set(comps)
@@ -106,8 +113,10 @@ ds.m_CopperEdgeClearance = mm(0.3)   # the reverse-mount LED cut-out sits close 
 ns = ds.m_NetSettings
 dflt = ns.GetDefaultNetclass()
 dflt.SetTrackWidth(mm(0.2)); dflt.SetClearance(mm(0.15)); dflt.SetViaDiameter(mm(0.5)); dflt.SetViaDrill(mm(0.25))
-for cname, width, pattern in [("Power", 0.4, ["GND", "+5V", "+3V3", "+1V1", "VBUS", "VREG_LX"]),
-                              ("USB", 0.2, ["USB_*"])]:
+# GND and +3V3 are planes (In1, In2) reached by fanout vias; the autorouter ignores the "Plane" class.
+for cname, width, pattern in [("Plane", 0.3, ["GND", "+3V3"]),
+                              ("Power", 0.4, ["+5V", "+1V1", "VBUS", "/VREG_LX"]),
+                              ("USB", 0.2, ["/USB_*"])]:
     nc = pcbnew.NETCLASS(cname)
     nc.SetTrackWidth(mm(width)); nc.SetClearance(mm(0.15)); nc.SetViaDiameter(mm(0.6)); nc.SetViaDrill(mm(0.3))
     if cname == "USB":
@@ -115,6 +124,9 @@ for cname, width, pattern in [("Power", 0.4, ["GND", "+5V", "+3V3", "+1V1", "VBU
     ns.SetNetclass(cname, nc)
     for pat in pattern:
         ns.SetNetclassPatternAssignment(pat, cname)
+
+board.SetLayerType(pcbnew.In1_Cu, pcbnew.LT_POWER)
+board.SetLayerType(pcbnew.In2_Cu, pcbnew.LT_POWER)
 
 nets = {}
 for name in netnames:
@@ -189,7 +201,7 @@ arc((X0 + RAD, Y1 - RAD), (X0 + RAD, Y1), 90)
 arc((X0 + RAD, Y0 + RAD), (X0, Y0 + RAD), 90)
 
 # ---------------------------------------------------------------- planes
-def zone(layer, netname, prio=0):
+def zone(layer, netname, prio=0, solid=False):
     z = pcbnew.ZONE(board)
     z.SetLayer(layer)
     z.SetNet(nets[netname])
@@ -203,11 +215,11 @@ def zone(layer, netname, prio=0):
             ol.Append(mm(cx + r * math.cos(a)), mm(cy + r * math.sin(a)))
     z.SetLocalClearance(mm(0.3))
     z.SetMinThickness(mm(0.2))
-    z.SetPadConnection(pcbnew.ZONE_CONNECTION_THERMAL)
+    z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL if solid else pcbnew.ZONE_CONNECTION_THERMAL)
     board.Add(z)
 zone(pcbnew.In1_Cu, "GND")
 zone(pcbnew.In2_Cu, "+3V3")
-zone(pcbnew.B_Cu, "GND")
+zone(pcbnew.B_Cu, "GND", solid=True)   # mostly empty layer: solid joins, no starved thermals
 
 # ---------------------------------------------------------------- key legends (silkscreen)
 def text(s_, x, y, size=1.2, layer=pcbnew.F_SilkS):
@@ -217,8 +229,21 @@ def text(s_, x, y, size=1.2, layer=pcbnew.F_SilkS):
     board.Add(t)
 for ref, label in [("SW1", "MUTE"), ("SW2", "DEAFEN"), ("SW3", "DISCONNECT")]:
     text(label, KEYS[ref], Y1 - 3.0)
-text("DS-2000", 121.0, 84.0, 1.5)
-text("rev A", 121.0, 86.5, 1.0)
+# debug pads on the bottom: say what each one is instead of TP1/JP1
+def btext(s_, x, y, size=0.9):
+    t = pcbnew.PCB_TEXT(board); t.SetText(s_); t.SetLayer(pcbnew.B_SilkS); t.SetMirrored(True)
+    t.SetPosition(pcbnew.VECTOR2I(mm(x), mm(y)))
+    t.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size))); t.SetTextThickness(mm(size * 0.15))
+    board.Add(t)
+for ref, label in [("TP1", "CK"), ("TP2", "G"), ("TP3", "IO"), ("JP1", "BOOT"), ("JP2", "RST")]:
+    x, y, _r, _s = P[ref]
+    btext(label, x, y + (1.8 if ref.startswith("TP") else 2.0), 0.8 if ref.startswith("TP") else 0.9)
+btext("SWD", (P["TP1"][0] + P["TP3"][0]) / 2, P["TP1"][1] - 2.0)
+for fp in board.GetFootprints():
+    if fp.GetReference().startswith(("TP", "JP")):
+        fp.Reference().SetVisible(False)
+text("DS-2000", 122.0, 82.0, 1.5)
+text("rev A", 122.0, 84.5, 1.0)
 
 print("filling", flush=True)
 # Zones are left unfilled: press B in KiCad, or run DRC with --refill-zones.

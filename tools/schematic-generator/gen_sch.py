@@ -272,7 +272,7 @@ TEXT((68.58, 170.18), "JP1: bridge the pads while plugging in USB to enter USB b
 # ====================================================================================
 # E. Crystal and SWD
 # ====================================================================================
-BOX(110.49, 209.55, 149.86, 241.3, "12 MHz crystal, SWD", title_at="bottom")
+BOX(110.49, 209.55, 149.86, 241.3, "12 MHz crystal, SWD pads", title_at="bottom")
 C17 = C("C17", "15p", "XIN", "GND", (114.3, 213.36))
 Y1 = part("Y1", "Device:Crystal_GND24_Small", "12MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm", (124.46, 213.36),
           {"1": "XIN", "3": "XTAL_OUT", "2": "GND", "4": "GND"}, rot=270,
@@ -283,13 +283,15 @@ W(Y1.p("2"), (119.38, 213.36), (119.38, 215.9)); PWR("GND", (119.38, 215.9))
 R6 = R("R6", "1k", "XTAL_OUT", "XOUT", (147.32, 220.98), rot=90)
 C18 = C("C18", "15p", "XTAL_OUT", "GND", (132.08, 223.52))
 W(U3.p("22"), R6.p("2")); W(R6.p("1"), (124.46, 220.98), Y1.p("3"))
-J2 = part("J2", "Connector_Generic:Conn_01x03", "SWD", "Connector_JST:JST_SH_SM03B-SRSS-TB_1x03-1MP_P1.00mm_Horizontal",
-          (139.7, 228.6), {"1": "SWCLK", "2": "GND", "3": "SWDIO"}, mirror="y",
-          fields={"MPN": "SM03B-SRSS-TB", "Manufacturer": "JST", "Note": "Raspberry Pi Debug Probe pinout"},
-          props={"Reference": (137.16, 234.95), "Value": (137.16, 237.49)})
-W(U3.p("24"), (154.94, 228.6), (154.94, 226.06), J2.p("1"))
-W(U3.p("25"), J2.p("3"))
-W(J2.p("2"), (147.32, 228.6)); PWR("GND", (147.32, 228.6), (1, 0))
+# SWD as three bare pads on the bottom side (Raspberry Pi Debug Probe order: SWCLK, GND, SWDIO)
+TPS = {}
+for ref, net, y in [("TP1", "SWCLK", 226.06), ("TP2", "GND", 228.6), ("TP3", "SWDIO", 231.14)]:
+    TPS[ref] = part(ref, "Connector:TestPoint", net, "TestPoint:TestPoint_Pad_D1.5mm", (144.78, y), {"1": net},
+                    rot=90, bom=False, fields={"Note": "SWD pad, bottom side"},
+                    props={"Reference": (137.16, y - 0.64), "Value": (137.16, y + 1.27)} if False else None)
+W(U3.p("24"), (154.94, 228.6), (154.94, 226.06), TPS["TP1"].p("1"))
+W(U3.p("25"), TPS["TP3"].p("1"))
+W(TPS["TP2"].p("1"), (147.32, 228.6)); PWR("GND", (147.32, 228.6), (1, 0))
 
 # ====================================================================================
 # H. Keys
