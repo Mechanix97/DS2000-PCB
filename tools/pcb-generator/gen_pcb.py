@@ -53,7 +53,7 @@ P = {
     "H1": (X0 + HOLE, Y0 + HOLE, 0, "F"), "H2": (X1 - HOLE, Y0 + HOLE, 0, "F"),
     "H3": (X0 + HOLE, Y1 - HOLE, 0, "F"), "H4": (X1 - HOLE, Y1 - HOLE, 0, "F"),
     "J1": (100.0, Y0 - USB_OVERHANG + 3.65, 180, "B"),   # underneath, sticking out past the back edge
-    "J3": (74.5, 73.5, 90, "F"),                         # USB wire holes, along the back edge
+    "J3": (74.5, 73.0, 90, "F"),                         # USB wire holes, along the back edge
     # USB input
     "F1": (88.5, 73.0, 0, "F"), "R1": (93.3, 74.2, 90, "F"), "R2": (106.7, 74.2, 90, "F"),
     "U1": (100.0, 73.2, 0, "F"),
@@ -64,17 +64,20 @@ P = {
     "U3": (MCU[0], MCU[1], 0, "F"),
     "C4": (101.9, 78.6, 90, "F"), "L1": (106.6, 79.4, 0, "F"), "C3": (109.4, 79.4, 90, "F"),   # C4 straight above VREG_VIN (pin 49)
     "R5": (111.5, 79.4, 90, "F"), "C5": (113.0, 79.4, 90, "F"),
-    "C16": (96.4, 78.2, 0, "F"),     # USB_OTP_VDD + QSPI_IOVDD, through the plane (pins share a via)                                              # USB_OTP_VDD + QSPI_IOVDD
+    "C16": (93.5, 76.0, 0, "F"),     # USB_OTP_VDD + QSPI_IOVDD, through the plane (pins share a via)                                              # USB_OTP_VDD + QSPI_IOVDD
     # decoupling: supply pad faces its pin and lines up with it (pad 1 is the supply side)
     "C6": (94.3, 81.5, 180, "F"), "C12": (94.3, 83.5, 180, "F"), "C7": (94.3, 85.5, 180, "F"),   # left: pins 1, 6, 11
     "C11": (105.8, 81.3, 0, "F"), "C15": (107.9, 82.1, 0, "F"),                                # right: pins 45, 44
     "C14": (105.8, 83.9, 0, "F"), "C10": (107.9, 84.7, 0, "F"),                                # right: pins 39, 38
-    "C8": (98.0, 89.9, 270, "F"), "C13": (101.4, 89.9, 270, "F"), "C9": (102.8, 89.9, 270, "F"), # bottom: 20, 23, 30
+    "C8": (94.9, 88.3, 180, "F"), "C13": (101.4, 89.9, 270, "F"), "C9": (102.8, 89.9, 270, "F"), # bottom: 20, 23, 30
     # flash, top-left next to the QSPI pins
     "U4": (86.5, 79.5, 0, "F"), "C19": (86.5, 76.0, 0, "F"),
-    "R7": (92.8, 78.2, 90, "F"), "R8": (92.8, 80.6, 90, "F"),
+    # above the flash, next to CS, in the row between J3 and the flash: the corridor to the RP2350 stays clear
+    "R7": (82.3, 75.45, 0, "F"), "R8": (84.25, 75.45, 0, "F"),
     # crystal, below XIN/XOUT (low parts may sit under the keycap edge, outside the switch)
-    "Y1": (95.3, 91.0, 0, "F"), "R6": (99.6, 91.9, 0, "F"), "C17": (92.1, 89.9, 90, "F"), "C18": (92.1, 92.3, 90, "F"),
+    # crystal tucked under XIN/XOUT, turned so its XIN pad is top-left and its output pad bottom-right:
+    # the two nets never cross and need no via (hand-routed by preroute.py)
+    "Y1": (96.5, 91.15, 270, "F"), "R6": (99.6, 90.4, 90, "F"), "C17": (93.7, 90.0, 180, "F"), "C18": (100.7, 92.0, 90, "F"),
     "R9": (105.6, 89.6, 0, "F"),
     # LED data
     "U5": (89.5, 86.2, 0, "F"), "C20": (89.5, 83.6, 0, "F"), "R10": (86.2, 86.2, 90, "F"),

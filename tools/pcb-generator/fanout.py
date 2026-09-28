@@ -65,6 +65,12 @@ for fp in b.GetFootprints():
                      through or pad.IsOnLayer(pcbnew.F_Cu), through or pad.IsOnLayer(pcbnew.B_Cu), pad))
 vias = []     # (x, y, net)
 tracks = []   # (a, c, width, net, layer)
+for t_ in b.GetTracks():                      # tracks already on the board, e.g. from preroute.py
+    if isinstance(t_, pcbnew.PCB_VIA):
+        c = t_.GetPosition(); vias.append((tomm(c.x), tomm(c.y), t_.GetNetname()))
+    else:
+        s_, e_ = t_.GetStart(), t_.GetEnd()
+        tracks.append(((tomm(s_.x), tomm(s_.y)), (tomm(e_.x), tomm(e_.y)), tomm(t_.GetWidth()), t_.GetNetname(), t_.GetLayer()))
 
 def via_ok(x, y, net, own):
     r = VIA_D / 2
@@ -178,6 +184,8 @@ add_track((mx, top), (mx, top - 0.5), 0.2, "+3V3", pcbnew.F_Cu)
 add_via(mx, top - 0.5, "+3V3")
 mcu_pads = [(fp, p) for fp, p in mcu_pads if p.GetNumber() not in ("53", "54")]
 vias_n += 1
+ended = {(round(a[0], 3), round(a[1], 3)) for a, _c, _w, _n, _l in tracks} |         {(round(c[0], 3), round(c[1], 3)) for _a, c, _w, _n, _l in tracks}
+mcu_pads = [(fp, p) for fp, p in mcu_pads if pos(p) not in ended]     # hand-routed to their cap (the cap still gets its via)
 for fp, pad in mcu_pads:                          # 1. RP2350A pins straight to their capacitor
     if try_tie(pad, pad.GetNetname()):
         tied += 1

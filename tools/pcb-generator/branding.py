@@ -7,7 +7,8 @@
   holes, vias, other text and the board edge; any that cannot be placed stays hidden and is listed
 - mechardo3d.xyz typography: Sora for the name and wordmark, IBM Plex Mono for everything technical.
   The fonts live in fonts/ (OFL); the board is flagged to embed them the next time KiCad saves it
-- the USB-C footprint's silkscreen, which falls past the board edge, moves to the fab layer
+- the USB-C's silkscreen (past the board edge) and the crystal's (meeting SW2's under the keycap)
+  move to the fab layer
 
 KiCad 10's Python bindings hand back untyped proxies once anything has been removed from the
 board, so reads and changes come first and removals last. Fonts cannot be set through the
@@ -71,7 +72,7 @@ stale = []
 for fp in list(b.GetFootprints()):
     if str(fp.GetFPID().GetLibItemName()).startswith("Logo_"):
         stale.append(fp)
-    elif fp.GetReference() == "J1":
+    elif fp.GetReference() in ("J1", "Y1"):     # J1's outline falls past the edge, Y1's meets SW2's under the keycap
         for item in fp.GraphicalItems():
             if item.GetLayer() in (pcbnew.F_SilkS, pcbnew.B_SilkS):
                 item.SetLayer(pcbnew.B_Fab)

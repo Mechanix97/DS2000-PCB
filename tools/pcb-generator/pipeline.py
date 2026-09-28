@@ -44,6 +44,7 @@ shutil.copytree(os.path.join(ROOT, "DS2000.pretty"), os.path.join(WORK, "DS2000.
 
 run([KCLI, "sch", "export", "netlist", "--format", "kicadsexpr", "-o", "net.net", "DS2000.kicad_sch"])
 print(run([KPY, "-u", script("gen_pcb.py"), "net.net", "DS2000.kicad_pcb"]).splitlines()[-2])
+print(run([KPY, "-u", script("preroute.py"), "DS2000.kicad_pcb"]).strip())
 print(run([KPY, "-u", script("fanout.py"), "DS2000.kicad_pcb"]).strip())
 
 def import_ses():
@@ -59,14 +60,29 @@ def freeroute():
     m = re.findall(r"Auto-routing stage completed:.*", log)
     return m[-1] if m else ""
 
+def unconnected():
+    run([KCLI, "pcb", "drc", "--refill-zones", "-o", "drc.rpt", "DS2000.kicad_pcb"])
+    return len(re.findall(r"^\[unconnected_items\]", open(os.path.join(WORK, "drc.rpt"), encoding="utf8").read(), re.M))
+
 if route:
     print(freeroute()[:150])
     import_ses()
-    for _ in range(2):                         # incremental passes over the routed board
-        print("  incremental:", freeroute()[:130])
-        import_ses()
+    best = unconnected()
+    print(f"  KiCad: {best} unconnected")
+    for _ in range(3):                         # incremental passes, kept only when KiCad agrees they help
+        if best == 0:
+            break
+        shutil.copy(os.path.join(WORK, "DS2000.kicad_pcb"), os.path.join(WORK, "best.kicad_pcb"))
+        freeroute(); import_ses()
+        n = unconnected()
+        print(f"  incremental pass: {n} unconnected")
+        if n < best:
+            best = n
+        else:
+            shutil.copy(os.path.join(WORK, "best.kicad_pcb"), os.path.join(WORK, "DS2000.kicad_pcb"))
 
 print(run([KPY, "-u", script("branding.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
+print(run([KPY, "-u", script("stitch.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
 
 def drc():
     run([KCLI, "pcb", "drc", "--schematic-parity", "--refill-zones", "--severity-all", "-o", "drc.rpt", "DS2000.kicad_pcb"])

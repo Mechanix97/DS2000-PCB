@@ -153,11 +153,17 @@ each decoupling capacitor in line with its supply pin and its supply pad facing 
 
 1. `gen_pcb.py` builds the board from the schematic's netlist (footprints, nets, fields, symbol
    links), places it, and sets stackup, rules and net classes.
-2. `fanout.py` connects every GND and +3V3 pad to its plane: RP2350A supply pins go by a short
+2. `preroute.py` hand-routes what the autorouter should not improvise, as locked tracks: the crystal
+   loop (XIN 7.4 mm, XOUT 2.1 mm, crystal output 4.9 mm, no vias, the crystal turned so the two
+   nets never cross) and IOVDD pin 20, which runs to its capacitor above the XIN run.
+3. `fanout.py` connects every GND and +3V3 pad to its plane: RP2350A supply pins go by a short
    track straight to their decoupling capacitor, pins 53/54 share one via between the USB and QSPI
    escapes, and every other pad gets its own via, each checked for clearance before it is placed.
-3. Freerouting routes the rest on F.Cu and B.Cu (In1 and In2 are planes), with incremental passes
-   until nothing is left, and `cleanup_vias.py` drops any via it leaves dangling.
+4. Freerouting routes the rest on F.Cu and B.Cu (In1 and In2 are planes). Incremental passes are
+   kept only when KiCad's own DRC counts fewer unconnected items, and `cleanup_vias.py` drops any
+   via left dangling.
+5. `branding.py` finishes the face (see above) and `stitch.py` ties the F.Cu and B.Cu GND pours to
+   In1 with a 3.5 mm grid of vias wherever they clear everything else (119 on rev A).
 
 `pipeline.py` writes to `build/` and never overwrites the committed board: from now on the
 `.kicad_pcb` is edited by hand in KiCad.
@@ -172,6 +178,14 @@ In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins o
 JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge (0.2 mm only for the LED
 cut-outs, in `DS2000.kicad_dru`). Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
 +1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm tracks / 0.2 mm gap.
+
+**Review (2026-09-28).** Every net was checked against Raspberry Pi's RP2350 minimal design and
+every footprint's pin mapping against its datasheet, including the SK6812MINI-E: its datasheet
+numbers pins differently from KiCad's symbol, but KiCad's reverse-mount footprint is drawn mirrored,
+so once placed on the bottom each pad lands on the right function. No wrong connection was found.
+The review did find routing the autorouter had done poorly, since fixed: XIN was 14 mm with two
+vias and the QSPI clock 35.5 mm with four (now 7.4 mm with none, and 11 mm with two). The USB data
+lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (12 Mbit/s).
 
 **Review before ordering:**
 
