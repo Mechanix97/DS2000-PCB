@@ -13,6 +13,8 @@ and deafen are lit from underneath by an RGB LED; disconnect has none. The board
 | Board | 4 layers, 1.6 mm, ~72 × 50 mm. RP2350A and USB-C on show on top, LEDs reverse-mounted underneath |
 | Tool | **KiCad 10** |
 
+![DS-2000 rev A](docs/img/rev-a-iso.png)
+
 Design decisions, block descriptions, BOM and open items: [`docs/design-rev-a.md`](docs/design-rev-a.md).
 
 ## Pinout

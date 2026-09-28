@@ -100,17 +100,57 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 | R10 | 100 Ω | | 0402 |
 | H1-H4 | M2 plated hole to GND | | |
 
+## Layout
+
+![rev A, starting placement](img/rev-a-iso.png)
+
+The board was started by `tools/pcb-generator/gen_pcb.py`, which loads footprints, nets and symbol
+links from the schematic's netlist, so **Update PCB from Schematic (F8) reports no changes** and DRC's
+schematic-parity check is clean. From here the `.kicad_pcb` is edited by hand.
+
+**Fixed (mechanical, agreed with the enclosure):**
+
+| Item | Position |
+|---|---|
+| Outline | 72 × 50 mm, 3 mm corner radius |
+| Keys | row of 3 at 19.05 mm pitch, centres 17 mm from the front edge, middle key on the board's centre line |
+| LEDs | D1/D2 on the bottom, 5.08 mm south of the switch centre (the MX LED window, opposite the switch pins) |
+| Holes | 4 × M2, 4 mm in from each edge, clear of the keycaps |
+| USB-C | centred on the back edge, mating face flush, opening facing back |
+| SWD (J2) | back edge, right, opening facing back |
+| USB wire holes (J3) | back edge, left |
+
+**Starting positions only:** everything in the strip between the keys and the back edge, grouped
+around the RP2350A by function. Expect to move all of it.
+
+**Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
+In1 is a GND plane, In2 a +3V3 plane, B.Cu a GND pour. Minimums set for JLC: 0.1 mm track and
+clearance, 0.2 mm drill, 0.3 mm copper to edge (0.2 mm only for the LED cut-outs, in
+`DS2000.kicad_dru`). Net classes: *Power* (GND, +5V, +3V3, +1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm
+tracks / 0.2 mm gap as a starting point for 90 Ω; confirm with JLC's impedance calculator for this
+stackup before routing.
+
+**When placing and routing:**
+
+- Core regulator (L1, C3, C4, R5, C5 and VREG_PGND) copied from the RP2350 minimal design's layout,
+  inductor orientation included. This is the one area not to improvise.
+- Crystal, R6, C17, C18 tight against XIN/XOUT; nothing else routed under the crystal.
+- Decoupling caps at their pins; C16 serves both USB_OTP_VDD and QSPI_IOVDD.
+- U1 (ESD) next to J1, R3/R4 next to the RP2350; D+/D- as a pair over unbroken GND.
+- Keep the visible face tidy: route on the inner layers and B.Cu where possible.
+- Under the keycaps (outside each switch's 14 mm housing) parts are hidden but must stay under
+  ~2 mm high so a fully pressed keycap clears them.
+- Confirm the LED side against your switches: the footprint assumes the LED window is on the side
+  opposite the two switch pins, which is standard for MX.
+
 ## Open items
 
-- [ ] **Board outline, key layout and hole positions** — decided together with the enclosure
-      (DS2000-Enclosure#1, #5); blocks layout (#11)
+- [ ] Routing (#11); outline, keys and holes are fixed, see Layout
 - [ ] L1 footprint: `L_Murata_DFE201610P` is a stand-in with the same 2.0×1.6 mm body. Check its
       pads against the Abracon datasheet or draw a dedicated footprint
-- [ ] SK6812MINI-E placement: centred on each switch's LED window (north of the switch centre),
-      with the matching cut-out; verify against the switch model chosen
 - [ ] Mute and deafen keycaps must be shine-through or translucent for their LEDs to be visible
 - [ ] LCSC numbers for every line, preferring JLCPCB basic parts (#13)
-- [ ] Soldermask colour, finish and silkscreen art (the visible face)
+- [ ] Silkscreen art and logo for the visible face (mask black and ENIG are set)
 
 ## Regenerating the schematic
 

@@ -202,7 +202,7 @@ W((256.54, 55.88), R9.p("2")); LBL("RUN", (256.54, 55.88), (-1, 0))
 BOX(292.1, 30.48, 368.3, 88.9, "Mounting holes (PCB corners, to GND)")
 for i in range(4):
     part(f"H{i + 1}", "Mechanical:MountingHole_Pad", "M2", "MountingHole:MountingHole_2.2mm_M2_Pad_Via",
-         (304.8 + i * 15.24, 53.34), {"1": "GND"})
+         (304.8 + i * 15.24, 53.34), {"1": "GND"}, bom=False)
 FLAG((360.68, 55.88)); W((360.68, 55.88), (360.68, 58.42)); PWR("GND", (360.68, 58.42))
 
 # ====================================================================================
@@ -263,7 +263,7 @@ R7 = R("R7", "10k", "+3V3", "QSPI_SS", (132.08, 187.96), dnp=True, fields={"Note
 R8 = R("R8", "1k", "BOOTSEL", "QSPI_SS", (121.92, 187.96))
 SW4 = part("JP1", "Jumper:SolderJumper_2_Open", "BOOTSEL", "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm", (114.3, 177.8),
            {"1": "GND", "2": "BOOTSEL"}, bom=False,
-           fields={"Note": "Bridge with tweezers while plugging in USB (or pressing RESET) to enter USB boot"})
+           fields={"Note": "Bridge with tweezers while plugging in USB (or while bridging JP2) to enter USB boot"})
 W(R8.p("1"), (121.92, 177.8), SW4.p("2"))
 W(SW4.p("1"), (106.68, 177.8), (106.68, 180.34)); PWR("GND", (106.68, 180.34))
 C19 = C("C19", "100n", "+3V3", "GND", (76.2, 195.58))
