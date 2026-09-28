@@ -40,7 +40,9 @@ a 4.75 V VBUS after the fuse.
   unbroken GND.
 - Flash W25Q32JVSSIQ (4 MB, same size as the RP2350-Zero, so the firmware image is identical).
   R7 (10 kΩ CS pull-up) is DNP as in the reference.
-- BOOTSEL: SW4 pulls `QSPI_SS` low through R8 1 kΩ. RESET: SW5 on `RUN`, with R9 10 kΩ pull-up.
+- BOOTSEL: no button. JP1 is a pair of bare pads (open solder jumper) that pull `QSPI_SS` low through
+  R8 1 kΩ when bridged with tweezers or a wire while USB is plugged in (or RESET pressed).
+  RESET: SW5 on `RUN`, with R9 10 kΩ pull-up.
 - SWD on J2, JST-SH 3-pin in the Raspberry Pi Debug Probe pinout (SWCLK, GND, SWDIO).
 
 **Keys and LEDs.** SW1-SW3 to GPIO0-2 and GND; the firmware uses the internal pull-ups (not
@@ -83,7 +85,8 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 | J3 | USB wire holes, not in BOM | — | 1×4 2.54 mm holes |
 | F1 | PTC 500 mA hold | Littelfuse 1206L050YR | 1206 |
 | SW1-SW3 | Keys | Cherry MX compatible | MX 1u PCB |
-| SW4, SW5 | BOOTSEL, RESET | XKB TS-1187A-B-A-B | SMD tactile |
+| SW5 | RESET | XKB TS-1187A-B-A-B | SMD tactile |
+| JP1 | BOOTSEL pads, not in BOM | — | open solder jumper, 1.3 mm pitch |
 | C1, C2 | 10 µF | | 0805 |
 | C3-C5 | 4.7 µF | | 0402 |
 | C6-C16, C19-C22 | 100 nF | | 0402 |

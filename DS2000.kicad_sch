@@ -2207,6 +2207,184 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Jumper:SolderJumper_2_Open"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "JP"
+				(at 0 2.032 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SolderJumper_2_Open"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Solder Jumper, 2-pole, open"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "solder jumper SPST"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SolderJumper*Open*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "SolderJumper_2_Open_0_1"
+				(polyline
+					(pts
+						(xy -0.254 1.016) (xy -0.254 -1.016)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -0.254 -1.016)
+					(mid -1.2656 0)
+					(end -0.254 1.016)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(arc
+					(start 0.254 1.016)
+					(mid 1.2656 0)
+					(end 0.254 -1.016)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 1.016) (xy 0.254 -1.016)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "SolderJumper_2_Open_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "LED:SK6812MINI-E"
 			(pin_names
 				(offset 0.254)
@@ -5780,7 +5958,7 @@
 	)
 	(polyline
 		(pts
-			(xy 147.32 114.3) (xy 210.82 114.3) (xy 210.82 147.32) (xy 147.32 147.32) (xy 147.32 114.3)
+			(xy 147.32 116.84) (xy 210.82 116.84) (xy 210.82 147.32) (xy 147.32 147.32) (xy 147.32 116.84)
 		)
 		(stroke
 			(width 0.254)
@@ -5865,7 +6043,7 @@
 	)
 	(text "Core regulator: layout exactly as the RP2350 guide"
 		(exclude_from_sim no)
-		(at 148.59 120.65 0)
+		(at 148.59 121.92 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5985,7 +6163,7 @@
 	)
 	(text "RP2350A supplies"
 		(exclude_from_sim no)
-		(at 148.59 113.03 0)
+		(at 148.59 115.57 0)
 		(effects
 			(font
 				(size 2 2)
@@ -6047,7 +6225,7 @@
 		)
 		(uuid "d97acdc2-9962-5d69-b49b-8400069b4e3e")
 	)
-	(text "Hold BOOTSEL while resetting to enter USB boot."
+	(text "JP1: bridge the pads while plugging in USB to enter USB boot."
 		(exclude_from_sim no)
 		(at 68.58 170.18 0)
 		(effects
@@ -17683,18 +17861,18 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
+		(lib_id "Jumper:SolderJumper_2_Open")
 		(at 114.3 177.8 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c86b97c6-16f5-595d-9f74-419fbb0ed9d5")
-		(property "Reference" "SW4"
-			(at 115.57 175.26 0)
+		(property "Reference" "JP1"
+			(at 114.3 175.768 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17704,7 +17882,7 @@
 			)
 		)
 		(property "Value" "BOOTSEL"
-			(at 114.3 179.324 0)
+			(at 114.3 180.34 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17713,7 +17891,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
 			(at 114.3 177.8 0)
 			(hide yes)
 			(show_name no)
@@ -17745,18 +17923,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1187A-B-A-B"
-			(at 114.3 177.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "XKB"
+		(property "Note" "Bridge with tweezers while plugging in USB (or pressing RESET) to enter USB boot"
 			(at 114.3 177.8 0)
 			(hide yes)
 			(show_name no)
@@ -17776,7 +17943,7 @@
 		(instances
 			(project ""
 				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
-					(reference "SW4")
+					(reference "JP1")
 					(unit 1)
 				)
 			)

@@ -206,7 +206,7 @@ FLAG((360.68, 55.88)); W((360.68, 55.88), (360.68, 58.42)); PWR("GND", (360.68, 
 # ====================================================================================
 # C. RP2350A supplies (wired straight into the MCU's top pins)
 # ====================================================================================
-BOX(147.32, 114.3, 210.82, 147.32, "RP2350A supplies")
+BOX(147.32, 116.84, 210.82, 147.32, "RP2350A supplies")
 MCU_CONN = {"1": "+3V3", "11": "+3V3", "20": "+3V3", "30": "+3V3", "38": "+3V3", "45": "+3V3",
             "6": "+1V1", "23": "+1V1", "39": "+1V1", "50": "+1V1",
             "44": "+3V3", "53": "+3V3", "54": "+3V3", "49": "+3V3",
@@ -239,7 +239,7 @@ W(R5.p("1"), (154.94, 129.54)); PWR("+3V3", (154.94, 129.54))
 FLAG((167.64, 129.54))
 W(U3.p("47"), (U3.p("47")[0], 243.84)); W(U3.p("61"), (U3.p("61")[0], 243.84))
 W((U3.p("47")[0], 243.84), (U3.p("61")[0], 243.84)); PWR("GND", (U3.p("61")[0], 243.84))
-TEXT((148.59, 120.65), "Core regulator: layout exactly as the RP2350 guide")
+TEXT((148.59, 121.92), "Core regulator: layout exactly as the RP2350 guide")
 
 # ====================================================================================
 # D. MCU
@@ -259,12 +259,13 @@ for fp_, mp in [("1", "60"), ("6", "56"), ("5", "57"), ("2", "59"), ("3", "58"),
     W(U4.p(fp_), U3.p(mp))
 R7 = R("R7", "10k", "+3V3", "QSPI_SS", (132.08, 187.96), dnp=True, fields={"Note": "DNF, only for other flash parts"})
 R8 = R("R8", "1k", "BOOTSEL", "QSPI_SS", (121.92, 187.96))
-SW4 = part("SW4", "Switch:SW_Push", "BOOTSEL", "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A", (114.3, 177.8),
-           {"1": "GND", "2": "BOOTSEL"}, fields={"MPN": "TS-1187A-B-A-B", "Manufacturer": "XKB"})
+SW4 = part("JP1", "Jumper:SolderJumper_2_Open", "BOOTSEL", "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm", (114.3, 177.8),
+           {"1": "GND", "2": "BOOTSEL"}, bom=False,
+           fields={"Note": "Bridge with tweezers while plugging in USB (or pressing RESET) to enter USB boot"})
 W(R8.p("1"), (121.92, 177.8), SW4.p("2"))
 W(SW4.p("1"), (106.68, 177.8), (106.68, 180.34)); PWR("GND", (106.68, 180.34))
 C19 = C("C19", "100n", "+3V3", "GND", (76.2, 195.58))
-TEXT((68.58, 170.18), "Hold BOOTSEL while resetting to enter USB boot.")
+TEXT((68.58, 170.18), "JP1: bridge the pads while plugging in USB to enter USB boot.")
 
 # ====================================================================================
 # E. Crystal and SWD
