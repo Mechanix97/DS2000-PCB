@@ -1,8 +1,8 @@
 """Finishes the board's visible face. Safe to run repeatedly on the hand-edited board.
 
 - GND pour on F.Cu (the other planes come from gen_pcb.py)
-- the Mechardo Labs mark (DS2000.pretty/Logo_Mechardo_6mm, ENIG gold) with "DS2000",
-  "mechardo labs" and "rev A" in the back-left corner, the one area of the face with no top copper
+- the DS2000 logo (white lettering, gold arcs) with "rev A" back-left, and the Mechardo Labs mark
+  (ENIG gold) with "mechardo / labs" back-right: the two areas of the face with no top copper
 - every reference designator shown, each moved to the first spot beside its part that clears pads,
   holes, vias, other text and the board edge; any that cannot be placed stays hidden and is listed
 - mechardo3d.xyz typography: Sora for the name and wordmark, IBM Plex Mono for everything technical.
@@ -33,12 +33,15 @@ b = pcbnew.LoadBoard(PCB)
 tick("loaded")
 mm, tomm = pcbnew.FromMM, pcbnew.ToMM
 
-BX, LOGO_Y = 75.5, 79.2
-OURS = {"DS2000", "DS-2000", "rev A", "mechardo labs"}
+# product block back-left, maker block back-right: the two areas of the face with no top copper
+PX, PY = 75.5, 80.8          # DS2000 logo centre
+MX, MY = 126.0, 77.2         # Mechardo mark centre
+OURS = {"DS2000", "DS-2000", "rev A", "mechardo labs", "mechardo", "labs"}
 REF_SIZE = 0.8                                  # cap height; Plex Mono Bold stems are ~0.16 mm here, above JLC's 0.153 mm
 MONO_ADVANCE = 0.6 / 0.7                        # Plex Mono: 600/1000 em per char; KiCad sizes TrueType by cap height (~0.7 em)
 FONTS = {                                       # text -> (face, bold)
-    "DS2000": ("Sora", True), "mechardo labs": ("Sora SemiBold", False), "rev A": ("IBM Plex Mono", True),
+    "DS2000": ("Sora", True), "mechardo": ("Sora SemiBold", False), "labs": ("Sora SemiBold", False),
+    "rev A": ("IBM Plex Mono", True),
     "MUTE": ("IBM Plex Mono SemiBold", False), "DEAFEN": ("IBM Plex Mono SemiBold", False),
     "DISCONNECT": ("IBM Plex Mono SemiBold", False),
 }
@@ -66,7 +69,7 @@ if not any(z.GetLayer() == pcbnew.F_Cu and z.GetNetname() == "GND" for z in b.Zo
 
 stale = []
 for fp in list(b.GetFootprints()):
-    if str(fp.GetFPID().GetLibItemName()) == "Logo_Mechardo_6mm":
+    if str(fp.GetFPID().GetLibItemName()).startswith("Logo_"):
         stale.append(fp)
     elif fp.GetReference() == "J1":
         for item in fp.GraphicalItems():
@@ -80,15 +83,16 @@ def text(s, x, y, size):
     t.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size))); t.SetTextThickness(mm(size * 0.15))
     b.Add(t)
 
-logo = pcbnew.FootprintLoad(LIB, "Logo_Mechardo_6mm")
-logo.SetFPID(pcbnew.LIB_ID("DS2000", "Logo_Mechardo_6mm"))
-logo.SetReference("LOGO1")
-logo.GetField(pcbnew.FIELD_T_REFERENCE).SetVisible(False)
-logo.SetPosition(pcbnew.VECTOR2I(mm(BX), mm(LOGO_Y)))
-b.Add(logo)
-text("DS2000", BX, LOGO_Y + 5.3, 1.6)
-text("mechardo labs", BX, LOGO_Y + 7.4, 1.0)
-text("rev A", BX, LOGO_Y + 9.3, 1.0)
+def place_logo(name, ref, x, y):
+    fp = pcbnew.FootprintLoad(LIB, name)
+    fp.SetFPID(pcbnew.LIB_ID("DS2000", name)); fp.SetReference(ref)
+    fp.GetField(pcbnew.FIELD_T_REFERENCE).SetVisible(False)
+    fp.SetPosition(pcbnew.VECTOR2I(mm(x), mm(y))); b.Add(fp)
+place_logo("Logo_DS2000_8.6mm", "LOGO2", PX, PY)        # the product logo from mechardo3d.xyz
+text("rev A", PX, PY + 6.1, 1.0)
+place_logo("Logo_Mechardo_5mm", "LOGO1", MX, MY)
+text("mechardo", MX, MY + 4.3, 0.9)
+text("labs", MX, MY + 5.8, 0.9)
 
 # ---------------------------------------------------------------- reference placement
 def rect(bb):
@@ -115,7 +119,8 @@ for d in list(b.GetDrawings()):
     if isinstance(d, pcbnew.PCB_TEXT) and d.GetLayer() in obst and d.GetText() not in OURS:
         add_obst(d.GetLayer(), rect(d.GetBoundingBox()), 0.2)
 # the branding block and the logo
-add_obst(pcbnew.F_SilkS, (BX - 5.2, LOGO_Y - 3.6, BX + 5.2, LOGO_Y + 9.8))
+add_obst(pcbnew.F_SilkS, (PX - 4.6, PY - 4.7, PX + 4.6, PY + 7.0))
+add_obst(pcbnew.F_SilkS, (MX - 3.3, MY - 2.9, MX + 3.3, MY + 6.6))
 
 def fits(side, r):
     if r[0] < EX0 + 0.6 or r[1] < EY0 + 0.6 or r[2] > EX1 - 0.6 or r[3] > EY1 - 0.6:

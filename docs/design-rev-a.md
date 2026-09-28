@@ -137,8 +137,13 @@ each decoupling capacitor in line with its supply pin and its supply pad facing 
   them for editing. KiCad reports `text_thickness` on some characters (5, 6, 9, G, a, e): its check
   measures the thinnest part of each glyph, where curves taper. The main strokes of Plex Mono Bold at
   0.8 mm are about 0.16 mm, above JLC's 0.153 mm minimum.
+- The DS2000 logo (back left) is the product logo from mechardo3d.xyz
+  (`static/images/DS2000/logo/ds2000-logo.webp`), traced by `tools/logo/gen_ds2000_logo.py` into
+  `DS2000.pretty/Logo_DS2000_8.6mm`: the white lettering is silkscreen, the blue arcs become ENIG
+  gold, since the board has no blue. "rev A" sits under it; the maker block (Mechardo mark with
+  "mechardo / labs") sits back right.
 - The Mechardo Labs mark is the mechardo3d.xyz favicon (`tools/logo/gen_logo.py` →
-  `DS2000.pretty/Logo_Mechardo_6mm`): a rounded square of ENIG copper whose mask opening leaves the
+  `DS2000.pretty/Logo_Mechardo_5mm`): a rounded square of ENIG copper whose mask opening leaves the
   "m" covered, so it reads black on gold. The SVG's "m" is a single self-overlapping contour, so it is
   first resolved to its nonzero-fill union; taken as-is the overlaps rendered as holes.
 - The USB-C's own silkscreen, which fell past the board edge, is on the fab layer; that is the one
