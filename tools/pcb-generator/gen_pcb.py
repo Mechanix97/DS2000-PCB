@@ -47,7 +47,10 @@ LED_FROM_CENTER = (0.0, 4.7)              # Choc V1 LED window, opposite the swi
 HOLE = 4.0                                # hole centre from each edge
 USB_OVERHANG = 1.2                        # receptacle face past the back edge
 
-MCU = (100.0, 84.3)
+MCU = (100.0, 84.8)   # 0.5 mm lower than first placed: the reference regulator above pin 48 must clear J1's pegs
+def VR(dx, dy, rot):
+    """Placement relative to VREG_LX (U3 pin 48, 2.0 right of and 3.45 above the package centre)."""
+    return (round(MCU[0] + 2.0 + dx, 3), round(MCU[1] - 3.45 + dy, 3), rot, "F")
 # ref: (x, y, rotation_deg, side)   side "F" or "B"
 P = {
     # mechanical
@@ -58,19 +61,23 @@ P = {
     # USB input
     "F1": (88.5, 73.0, 0, "F"), "R1": (93.3, 74.2, 90, "F"), "R2": (106.7, 74.2, 90, "F"),
     "U1": (100.0, 73.2, 0, "F"),
-    "R3": (99.5, 76.8, 270, "F"), "R4": (100.7, 76.8, 270, "F"),   # between the USB-C pegs, chip side (pad 2) down
+    "R3": VR(-3.1, -3.95, 270), "R4": VR(-2.1, -3.95, 270),   # as R7/R8 in the RP2350A minimal design, chip side (pad 2) down
     # 3.3 V regulator
     "C1": (109.4, 73.5, 90, "F"), "U2": (113.0, 73.5, 0, "F"), "C2": (116.6, 73.5, 90, "F"),
-    # RP2350A, core regulator top-right next to VREG pins 46-50
+    # RP2350A. The core regulator is a copy of Raspberry Pi's RPI-RP2350A-MINIMAL R4-S1 layout
+    # (MIT), which their guide says not to improvise: same parts, positions relative to pin 48 and
+    # routing (preroute.py). Their C6/C7/L1/C9/R3/C12 are our C4/C3/L1/C5/R5/C16.
     "U3": (MCU[0], MCU[1], 0, "F"),
-    "C4": (101.9, 78.6, 90, "F"), "L1": (106.6, 79.4, 0, "F"), "C3": (109.4, 79.4, 90, "F"),   # C4 straight above VREG_VIN (pin 49)
-    "R5": (111.5, 79.4, 90, "F"), "C5": (113.0, 79.4, 90, "F"),
-    "C16": (93.5, 76.0, 0, "F"),     # USB_OTP_VDD + QSPI_IOVDD, through the plane (pins share a via)                                              # USB_OTP_VDD + QSPI_IOVDD
+    # R5 is the one departure: J1's shell pin sits where the reference has it, so it lies beside C5
+    # instead of above it (it only feeds VREG_AVDD's RC filter, away from L1's field)
+    "C4": VR(0, -1.16, 0), "C3": VR(0, -2.1, 0), "L1": VR(0, -3.75, 0),
+    "C5": VR(2.2, -1.6, 270), "R5": VR(3.65, -2.08, 180),
+    "C16": VR(-4.1, -3.95, 90),      # USB_OTP_VDD + QSPI_IOVDD, as C12 in the reference
     # decoupling: supply pad faces its pin and lines up with it (pad 1 is the supply side)
-    "C6": (94.3, 81.5, 180, "F"), "C12": (94.3, 83.5, 180, "F"), "C7": (94.3, 85.5, 180, "F"),   # left: pins 1, 6, 11
-    "C11": (105.8, 81.3, 0, "F"), "C15": (107.9, 82.1, 0, "F"),                                # right: pins 45, 44
-    "C14": (105.8, 83.9, 0, "F"), "C10": (107.9, 84.7, 0, "F"),                                # right: pins 39, 38
-    "C8": (94.9, 88.3, 180, "F"), "C13": (101.4, 89.9, 270, "F"), "C9": (102.8, 89.9, 270, "F"), # bottom: 20, 23, 30
+    "C6": (94.3, 82, 180, "F"), "C12": (94.3, 84, 180, "F"), "C7": (94.3, 86, 180, "F"),   # left: pins 1, 6, 11
+    "C11": (105.8, 81.8, 0, "F"), "C15": (107.9, 82.6, 0, "F"),                                # right: pins 45, 44
+    "C14": (105.8, 84.4, 0, "F"), "C10": (107.9, 85.2, 0, "F"),                                # right: pins 39, 38
+    "C8": (94.9, 88.8, 180, "F"), "C13": (101.4, 90.4, 270, "F"), "C9": (102.8, 90.4, 270, "F"), # bottom: 20, 23, 30
     # flash, top-left next to the QSPI pins
     "U4": (86.5, 79.5, 0, "F"), "C19": (86.5, 76.0, 0, "F"),
     # above the flash, next to CS, in the row between J3 and the flash: the corridor to the RP2350 stays clear
@@ -78,10 +85,10 @@ P = {
     # crystal, below XIN/XOUT (low parts may sit under the keycap edge, outside the switch)
     # crystal tucked under XIN/XOUT, turned so its XIN pad is top-left and its output pad bottom-right:
     # the two nets never cross and need no via (hand-routed by preroute.py)
-    "Y1": (96.5, 91.15, 270, "F"), "R6": (99.6, 90.4, 90, "F"), "C17": (93.7, 90.0, 180, "F"), "C18": (100.7, 92.0, 90, "F"),
-    "R9": (105.6, 89.6, 0, "F"),
+    "Y1": (96.5, 91.65, 270, "F"), "R6": (99.6, 90.9, 90, "F"), "C17": (93.7, 90.5, 180, "F"), "C18": (100.7, 92.5, 90, "F"),
+    "R9": (105.6, 90.1, 0, "F"),
     # LED data
-    "U5": (89.5, 86.2, 0, "F"), "C20": (89.5, 83.6, 0, "F"), "R10": (86.2, 86.2, 90, "F"),
+    "U5": (89.5, 86.7, 0, "F"), "C20": (89.5, 84.1, 0, "F"), "R10": (86.2, 86.7, 90, "F"),
     # debug, all on the bottom, grouped at the back right
     "TP1": (118.0, 77.0, 0, "B"), "TP2": (120.54, 77.0, 0, "B"), "TP3": (123.08, 77.0, 0, "B"),
     "JP1": (118.8, 81.0, 0, "B"), "JP2": (123.3, 81.0, 0, "B"),
@@ -175,6 +182,11 @@ for ref, c in comps.items():
     if ref == "J1":
         # its GND pins are too narrow and close together for thermal spokes: join them solidly
         fp.SetLocalZoneConnection(pcbnew.ZONE_CONNECTION_FULL)
+    if ref == "U3":
+        # the exposed pad and its thermal vias carry heat into the planes: solid, not spokes
+        for pad in fp.Pads():
+            if pad.GetNumber() == "61":
+                pad.SetLocalZoneConnection(pcbnew.ZONE_CONNECTION_FULL)
     board.Add(fp)
     x, y, rot, side = P[ref]
     fp.SetPosition(pcbnew.VECTOR2I(mm(x), mm(y)))

@@ -37,6 +37,7 @@ def use(lib_id):
 
 # ------------------------------------------------------------------------------------ parts
 R0402, C0402, C0805 = "Resistor_SMD:R_0402_1005Metric", "Capacitor_SMD:C_0402_1005Metric", "Capacitor_SMD:C_0805_2012Metric"
+C0402W = "DS2000:C_0402_1005Metric_Wide"          # the RP2350 reference's 4.7u VREG caps: pads 1.03 mm apart
 PARTS = {}
 
 class Part:
@@ -224,15 +225,16 @@ U3 = part("U3", "MCU_RaspberryPi:RP2350A", "RP2350A", "Package_DFN_QFN:QFN-60-1E
 for n in ["53", "44", "54", "1", "49"]:
     W(U3.p(n), (U3.p(n)[0], 144.78))
 W((U3.p("53")[0], 144.78), (U3.p("49")[0], 144.78)); PWR("+3V3", (175.26, 144.78))
-L1 = part("L1", "Device:L_Small", "3.3u", "Inductor_SMD:L_Murata_DFE201610P", (190.5, 134.62),
-          {"1": "VREG_LX", "2": "+1V1"}, rot=90,
+# rot 270: pin 1, the Abracon polarity dot, is +1V1 as in the RP2350A minimal design
+L1 = part("L1", "Device:L_Small", "3.3u", "DS2000:L_Abracon_AOTA-B201610S3R3-101-T", (190.5, 134.62),
+          {"1": "+1V1", "2": "VREG_LX"}, rot=270,
           fields={"MPN": "AOTA-B201610S3R3-101-T", "Manufacturer": "Abracon",
-                  "Note": "Polarity-marked; orientation and layout per RP2350 guide. Verify pads"})
-W(U3.p("48"), L1.p("1"))
-C3 = C("C3", "4.7u", "+1V1", "GND", (203.2, 142.24), fields={"Note": "VREG output cap"})
+                  "Note": "Polarity dot = pin 1 = +1V1. Layout copied from the RP2350A minimal design (R4-S1)"})
+W(U3.p("48"), L1.p("2"))
+C3 = C("C3", "4.7u", "+1V1", "GND", (203.2, 142.24), fp=C0402W, fields={"Note": "VREG output cap"})
 W(U3.p("50"), (U3.p("50")[0], 139.7)); W(U3.p("6"), (U3.p("6")[0], 139.7))
 W((U3.p("50")[0], 139.7), C3.p("1"))
-W(L1.p("2"), (193.04, 139.7)); W(L1.p("2"), (193.04, 129.54)); PWR("+1V1", (193.04, 129.54))
+W(L1.p("1"), (193.04, 139.7)); W(L1.p("1"), (193.04, 129.54)); PWR("+1V1", (193.04, 129.54))
 FLAG((200.66, 139.7))
 R5 = R("R5", "33", "+3V3", "VREG_AVDD", (160.02, 129.54), rot=90)
 C5 = C("C5", "4.7u", "VREG_AVDD", "GND", (170.18, 132.08))
@@ -340,7 +342,7 @@ dec = [("C4", "4.7u", "+3V3", "VREG_VIN")] + [(f"C{6 + i}", "100n", "+3V3", "IOV
       [(f"C{12 + i}", "100n", "+1V1", "DVDD") for i in range(3)] + [("C15", "100n", "+3V3", "ADC_AVDD"),
                                                                     ("C16", "100n", "+3V3", "USB_OTP+QSPI_IOVDD")]
 for i, (ref, val, net, what) in enumerate(dec):
-    C(ref, val, net, "GND", (78.74 + i * 17.78, 270.51), fields={"Note": what})
+    C(ref, val, net, "GND", (78.74 + i * 17.78, 270.51), fp=C0402W if ref == "C4" else C0402, fields={"Note": what})
 TEXT((68.58, 283.21), "C4 VREG_VIN · C6-C11 IOVDD x6 · C12-C14 DVDD x3 · C15 ADC_AVDD · C16 USB_OTP_VDD + QSPI_IOVDD (shared, as in the reference)")
 
 # ------------------------------------------------------------------------------------ finish

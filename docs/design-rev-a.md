@@ -33,6 +33,8 @@ a 4.75 V VBUS after the fuse.
   **L1 must be the polarity-marked Abracon AOTA-B201610S3R3-101-T, placed in the orientation and
   layout the guide shows.** Raspberry Pi explicitly says other layouts are at your own risk.
 - `VREG_PGND` to GND, routed as the guide describes (not to an arbitrary via).
+- **Layout: a copy of Raspberry Pi's RPI-RP2350A-MINIMAL R4-S1 board** (KiCad files, MIT), see
+  *Core regulator* under Layout.
 - 100 nF per power pin: C6-C11 IOVDD, C12-C14 DVDD, C15 ADC_AVDD, C16 shared by USB_OTP_VDD and
   QSPI_IOVDD (as in the reference).
 - Crystal ABM8-272-T3 12 MHz, 15 pF load caps, 1 kΩ on XOUT. Do not substitute.
@@ -76,7 +78,7 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 | U3 | RP2350A | RP2350A | QFN-60 7×7 mm, thermal vias |
 | U4 | Flash 4 MB | W25Q32JVSSIQ | SOIC-8 5.3 mm |
 | Y1 | 12 MHz | ABM8-272-T3 | 3225 4-pin |
-| L1 | 3.3 µH | AOTA-B201610S3R3-101-T | 2016 metric (see open items) |
+| L1 | 3.3 µH | AOTA-B201610S3R3-101-T (LCSC C42411119) | 2016 metric, polarity dot on pad 1 = +1V1; `DS2000:L_Abracon_AOTA-B201610S3R3-101-T` |
 | U2 | 3.3 V LDO | AP2112K-3.3TRG1 | SOT-23-5 |
 | U1 | USB ESD | USBLC6-2SC6 | SOT-23-6 |
 | U5 | Buffer, TTL in | 74AHCT1G125GW | SOT-353 |
@@ -120,9 +122,37 @@ item left is the intended USB-C footprint change described under *Face and brand
 | Debug | **all on the bottom**, back right: SWD pads TP1-TP3 (CK, G, IO), BOOT (JP1), RST (JP2) |
 | USB wire holes (J3) | back edge, left |
 
-**Top side, around the RP2350A:** flash top-left by the QSPI pins, core regulator top-right by the
-VREG pins, USB series resistors between the USB-C pegs straight above D+/D-, crystal below XIN/XOUT,
-each decoupling capacitor in line with its supply pin and its supply pad facing it.
+**Top side, around the RP2350A:** flash top-left by the QSPI pins, core regulator straight above the
+VREG pins, USB series resistors beside it above D+/D-, crystal below XIN/XOUT, each decoupling
+capacitor in line with its supply pin and its supply pad facing it.
+
+**Core regulator.** Raspberry Pi says their regulator layout should be copied, not improvised: the
+inductor's field upsets the output capacitor when it is the wrong way round or placed differently.
+Rev A copies it from their KiCad files (RPI-RP2350A-MINIMAL R4-S1, MIT). Our U3 sits the same way
+round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
+
+| Theirs | Ours | Part | From pin 48 (x, y), mm |
+|---|---|---|---|
+| C6 | C4 | 4.7 µF, VREG_VIN | (0, −1.16) |
+| C7 | C3 | 4.7 µF, +1V1 output | (0, −2.10) |
+| L1 | L1 | AOTA-B201610S3R3-101-T, dot (pad 1) on +1V1, left | (0, −3.75) |
+| C9 | C5 | 4.7 µF, VREG_AVDD | (2.2, −1.60) |
+| R3 | R5 | 33 Ω, VREG_AVDD filter | (3.65, −2.08) *(theirs: (2.2, −3.45))* |
+| C12 | C16 | 100 nF, USB_OTP_VDD + QSPI_IOVDD | (−4.1, −3.95) |
+| R7/R8 | R3/R4 | 27 Ω, USB | (−3.1 / −2.1, −3.95) |
+
+- The two 4.7 µF caps use the reference's wide 0402 land (`DS2000:C_0402_1005Metric_Wide`, pads
+  1.03 mm apart) so VREG_LX runs straight up between them to L1.
+- VREG_PGND (47) ties to both caps' ground pads on the top layer, with two vias beside them, as in
+  the reference; VREG_FB (50) is taken at the output cap; VREG_AVDD runs clear of L1.
+- The tracks are hand-placed by `preroute.py` and locked; `vreg_pours.py` adds the reference's four
+  small pours (PGND, VREG_LX, the +1V1 node, VREG_VIN) after autorouting.
+- The reference's +3V3 pour under the package (joining VREG_VIN to pins 53/54) becomes a track in the
+  same place, between the pin ring and the exposed pad, with one via to the In2 plane.
+- **Two departures**, both forced by J1 underneath: the whole RP2350A cluster sits 0.5 mm lower than
+  first placed so L1 and C16 clear J1's plastic pegs, and R5 lies beside C5 instead of above it,
+  where J1's shell pin comes through. R5 only feeds the 200 µA AVDD filter, away from L1's field.
+- No via lands on J1's bottom-side contacts: every via on the board is at least 0.4 mm clear of them.
 
 **Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run on the hand-edited board):
 
@@ -195,9 +225,8 @@ lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (
 
 **Review before ordering:**
 
-- Core regulator: compare L1, C3, C4, R5, C5 and VREG_PGND against the RP2350 minimal design's layout,
-  inductor orientation included. The autorouted version is electrically complete but is not a copy
-  of Raspberry Pi's reference, which is the one area they say not to improvise.
+- Core regulator: copied from the reference (see above). At assembly, check L1's dot sits on the
+  left, towards +1V1 (the silkscreen dot marks it).
 - USB: confirm the 90 Ω pair geometry with JLC's impedance calculator for this stackup.
 - Visible face: the autorouter used F.Cu freely. Moving long runs to B.Cu makes the top cleaner.
 - Under the keycaps (outside each switch's 13.8 mm lower housing) parts are hidden but must stay under
@@ -208,8 +237,6 @@ lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (
 ## Open items
 
 - [ ] Review the routed board (see Layout, *Review before ordering*)
-- [ ] L1 footprint: `L_Murata_DFE201610P` is a stand-in with the same 2.0×1.6 mm body. Check its
-      pads against the Abracon datasheet or draw a dedicated footprint
 - [ ] Mute and deafen keycaps must be shine-through or translucent for their LEDs to be visible
 - [ ] LCSC numbers for every line, preferring JLCPCB basic parts (#13)
 

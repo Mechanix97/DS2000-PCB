@@ -172,20 +172,43 @@ for fp in b.GetFootprints():
 tied, vias_n, left = 0, 0, []
 untied = []
 
+ended = {(round(a[0], 3), round(a[1], 3)) for a, _c, _w, _n, _l in tracks} |         {(round(c[0], 3), round(c[1], 3)) for _a, c, _w, _n, _l in tracks}
+def rpos(pad):
+    x, y = pos(pad); return (round(x, 3), round(y, 3))
+
 # 0. USB_OTP_VDD (53) and QSPI_IOVDD (54) are adjacent +3V3 pins hemmed in by USB (51/52) and QSPI
-#    (55-60): join them and drop one via between the two escape fans.
+#    (55-60): join them and drop one via between the two escape fans, unless preroute.py already
+#    wired them as in Raspberry Pi's reference
 u3 = next(fp for fp in b.GetFootprints() if fp.GetReference() == MCU)
 p53, p54 = (next(p for p in u3.Pads() if p.GetNumber() == n) for n in ("53", "54"))
-(x53, y53), (x54, y54) = pos(p53), pos(p54)
-mx, top = (x53 + x54) / 2, y53 - 0.75
-add_track((x53, y53), (mx, top), 0.2, "+3V3", pcbnew.F_Cu)
-add_track((x54, y54), (mx, top), 0.2, "+3V3", pcbnew.F_Cu)
-add_track((mx, top), (mx, top - 0.5), 0.2, "+3V3", pcbnew.F_Cu)
-add_via(mx, top - 0.5, "+3V3")
+if rpos(p53) not in ended:
+    (x53, y53), (x54, y54) = pos(p53), pos(p54)
+    mx, top = (x53 + x54) / 2, y53 - 0.75
+    add_track((x53, y53), (mx, top), 0.2, "+3V3", pcbnew.F_Cu)
+    add_track((x54, y54), (mx, top), 0.2, "+3V3", pcbnew.F_Cu)
+    add_track((mx, top), (mx, top - 0.5), 0.2, "+3V3", pcbnew.F_Cu)
+    add_via(mx, top - 0.5, "+3V3")
+    vias_n += 1
 mcu_pads = [(fp, p) for fp, p in mcu_pads if p.GetNumber() not in ("53", "54")]
-vias_n += 1
-ended = {(round(a[0], 3), round(a[1], 3)) for a, _c, _w, _n, _l in tracks} |         {(round(c[0], 3), round(c[1], 3)) for _a, c, _w, _n, _l in tracks}
-mcu_pads = [(fp, p) for fp, p in mcu_pads if pos(p) not in ended]     # hand-routed to their cap (the cap still gets its via)
+# pads preroute.py already wired keep their hand routing; other pads skip their via only when
+# those tracks already reach a same-net via (the core regulator), not when they just join two pads
+mcu_pads = [(fp, p) for fp, p in mcu_pads if rpos(p) not in ended]
+def reaches_via(pad):
+    net, seen, todo = pad.GetNetname(), set(), [rpos(pad)]
+    vpos = {(round(x, 3), round(y, 3)) for x, y, n in vias if n == net}
+    while todo:
+        q = todo.pop()
+        if q in seen:
+            continue
+        seen.add(q)
+        if q in vpos:
+            return True
+        for a_, c_, _w, n_, _l in tracks:
+            ra, rc = (round(a_[0], 3), round(a_[1], 3)), (round(c_[0], 3), round(c_[1], 3))
+            if n_ == net and q in (ra, rc):
+                todo.append(rc if q == ra else ra)
+    return False
+others = [(fp, p, l) for fp, p, l in others if not reaches_via(p)]
 for fp, pad in mcu_pads:                          # 1. RP2350A pins straight to their capacitor
     if try_tie(pad, pad.GetNetname()):
         tied += 1

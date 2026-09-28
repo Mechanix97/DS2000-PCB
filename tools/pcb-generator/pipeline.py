@@ -81,6 +81,7 @@ if route:
         else:
             shutil.copy(os.path.join(WORK, "best.kicad_pcb"), os.path.join(WORK, "DS2000.kicad_pcb"))
 
+print(run([KPY, "-u", script("vreg_pours.py"), "DS2000.kicad_pcb"]).strip())
 print(run([KPY, "-u", script("branding.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
 print(run([KPY, "-u", script("stitch.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
 

@@ -12003,7 +12003,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "DS2000:C_0402_1005Metric_Wide"
 			(at 204.72 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -15941,7 +15941,7 @@
 	)
 	(symbol
 		(lib_id "Device:L_Small")
-		(at 190.5 134.62 90)
+		(at 190.5 134.62 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -15970,7 +15970,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Murata_DFE201610P"
+		(property "Footprint" "DS2000:L_Abracon_AOTA-B201610S3R3-101-T"
 			(at 190.5 137.66 0)
 			(hide yes)
 			(show_name no)
@@ -16024,7 +16024,7 @@
 				)
 			)
 		)
-		(property "Note" "Polarity-marked; orientation and layout per RP2350 guide. Verify pads"
+		(property "Note" "Polarity dot = pin 1 = +1V1. Layout copied from the RP2350A minimal design (R4-S1)"
 			(at 190.5 137.66 0)
 			(hide yes)
 			(show_name no)
@@ -19176,7 +19176,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "DS2000:C_0402_1005Metric_Wide"
 			(at 80.26 271.78 0)
 			(hide yes)
 			(show_name no)

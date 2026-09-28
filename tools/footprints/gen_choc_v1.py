@@ -29,7 +29,7 @@ def pad(num, kind, x, y, size, drill, layers):
 
 body = (
     rect(-7.5, -7.5, 7.5, 7.5, "F.Fab", 0.1)
-    + rect(-7.6, -7.6, 7.6, 7.6, "F.SilkS", 0.12)
+    + rect(-7.25, -7.25, 7.25, 7.25, "F.SilkS", 0.12)           # between the switch pads and the parts under the flange
     + rect(-7.15, -7.15, 7.15, 7.15, "F.CrtYd", 0.05)           # lower housing + 0.25: the 15 mm flange is 2.2 mm up
     + rect(-8.75, -8.25, 8.75, 8.25, "Dwgs.User", 0.1)          # MBK keycap
     + rect(-2.5, 4.7 - 1.575, 2.5, 4.7 + 1.575, "Dwgs.User", 0.1)  # LED window in the switch
