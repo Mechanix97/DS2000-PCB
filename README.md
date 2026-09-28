@@ -17,6 +17,24 @@ and deafen are lit from underneath by an RGB LED; disconnect has none. The board
 
 Design decisions, block descriptions, BOM and open items: [`docs/design-rev-a.md`](docs/design-rev-a.md).
 
+## Gallery
+
+| Top face, without switches | Underneath |
+|---|---|
+| ![Top, without switches](docs/img/rev-a-layout.png) | ![Bottom](docs/img/rev-a-bottom.png) |
+| The visible face: RP2350A, logos and legends. The LEDs show through the Choc cut-outs | USB-C at the back edge, SK6812MINI-E under mute and deafen, debug pads (SWD, BOOT, RST) |
+
+| With switches and keycaps | From the back |
+|---|---|
+| ![Top](docs/img/rev-a-top.png) | ![Back](docs/img/rev-a-back.png) |
+
+### Schematic
+
+[![Schematic](docs/img/schematic.png)](docs/img/schematic.png)
+
+One sheet, one box per block: USB-C input, 3.3 V regulator, RP2350A supplies, QSPI flash, crystal
+and SWD, keys, and the LED chain with its 5 V level shifter.
+
 ## Pinout
 
 The pinout is defined by the firmware (`DS-2000-Firmware/include/pins.h`). Change it there first.
