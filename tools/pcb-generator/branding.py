@@ -139,8 +139,30 @@ def fits_body(side, r, fp):
     return all(o[2] < r[0] or o[0] > r[2] or o[3] < r[1] or o[1] > r[3] for o in own)
 
 placed, hidden = 0, []
+def set_ref(fp, side, tx, ty, ang, w, h):
+    field = fp.GetField(pcbnew.FIELD_T_REFERENCE)
+    field.SetVisible(True); field.SetLayer(side)
+    field.SetHorizJustify(pcbnew.GR_TEXT_H_ALIGN_CENTER); field.SetVertJustify(pcbnew.GR_TEXT_V_ALIGN_CENTER)
+    field.SetKeepUpright(True)
+    field.SetTextSize(pcbnew.VECTOR2I(mm(REF_SIZE), mm(REF_SIZE))); field.SetTextThickness(mm(0.12))
+    field.SetPosition(pcbnew.VECTOR2I(mm(tx), mm(ty)))
+    field.SetTextAngle(pcbnew.EDA_ANGLE(ang, pcbnew.DEGREES_T))
+    tw, th = (w, h) if ang == 0 else (h, w)
+    add_obst(side, (tx - tw / 2, ty - th / 2, tx + tw / 2, ty + th / 2), 0.1)
+
+# Switches: in a row under the keys, centred, between the keycap's front edge and the key legend,
+# so all three read from the front
+KEYCAP_FRONT = 8.25                             # MBK cap, 16.5 mm deep, from the switch centre
+for fp in b.GetFootprints():
+    if fp.GetReference().startswith("SW"):
+        ref = fp.GetReference(); c = fp.GetPosition()
+        w, h = len(ref) * MONO_ADVANCE * REF_SIZE + 0.3, REF_SIZE / 0.7 + 0.2
+        set_ref(fp, pcbnew.F_SilkS, tomm(c.x), tomm(c.y) + KEYCAP_FRONT + 0.6 + h / 2, 0, w, h)
+        placed += 1
+
 # ICs choose first; then everything else, smallest first
-fps = sorted((fp for fp in b.GetFootprints() if not fp.GetReference().startswith(HIDDEN_REFS)),
+fps = sorted((fp for fp in b.GetFootprints()
+              if not fp.GetReference().startswith(HIDDEN_REFS) and not fp.GetReference().startswith("SW")),
              key=lambda f: (not f.GetReference().startswith("U"),
                             (lambda r: (r[2] - r[0]) * (r[3] - r[1]))(rect(f.GetBoundingBox(False)))))
 for fp in fps:
@@ -163,21 +185,15 @@ for fp in fps:
     for sx in (-1, 1):                           # diagonal corners, for parts boxed in on every side
         for sy in (-1, 1):
             cands.append((cx + sx * ((x1 - x0) / 2 + g + w / 2), cy + sy * ((y1 - y0) / 2 + g + h / 2), 0))
-    if ref.startswith(("U", "SW")):
-        cands.append((cx, cy, 0))                # ICs and switches: on the body, as usual
+    if ref.startswith("U"):
+        cands.append((cx, cy, 0))                # ICs: on the body, as usual
     field = fp.GetField(pcbnew.FIELD_T_REFERENCE)
     for tx, ty, ang in cands:
         tw, th = (w, h) if ang == 0 else (h, w)
         r = (tx - tw / 2, ty - th / 2, tx + tw / 2, ty + th / 2)
         on_body = (tx, ty) == (cx, cy)
         if fits(side, r) or (on_body and fits_body(side, r, fp)):
-            field.SetVisible(True); field.SetLayer(side)
-            field.SetHorizJustify(pcbnew.GR_TEXT_H_ALIGN_CENTER); field.SetVertJustify(pcbnew.GR_TEXT_V_ALIGN_CENTER)
-            field.SetKeepUpright(True)
-            field.SetTextSize(pcbnew.VECTOR2I(mm(REF_SIZE), mm(REF_SIZE))); field.SetTextThickness(mm(0.12))
-            field.SetPosition(pcbnew.VECTOR2I(mm(tx), mm(ty)))
-            field.SetTextAngle(pcbnew.EDA_ANGLE(ang, pcbnew.DEGREES_T))
-            add_obst(side, r, 0.1); placed += 1
+            set_ref(fp, side, tx, ty, ang, w, h); placed += 1
             break
     else:
         field.SetVisible(False); hidden.append(ref)
