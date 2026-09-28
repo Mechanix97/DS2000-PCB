@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="docs/img/ds2000-logo.webp" alt="DS2000" width="150">
+</p>
+
+<p align="center">
   <img src="docs/img/case-tilt.png" alt="DS-2000 rev A in its enclosure" width="820">
 </p>
 
