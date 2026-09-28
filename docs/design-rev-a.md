@@ -105,9 +105,8 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 ![rev A, routed](img/rev-a-iso.png)
 
 **State:** placed and fully routed. ERC is clean; DRC reports no unconnected pads, no clearance or
-edge errors and full schematic parity (Update PCB from Schematic reports no changes). What remains in
-the DRC output is silkscreen overlap from the footprints' default reference texts, to tidy while
-designing the visible face.
+edge errors and full schematic parity (Update PCB from Schematic reports no changes). The only DRC
+item left is the intended USB-C footprint change described under *Face and branding*.
 
 **Fixed (mechanical, agreed with the enclosure):**
 
@@ -124,6 +123,15 @@ designing the visible face.
 **Top side, around the RP2350A:** flash top-left by the QSPI pins, core regulator top-right by the
 VREG pins, USB series resistors between the USB-C pegs straight above D+/D-, crystal below XIN/XOUT,
 each decoupling capacitor in line with its supply pin and its supply pad facing it.
+
+**Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run): reference designators
+are hidden (they stay in the file for assembly drawings), so the top carries only the key legends,
+the Mechardo Labs mark and "DS2000 / mechardo labs / rev A" in the back-left corner, the one area of
+the face with no top copper. The mark is the mechardo3d.xyz favicon traced from its SVG
+(`tools/logo/gen_logo.py` → `DS2000.pretty/Logo_Mechardo_6mm`): a rounded square of ENIG copper whose
+mask opening leaves the "m" covered, so it reads black on gold. The USB-C's own silkscreen, which
+fell past the board edge, is moved to the fab layer; that is the one intended
+`lib_footprint_mismatch` in the DRC output.
 
 **How it was routed** (`tools/pcb-generator/`, see `pipeline.py`):
 
@@ -163,12 +171,11 @@ cut-outs, in `DS2000.kicad_dru`). Net classes: *Plane* (GND, +3V3) reached by vi
 
 ## Open items
 
-- [ ] Review the routed board (see Layout, *Review before ordering*), then tidy silkscreen
+- [ ] Review the routed board (see Layout, *Review before ordering*)
 - [ ] L1 footprint: `L_Murata_DFE201610P` is a stand-in with the same 2.0×1.6 mm body. Check its
       pads against the Abracon datasheet or draw a dedicated footprint
 - [ ] Mute and deafen keycaps must be shine-through or translucent for their LEDs to be visible
 - [ ] LCSC numbers for every line, preferring JLCPCB basic parts (#13)
-- [ ] Silkscreen art and logo for the visible face (mask black and ENIG are set)
 
 ## Regenerating the schematic
 

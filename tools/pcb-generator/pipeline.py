@@ -38,8 +38,9 @@ os.makedirs(WORK, exist_ok=True)
 for f in ("DS2000.kicad_pro", "DS2000.kicad_prl", "DS2000.ses"):
     if os.path.exists(os.path.join(WORK, f)):
         os.remove(os.path.join(WORK, f))
-for f in ("DS2000.kicad_sch", "DS2000.kicad_dru"):
+for f in ("DS2000.kicad_sch", "DS2000.kicad_dru", "fp-lib-table"):
     shutil.copy(os.path.join(ROOT, f), WORK)
+shutil.copytree(os.path.join(ROOT, "DS2000.pretty"), os.path.join(WORK, "DS2000.pretty"), dirs_exist_ok=True)
 
 run([KCLI, "sch", "export", "netlist", "--format", "kicadsexpr", "-o", "net.net", "DS2000.kicad_sch"])
 print(run([KPY, "-u", script("gen_pcb.py"), "net.net", "DS2000.kicad_pcb"]).splitlines()[-2])
@@ -64,6 +65,8 @@ if route:
     for _ in range(2):                         # incremental passes over the routed board
         print("  incremental:", freeroute()[:130])
         import_ses()
+
+print(run([KPY, "-u", script("branding.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
 
 def drc():
     run([KCLI, "pcb", "drc", "--schematic-parity", "--refill-zones", "--severity-all", "-o", "drc.rpt", "DS2000.kicad_pcb"])

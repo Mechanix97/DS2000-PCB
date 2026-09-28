@@ -242,10 +242,9 @@ btext("SWD", (P["TP1"][0] + P["TP3"][0]) / 2, P["TP1"][1] - 2.0)
 for fp in board.GetFootprints():
     if fp.GetReference().startswith(("TP", "JP")):
         fp.Reference().SetVisible(False)
-text("DS-2000", 122.0, 82.0, 1.5)
-text("rev A", 122.0, 84.5, 1.0)
 
 print("filling", flush=True)
+# Product name, logo and reference hiding: branding.py, run after routing.
 # Zones are left unfilled: press B in KiCad, or run DRC with --refill-zones.
 pcbnew.SaveBoard(OUT, board)
 print(f"saved {OUT}: {len(comps)} footprints, {len(netnames)} nets")
