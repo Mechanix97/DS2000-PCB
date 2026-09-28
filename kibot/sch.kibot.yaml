@@ -1,0 +1,39 @@
+# Schematic checks and documentation. Runs on every PR and on pushes to main.
+# The diff base is passed by CI with `-E BASE=<git ref>`.
+kibot:
+  version: 1
+
+preflight:
+  erc:
+    format: HTML,RPT
+    # The schematic still has known violations (DS2000-PCB#14). Report them without failing
+    # the job; switch this to false once rev A is ERC-clean.
+    dont_stop: true
+
+outputs:
+  - name: sch_pdf
+    comment: Schematic as PDF
+    type: pdf_sch_print
+    dir: schematic
+
+  - name: sch_diff
+    comment: Visual schematic diff against the base of the change
+    type: diff
+    dir: diff
+    options:
+      pcb: false
+      old: '@BASE@'
+      old_type: git
+      only_different: true
+
+  - name: netlist
+    comment: KiCad netlist
+    type: netlist
+    dir: schematic
+
+  - name: bom
+    comment: Bill of materials
+    type: bom
+    dir: bom
+    options:
+      format: CSV
