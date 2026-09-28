@@ -6041,9 +6041,9 @@
 		)
 		(uuid "11465dea-fb32-5a3a-93fd-37f95b649636")
 	)
-	(text "Core regulator: layout exactly as the RP2350 guide"
+	(text "JP2: bridge briefly to reset. R9 keeps RUN high."
 		(exclude_from_sim no)
-		(at 148.59 121.92 0)
+		(at 241.3 86.36 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6123,6 +6123,18 @@
 		)
 		(uuid "57120ad6-1b30-50a7-b469-dfefb69d4a6d")
 	)
+	(text "C4 VREG_VIN · C6-C11 IOVDD x6 · C12-C14 DVDD x3 · C15 ADC_AVDD · C16 USB_OTP_VDD + QSPI_IOVDD (shared, as in the reference)"
+		(exclude_from_sim no)
+		(at 68.58 283.21 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(italic yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "6eb34563-dd29-5397-96d0-a335bd315538")
+	)
 	(text "12 MHz crystal, SWD"
 		(exclude_from_sim no)
 		(at 111.76 240.03 0)
@@ -6149,9 +6161,9 @@
 		)
 		(uuid "784516dd-b205-50eb-b316-41b85107b87a")
 	)
-	(text "D1 under mute, D2 under deafen (reverse-mounted). Disconnect key has no LED. One 100n per LED."
+	(text "GP0-GP2, internal pull-ups"
 		(exclude_from_sim no)
-		(at 214.63 227.33 0)
+		(at 227.33 149.86 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6175,9 +6187,9 @@
 		)
 		(uuid "9f6ac462-9a23-5bd2-b2ca-e2aa1ec4cc35")
 	)
-	(text "C4 VREG_VIN · C6-C11 IOVDD x6 · C12-C14 DVDD x3 · C15 ADC_AVDD · C16 USB_OTP_VDD + QSPI_IOVDD (shared, as in the reference)"
+	(text "D1 under mute, D2 under deafen (reverse-mounted). Disconnect key has no LED. One 100n per LED."
 		(exclude_from_sim no)
-		(at 68.58 283.21 0)
+		(at 214.63 227.33 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6187,9 +6199,9 @@
 		)
 		(uuid "b2473b80-5709-5722-b641-d09a3538360d")
 	)
-	(text "GP0-GP2, internal pull-ups"
+	(text "JP1: bridge the pads while plugging in USB to enter USB boot."
 		(exclude_from_sim no)
-		(at 227.33 149.86 0)
+		(at 68.58 170.18 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6225,9 +6237,9 @@
 		)
 		(uuid "d97acdc2-9962-5d69-b49b-8400069b4e3e")
 	)
-	(text "JP1: bridge the pads while plugging in USB to enter USB boot."
+	(text "Core regulator: layout exactly as the RP2350 guide"
 		(exclude_from_sim no)
-		(at 68.58 170.18 0)
+		(at 148.59 121.92 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -11407,17 +11419,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
+		(lib_id "Jumper:SolderJumper_2_Open")
 		(at 264.16 60.96 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "44d55af4-f8e8-5f46-bea7-9fa4cea4da7a")
-		(property "Reference" "SW5"
+		(property "Reference" "JP2"
 			(at 267.97 60.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11439,7 +11451,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
 			(at 264.16 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -11471,18 +11483,7 @@
 				)
 			)
 		)
-		(property "MPN" "TS-1187A-B-A-B"
-			(at 264.16 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "XKB"
+		(property "Note" "Bridge briefly to reset"
 			(at 264.16 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -11502,7 +11503,7 @@
 		(instances
 			(project ""
 				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
-					(reference "SW5")
+					(reference "JP2")
 					(unit 1)
 				)
 			)

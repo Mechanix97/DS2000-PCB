@@ -189,9 +189,11 @@ TEXT((165.1, 86.36), "EN tied to VIN: always on. 250 mV dropout.")
 # ====================================================================================
 BOX(238.76, 30.48, 287.02, 88.9, "Reset")
 R9 = R("R9", "10k", "+3V3", "RUN", (264.16, 53.34))
-SW5 = part("SW5", "Switch:SW_Push", "RESET", "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A", (264.16, 60.96),
-           {"1": "RUN", "2": "GND"}, rot=270, fields={"MPN": "TS-1187A-B-A-B", "Manufacturer": "XKB"},
+SW5 = part("JP2", "Jumper:SolderJumper_2_Open", "RESET", "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm", (264.16, 60.96),
+           {"1": "RUN", "2": "GND"}, rot=270, bom=False,
+           fields={"Note": "Bridge briefly to reset"},
            props={"Reference": (267.97, 60.96), "Value": (267.97, 63.5)})
+TEXT((241.3, 86.36), "JP2: bridge briefly to reset. R9 keeps RUN high.")
 W((256.54, 55.88), R9.p("2")); LBL("RUN", (256.54, 55.88), (-1, 0))
 
 # ====================================================================================
