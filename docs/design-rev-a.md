@@ -9,8 +9,8 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 |---|---|---|
 | MCU | Discrete **RP2350A** (QFN-60) | Same family as the RP2350-Zero test module the firmware runs on |
 | Look | **Exposed PCB as the top face**, enclosure is a tray underneath | The board is the product's face: logo, art, legends in silkscreen |
-| Top side | Switches, and **the RP2350A and its circuitry on show** in a strip behind the keys, USB-C at the back edge | The visible chip is part of the look |
-| Bottom side | Only the two reverse-mount LEDs | The tray underneath can be thin. Assembly is two-sided (or the LEDs are hand-soldered) |
+| Top side | Switches, and **the RP2350A and its circuitry on show** in a strip behind the keys | The visible chip is part of the look |
+| Bottom side | The two reverse-mount LEDs and the **USB-C receptacle** | The plug and cable sit low, level with the tray, and the top strip gains space. Assembly is two-sided |
 | Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Routes mostly on inner layers so the face stays clean, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
 | Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
 | Keys | 3× Cherry MX, **soldered, no plate**, in a row | Footprint drilled for 5-pin (PCB-mount); 3-pin switches also fit. 5-pin is steadier without a plate |
@@ -20,7 +20,7 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 
 ## Blocks
 
-**USB-C and power.** HRO TYPE-C-31-M-12 on the top side at the back edge, pointing backwards, behind the key row so the plug never meets a keycap. J3 is four bare 2.54 mm holes (VBUS, D-, D+, GND) to solder a USB cable instead of fitting J1; it sits upstream of the fuse and ESD, so a soldered cable is protected the same way. 5.1 kΩ on CC1/CC2
+**USB-C and power.** HRO TYPE-C-31-M-12 on the **bottom** side at the back edge, pointing backwards, so the plug and cable sit low and the top strip stays free. The tray needs a pocket of at least 4 mm under the board and a cut-out in its back wall for the plug overmould (about 12.5 × 6.5 mm). J3 is four bare 2.54 mm holes (VBUS, D-, D+, GND) to solder a USB cable instead of fitting J1; it sits upstream of the fuse and ESD, so a soldered cable is protected the same way. 5.1 kΩ on CC1/CC2
 (UFP). VBUS goes through F1 (500 mA hold PTC) to `+5V`, which feeds the LEDs and the level shifter.
 USBLC6-2SC6 ESD on D+/D- close to the connector. AP2112K-3.3 LDO (250 mV dropout, 600 mA) makes
 `+3V3`; the RP2350 minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
@@ -116,12 +116,17 @@ schematic-parity check is clean. From here the `.kicad_pcb` is edited by hand.
 | Keys | row of 3 at 19.05 mm pitch, centres 17 mm from the front edge, middle key on the board's centre line |
 | LEDs | D1/D2 on the bottom, 5.08 mm south of the switch centre (the MX LED window, opposite the switch pins) |
 | Holes | 4 × M2, 4 mm in from each edge, clear of the keycaps |
-| USB-C | centred on the back edge, mating face flush, opening facing back |
+| USB-C | bottom side, centred on the back edge, mating face flush, opening facing back |
 | SWD (J2) | back edge, right, opening facing back |
 | USB wire holes (J3) | back edge, left |
 
 **Starting positions only:** everything in the strip between the keys and the back edge, grouped
 around the RP2350A by function. Expect to move all of it.
+
+**3D models:** KiCad's library has no STEP for the MX switch, the HRO USB-C or the QFN-60, so
+`tools/3d-models/gen_models.py` generates simplified ones from datasheet dimensions into
+`3dmodels/DS2000.3dshapes/` (referenced through `${KIPRJMOD}`, so they travel with the project). The
+switches also carry a 1u keycap model for previews and for fitting the enclosure.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is a GND plane, In2 a +3V3 plane, B.Cu a GND pour. Minimums set for JLC: 0.1 mm track and

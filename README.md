@@ -10,7 +10,7 @@ and deafen are lit from underneath by an RGB LED; disconnect has none. The board
 | Keys | 3× Cherry MX compatible in a row, soldered (5-pin footprint, 3-pin fits) |
 | LEDs | 2× SK6812MINI-E, reverse-mounted under the mute and deafen keys |
 | Connector | USB-C (USB 2.0 full speed), or a cable soldered to J3 |
-| Board | 4 layers, 1.6 mm, ~72 × 50 mm. RP2350A and USB-C on show on top, LEDs reverse-mounted underneath |
+| Board | 4 layers, 1.6 mm, 72 × 50 mm, black mask, ENIG. RP2350A on show on top; USB-C and LEDs underneath |
 | Tool | **KiCad 10** |
 
 ![DS-2000 rev A](docs/img/rev-a-iso.png)

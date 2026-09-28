@@ -50,7 +50,7 @@ P = {
     # mechanical
     "H1": (X0 + HOLE, Y0 + HOLE, 0, "F"), "H2": (X1 - HOLE, Y0 + HOLE, 0, "F"),
     "H3": (X0 + HOLE, Y1 - HOLE, 0, "F"), "H4": (X1 - HOLE, Y1 - HOLE, 0, "F"),
-    "J1": (100.0, Y0 + 3.65, 180, "F"),          # mating face flush with the back edge
+    "J1": (100.0, Y0 + 3.65, 180, "B"),          # underneath: plug and cable sit low, face flush with the back edge
     "J3": (76.0, 70.0, 90, "F"),                 # USB wire holes, along the back edge
     "J2": (124.0, 70.5, 180, "F"),               # SWD, back edge, right
     # USB input
@@ -144,6 +144,20 @@ for ref, c in comps.items():
         fld.SetText(fval); fld.SetVisible(False)
     if ref == "J3":
         fp.Models().clear()          # bare holes: no header is fitted
+    # KiCad's library has no STEP for these three; use the project's own simplified models
+    own = {"J1": ["USB_C_Receptacle_HRO_TYPE-C-31-M-12"], "U3": ["QFN-60-1EP_7x7mm_P0.4mm"],
+           "SW1": ["SW_Cherry_MX_1.00u_PCB", "Keycap_1u_MX"], "SW2": ["SW_Cherry_MX_1.00u_PCB", "Keycap_1u_MX"],
+           "SW3": ["SW_Cherry_MX_1.00u_PCB", "Keycap_1u_MX"]}
+    if ref in own:
+        fp.Models().clear()
+        for mname in own[ref]:
+            m = pcbnew.FP_3DMODEL()
+            m.m_Filename = "${KIPRJMOD}/3dmodels/DS2000.3dshapes/" + mname + ".step"
+            m.m_Show = True
+            fp.Models().push_back(m)
+    if ref == "J1":
+        # its GND pins are too narrow and close together for thermal spokes: join them solidly
+        fp.SetLocalZoneConnection(pcbnew.ZONE_CONNECTION_FULL)
     board.Add(fp)
     x, y, rot, side = P[ref]
     fp.SetPosition(pcbnew.VECTOR2I(mm(x), mm(y)))
