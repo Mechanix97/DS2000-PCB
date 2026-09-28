@@ -1,4 +1,4 @@
-# DS-2000 rev A — design notes
+# DS2000 rev A — design notes
 
 Rev A replaces the 2025 RP2040 draft (last seen at commit `7db9552`). It was drawn from scratch,
 using the draft only as a reference, and fixes every defect found in it (DS2000-PCB#2-#10).
@@ -16,7 +16,7 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 | Keys | 3× Kailh Choc V1 (low profile), **soldered, no plate**, in a row, MBK-style keycaps | Changed from Cherry MX for a lower, flatter device. Choc V1 has two locating posts, so it sits steady without a plate |
 | Size | 72 × 46 mm | 3 keys at the Choc 18 mm pitch plus corner M2 holes; the extra depth is the component strip behind the keys. Kept from the MX layout so the enclosure's numbers stay put |
 | Status | **SK6812MINI-E** reverse-mount under the mute and deafen keys; **disconnect has no LED** | Lights the key through the switch LED window; needs shine-through or translucent keycaps |
-| Pinout | Owned by `DS-2000-Firmware/include/pins.h` | See below |
+| Pinout | Owned by `DS2000-Firmware/include/pins.h` | See below |
 
 ## Blocks
 
@@ -43,7 +43,7 @@ a 4.75 V VBUS after the fuse.
 - BOOTSEL: no button. JP1 is a pair of bare pads (open solder jumper) that pull `QSPI_SS` low through
   R8 1 kΩ when bridged with tweezers or a wire while USB is plugged in (or RESET pressed).
   RESET: likewise pads, JP2, from `RUN` to GND; R9 10 kΩ keeps `RUN` high. Firmware updates do not
-  need either: the running firmware reboots itself into USB boot (DS-2000-Firmware#14, #15; DS-2000#35).
+  need either: the running firmware reboots itself into USB boot (DS2000-Firmware#14, #15; DS2000#35).
 - SWD on three bare pads on the bottom, TP1-TP3 (SWCLK, GND, SWDIO, the Debug Probe order); no connector.
 
 **Keys and LEDs.** SW1-SW3 to GPIO0-2 and GND; the firmware uses the internal pull-ups (not
@@ -61,7 +61,7 @@ D1 (mute) → D2 (deafen); D2's DOUT is unused. Each LED has its own 100 nF. SK6
 | Disconnect key | GP2 | `KEY_DISCONNECT` |
 | LED data (to U5) | GP5 | `LED_DIN_3V3` |
 
-**Firmware impact** (tracked in Mechanix97/DS-2000-Firmware#13): the six PWM LED pins (GP5-GP10) are gone. The firmware needs a
+**Firmware impact** (tracked in Mechanix97/DS2000-Firmware#13): the six PWM LED pins (GP5-GP10) are gone. The firmware needs a
 WS2812/SK6812 driver on GP5 (arduino-pico ships `Adafruit_NeoPixel`-compatible PIO drivers), and
 `pins.h` changes accordingly. The serial protocol does not change: it already carries a colour for
 each of the two status LEDs, which map one-to-one onto D1 and D2.
