@@ -424,7 +424,7 @@ for pts, title, title_at in boxes:
     y2 = max(p[1] for p in pts)
     items.append(["polyline", ["pts"] + [xy(*p) for p in pts + [pts[0]]],
                   ["stroke", ["width", Sym("0.254")], ["type", Sym("dash")], ["color", Sym("72"), Sym("72"), Sym("160"), Sym("1")]],
-                  ["fill", ["type", Sym("none")]], ["uuid", uid()]])
+                  ["uuid", uid()]])      # no fill: it is the default, and KiBot's parser rejects it
     ty = y1 - 1.27 if title_at == "top" else y2 - 1.27
     items.append(["text", title, ["exclude_from_sim", Sym("no")], at(x1 + 1.27, ty),
                   ["effects", ["font", ["size", f(2), f(2)], ["thickness", f(0.3)], ["bold", Sym("yes")], ["color", Sym("72"), Sym("72"), Sym("160"), Sym("1")]],

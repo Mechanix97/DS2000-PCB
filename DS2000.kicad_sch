@@ -5803,9 +5803,6 @@
 			(type dash)
 			(color 72 72 160 1)
 		)
-		(fill
-			(type none)
-		)
 		(uuid "0387c659-cc48-5f9f-957f-a5c60eb98891")
 	)
 	(polyline
@@ -5816,9 +5813,6 @@
 			(width 0.254)
 			(type dash)
 			(color 72 72 160 1)
-		)
-		(fill
-			(type none)
 		)
 		(uuid "2e39fd3a-96a6-5b1c-bf78-895220457f74")
 	)
@@ -5831,9 +5825,6 @@
 			(type dash)
 			(color 72 72 160 1)
 		)
-		(fill
-			(type none)
-		)
 		(uuid "420cd678-7f7e-592c-915b-316479ccc5dd")
 	)
 	(polyline
@@ -5844,9 +5835,6 @@
 			(width 0.254)
 			(type dash)
 			(color 72 72 160 1)
-		)
-		(fill
-			(type none)
 		)
 		(uuid "55e6e71f-4248-52c9-9555-9fd3ba01b180")
 	)
@@ -5859,9 +5847,6 @@
 			(type dash)
 			(color 72 72 160 1)
 		)
-		(fill
-			(type none)
-		)
 		(uuid "5948bdfc-2419-5b9a-a217-d913cb3b586b")
 	)
 	(polyline
@@ -5872,9 +5857,6 @@
 			(width 0.254)
 			(type dash)
 			(color 72 72 160 1)
-		)
-		(fill
-			(type none)
 		)
 		(uuid "9164b05d-896c-55ae-8eb2-56279f9bce10")
 	)
@@ -5887,9 +5869,6 @@
 			(type dash)
 			(color 72 72 160 1)
 		)
-		(fill
-			(type none)
-		)
 		(uuid "9490d2f2-de2a-51ef-861e-f8367c7d8bfa")
 	)
 	(polyline
@@ -5900,9 +5879,6 @@
 			(width 0.254)
 			(type dash)
 			(color 72 72 160 1)
-		)
-		(fill
-			(type none)
 		)
 		(uuid "bf889188-4dfd-5c88-950f-deebf1951755")
 	)
@@ -5915,9 +5891,6 @@
 			(type dash)
 			(color 72 72 160 1)
 		)
-		(fill
-			(type none)
-		)
 		(uuid "c2b91348-0c84-5491-a4ad-c15d59c1208f")
 	)
 	(polyline
@@ -5928,9 +5901,6 @@
 			(width 0.254)
 			(type dash)
 			(color 72 72 160 1)
-		)
-		(fill
-			(type none)
 		)
 		(uuid "d97acdc2-9962-5d69-b49b-8400069b4e3e")
 	)
@@ -5943,9 +5913,6 @@
 			(width 0.254)
 			(type dash)
 			(color 72 72 160 1)
-		)
-		(fill
-			(type none)
 		)
 		(uuid "e58a18fb-58b6-5f46-b412-1036d4d11fce")
 	)
