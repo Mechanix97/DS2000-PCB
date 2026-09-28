@@ -9,16 +9,18 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 |---|---|---|
 | MCU | Discrete **RP2350A** (QFN-60) | Same family as the RP2350-Zero test module the firmware runs on |
 | Look | **Exposed PCB as the top face**, enclosure is a tray underneath | The board is the product's face: logo, art, legends in silkscreen |
-| Top side | Switches, silkscreen and art only | All other components on the bottom side |
-| Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Keeps tracks off the visible face, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
+| Top side | Switches, and **the RP2350A and its circuitry on show** in a strip behind the keys, USB-C at the back edge | The visible chip is part of the look |
+| Bottom side | Only the three reverse-mount LEDs | The tray underneath can be thin. Assembly is two-sided (or the LEDs are hand-soldered) |
+| Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Routes mostly on inner layers so the face stays clean, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
 | Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
-| Keys | 3× Cherry MX, **soldered, no plate** | Plate-mount (3-pin) or PCB-mount (5-pin) switches both fit the footprint; 5-pin is more stable without a plate |
+| Keys | 3× Cherry MX, **soldered, no plate**, in a row | Footprint drilled for 5-pin (PCB-mount); 3-pin switches also fit. 5-pin is steadier without a plate |
+| Size | ~72 × 50 mm | 3 × 19.05 mm keys plus corner M2 holes; the extra depth is the component strip behind the keys |
 | Status | **SK6812MINI-E** reverse-mount under each key | Lights the key through the switch LED window; needs shine-through or translucent keycaps |
 | Pinout | Owned by `DS-2000-Firmware/include/pins.h` | See below |
 
 ## Blocks
 
-**USB-C and power.** HRO TYPE-C-31-M-12 on the bottom side at the board edge. 5.1 kΩ on CC1/CC2
+**USB-C and power.** HRO TYPE-C-31-M-12 on the top side at the back edge, pointing backwards, behind the key row so the plug never meets a keycap. J3 is four bare 2.54 mm holes (VBUS, D-, D+, GND) to solder a USB cable instead of fitting J1; it sits upstream of the fuse and ESD, so a soldered cable is protected the same way. 5.1 kΩ on CC1/CC2
 (UFP). VBUS goes through F1 (500 mA hold PTC) to `+5V`, which feeds the LEDs and the level shifter.
 USBLC6-2SC6 ESD on D+/D- close to the connector. AP2112K-3.3 LDO (250 mV dropout, 600 mA) makes
 `+3V3`; the RP2350 minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
@@ -56,7 +58,7 @@ D1 (mute) → D2 (deafen) → D3 (disconnect). Each LED has its own 100 nF. SK68
 | Disconnect key | GP2 | `KEY_DISCONNECT` |
 | LED data (to U5) | GP5 | `LED_DIN_3V3` |
 
-**Firmware impact:** the six PWM LED pins (GP5-GP10) are gone. The firmware needs a
+**Firmware impact** (tracked in Mechanix97/DS-2000-Firmware#13): the six PWM LED pins (GP5-GP10) are gone. The firmware needs a
 WS2812/SK6812 driver on GP5 (arduino-pico ships `Adafruit_NeoPixel`-compatible PIO drivers), and
 `pins.h` changes accordingly. The serial protocol does not change: it already carries a colour for
 each of the two status LEDs. What the third LED (disconnect key) shows is an open decision.
@@ -78,6 +80,7 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 | D1-D3 | RGB LED | SK6812MINI-E | reverse mount 3.2×2.8 |
 | J1 | USB-C 16P | HRO TYPE-C-31-M-12 | |
 | J2 | SWD | JST SM03B-SRSS-TB | JST-SH 1×3 horizontal |
+| J3 | USB wire holes, not in BOM | — | 1×4 2.54 mm holes |
 | F1 | PTC 500 mA hold | Littelfuse 1206L050YR | 1206 |
 | SW1-SW3 | Keys | Cherry MX compatible | MX 1u PCB |
 | SW4, SW5 | BOOTSEL, RESET | XKB TS-1187A-B-A-B | SMD tactile |
@@ -109,7 +112,9 @@ Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are
 
 ## Regenerating the schematic
 
-`tools/schematic-generator/gen_sch.py` produced the first version of `DS2000.kicad_sch` from the
-netlist written in it, and was checked with ERC (0 violations) and a netlist export. From here on,
+`tools/schematic-generator/gen_sch.py` produced the first version of `DS2000.kicad_sch`: one titled
+box per stage, wired inside each stage, net labels only between stages. `check_netlist.py` compares
+KiCad's netlist export with the connectivity declared in the generator; both it and ERC (0
+violations) passed. From here on,
 **the `.kicad_sch` is the source of truth**: edit it in KiCad. The generator is kept only as a
 record of how the first version was derived.

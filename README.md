@@ -7,10 +7,10 @@ lit from underneath by an RGB LED. The board is also the device's visible top fa
 | | |
 |---|---|
 | MCU | Raspberry Pi RP2350A |
-| Keys | 3× Cherry MX compatible, soldered |
+| Keys | 3× Cherry MX compatible in a row, soldered (5-pin footprint, 3-pin fits) |
 | LEDs | SK6812MINI-E, reverse-mounted under each key |
-| Connector | USB-C (USB 2.0 full speed) |
-| Board | 4 layers, 1.6 mm, components on the bottom side |
+| Connector | USB-C (USB 2.0 full speed), or a cable soldered to J3 |
+| Board | 4 layers, 1.6 mm, ~72 × 50 mm. RP2350A and USB-C on show on top, LEDs reverse-mounted underneath |
 | Tool | **KiCad 10** |
 
 Design decisions, block descriptions, BOM and open items: [`docs/design-rev-a.md`](docs/design-rev-a.md).
