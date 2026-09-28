@@ -1,0 +1,58 @@
+name: KiBot
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: kibot-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kibot:
+    runs-on: ubuntu-latest
+    # KiBot 1.9.1 with KiCad 10.0.5. Bump deliberately, together with the KiCad version in the README.
+    container: ghcr.io/inti-cmnb/kicad10_auto_full:1.9.1-1_k10.0.5_d13.2_b4.2.4LTS
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The diff outputs check out the base commit
+          fetch-depth: 0
+
+      - name: Trust the workspace for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Pick the diff base
+        id: base
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [ -n "$PR_BASE" ]; then
+            base="$PR_BASE"
+          elif [ -n "$PUSH_BEFORE" ] && [ "$PUSH_BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            base="$PUSH_BEFORE"
+          else
+            base="HEAD~1"
+          fi
+          echo "ref=$base" >> "$GITHUB_OUTPUT"
+          echo "Diff base: $base"
+
+      - name: Schematic (ERC, PDF, diff, netlist, BOM)
+        run: kibot -c kibot/sch.kibot.yaml -e DS2000.kicad_sch -d kibot-out -E BASE=${{ steps.base.outputs.ref }}
+
+      - name: Board (DRC, diff)
+        if: hashFiles('DS2000.kicad_pcb') != ''
+        run: kibot -c kibot/pcb.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out -E BASE=${{ steps.base.outputs.ref }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kibot-out
+          path: kibot-out
+          if-no-files-found: warn
