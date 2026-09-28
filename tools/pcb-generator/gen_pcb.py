@@ -237,7 +237,7 @@ def btext(s_, x, y, size=0.9):
     board.Add(t)
 for ref, label in [("TP1", "CK"), ("TP2", "G"), ("TP3", "IO"), ("JP1", "BOOT"), ("JP2", "RST")]:
     x, y, _r, _s = P[ref]
-    btext(label, x, y + (1.8 if ref.startswith("TP") else 2.0), 0.8 if ref.startswith("TP") else 0.9)
+    btext(label, x, y + (1.9 if ref.startswith("TP") else 2.1), 1.0)
 btext("SWD", (P["TP1"][0] + P["TP3"][0]) / 2, P["TP1"][1] - 2.0)
 for fp in board.GetFootprints():
     if fp.GetReference().startswith(("TP", "JP")):

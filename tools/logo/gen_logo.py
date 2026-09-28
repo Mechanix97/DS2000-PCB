@@ -53,7 +53,15 @@ def area(p):
     return sum(p[i][0] * p[(i + 1) % len(p)][1] - p[(i + 1) % len(p)][0] * p[i][1] for i in range(len(p))) / 2
 
 outer = rounded_square(VIEW, RX)
-letter = parse_path(D)
+# The glyph is one contour whose humps overlap; browsers fill it with the nonzero rule. A polygon
+# taken as-is renders the overlaps as holes, so resolve it to its nonzero union first.
+import pyclipper
+SCALE = 1000
+pc = pyclipper.Pyclipper()
+pc.AddPath([(round(x * SCALE), round(y * SCALE)) for x, y in parse_path(D)], pyclipper.PT_SUBJECT, True)
+union = pc.Execute(pyclipper.CT_UNION, pyclipper.PFT_NONZERO, pyclipper.PFT_NONZERO)
+assert len(union) == 1, f"expected one outline for the m, got {len(union)}"
+letter = [(x / SCALE, y / SCALE) for x, y in union[0]]
 if area(outer) * area(letter) > 0:          # the hole must wind the other way
     letter = letter[::-1]
 # keyhole: bridge from the outer ring's lowest point to the letter's lowest point

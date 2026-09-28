@@ -124,14 +124,25 @@ item left is the intended USB-C footprint change described under *Face and brand
 VREG pins, USB series resistors between the USB-C pegs straight above D+/D-, crystal below XIN/XOUT,
 each decoupling capacitor in line with its supply pin and its supply pad facing it.
 
-**Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run): reference designators
-are hidden (they stay in the file for assembly drawings), so the top carries only the key legends,
-the Mechardo Labs mark and "DS2000 / mechardo labs / rev A" in the back-left corner, the one area of
-the face with no top copper. The mark is the mechardo3d.xyz favicon traced from its SVG
-(`tools/logo/gen_logo.py` → `DS2000.pretty/Logo_Mechardo_6mm`): a rounded square of ENIG copper whose
-mask opening leaves the "m" covered, so it reads black on gold. The USB-C's own silkscreen, which
-fell past the board edge, is moved to the fab layer; that is the one intended
-`lib_footprint_mismatch` in the DRC output.
+**Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run on the hand-edited board):
+
+- F.Cu carries a GND pour as well, so all four layers are ground or +3V3 wherever there is no track.
+  Its thermal reliefs may resolve to a single spoke (`DS2000.kicad_dru`): every top GND pad already
+  reaches In1 through its own via.
+- Every reference designator is visible, placed by a script at the first spot beside its part that
+  clears pads, holes, vias, other text and the board edge. The three that find no room (C6, C11, R3,
+  in the tightest spot around the RP2350A) stay hidden; they are still in the assembly drawings.
+- Typography follows mechardo3d.xyz: Sora for "DS2000" and "mechardo labs", IBM Plex Mono for the
+  key legends, references and debug labels. The fonts are embedded in the board file; `fonts/` has
+  them for editing. KiCad reports `text_thickness` on some characters (5, 6, 9, G, a, e): its check
+  measures the thinnest part of each glyph, where curves taper. The main strokes of Plex Mono Bold at
+  0.8 mm are about 0.16 mm, above JLC's 0.153 mm minimum.
+- The Mechardo Labs mark is the mechardo3d.xyz favicon (`tools/logo/gen_logo.py` →
+  `DS2000.pretty/Logo_Mechardo_6mm`): a rounded square of ENIG copper whose mask opening leaves the
+  "m" covered, so it reads black on gold. The SVG's "m" is a single self-overlapping contour, so it is
+  first resolved to its nonzero-fill union; taken as-is the overlaps rendered as holes.
+- The USB-C's own silkscreen, which fell past the board edge, is on the fab layer; that is the one
+  intended `lib_footprint_mismatch` in the DRC output.
 
 **How it was routed** (`tools/pcb-generator/`, see `pipeline.py`):
 
@@ -152,7 +163,7 @@ fell past the board edge, is moved to the fab layer; that is the one intended
 switches also carry a 1u keycap model for previews and for fitting the enclosure.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
-In1 is the GND plane, In2 the +3V3 plane, B.Cu a GND pour with solid pad joins. Minimums set for
+In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
 JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge (0.2 mm only for the LED
 cut-outs, in `DS2000.kicad_dru`). Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
 +1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm tracks / 0.2 mm gap.

@@ -5,3 +5,9 @@
 (rule "SK6812MINI-E cut-out"
   (constraint edge_clearance (min 0.2mm))
   (condition "A.memberOfFootprint('D*') || B.memberOfFootprint('D*')"))
+
+# The top GND pour is cosmetic as much as electrical: every GND pad already reaches In1 through its
+# own via, so one thermal spoke where routing leaves room for only one is enough.
+(rule "top pour spokes"
+  (layer "F.Cu")
+  (constraint min_resolved_spokes 1))
