@@ -7,7 +7,7 @@ and deafen are lit from underneath by an RGB LED; disconnect has none. The board
 | | |
 |---|---|
 | MCU | Raspberry Pi RP2350A |
-| Keys | 3× Cherry MX compatible in a row, soldered (5-pin footprint, 3-pin fits) |
+| Keys | 3× Kailh Choc V1 (low profile) in a row, 18 mm pitch, soldered |
 | LEDs | 2× SK6812MINI-E, reverse-mounted under the mute and deafen keys |
 | Connector | USB-C (USB 2.0 full speed), or a cable soldered to J3 |
 | Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. RP2350A on show on top; USB-C, LEDs and debug pads underneath |

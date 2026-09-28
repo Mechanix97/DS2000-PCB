@@ -7,11 +7,12 @@ function. Routing is left to the designer.
 
 Run with KiCad's python:  python.exe gen_pcb.py <netlist.net> <out.kicad_pcb>
 """
-import math, re, sys
+import math, os, re, sys
 import pcbnew
 
 NET, OUT = sys.argv[1], sys.argv[2]
 FPDIR = "C:/Program Files/KiCad/10.0/share/kicad/footprints"
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 mm = pcbnew.FromMM
 
 # ---------------------------------------------------------------- netlist
@@ -36,13 +37,13 @@ for n in find(first(root, "nets"), "net"):
         pad_net[(first(node, "ref")[1], first(node, "pin")[1])] = name
 
 # ---------------------------------------------------------------- geometry
-# Board: x 64..136, y 67..117 (y grows towards the user). Keys centred on y = 100.
+# Board: x 64..136, y 67..117 (y grows towards the user). Keys centred on y = 101.
 X0, X1, Y0, Y1, RAD = 64.0, 136.0, 71.0, 117.0, 3.0
-KEY_Y, PITCH = 100.0, 19.05
+KEY_Y, PITCH = 101.0, 18.0                   # Kailh Choc spacing; 1 mm forward of rev A's MX row, clear of the crystal
 KEYS = {"SW1": 100 - PITCH, "SW2": 100.0, "SW3": 100 + PITCH}
 LED_UNDER = {"D1": "SW1", "D2": "SW2"}
-MX_CENTER_FROM_ORIGIN = (-2.54, 5.08)     # SW_Cherry_MX_1.00u_PCB: origin is pin 1
-LED_FROM_CENTER = (0.0, 5.08)             # MX LED window, opposite the switch pins
+SWITCH_FP = "DS2000:SW_Kailh_Choc_V1_1.00u"   # origin is the switch centre
+LED_FROM_CENTER = (0.0, 4.7)              # Choc V1 LED window, opposite the switch pins
 HOLE = 4.0                                # hole centre from each edge
 USB_OVERHANG = 1.2                        # receptacle face past the back edge
 
@@ -86,12 +87,12 @@ P = {
     "JP1": (118.8, 81.0, 0, "B"), "JP2": (123.3, 81.0, 0, "B"),
 }
 for ref, cx in KEYS.items():
-    P[ref] = (cx - MX_CENTER_FROM_ORIGIN[0], KEY_Y - MX_CENTER_FROM_ORIGIN[1], 0, "F")
+    P[ref] = (cx, KEY_Y, 0, "F")
 for led, sw in LED_UNDER.items():
     cx = KEYS[sw]
     P[led] = (cx + LED_FROM_CENTER[0], KEY_Y + LED_FROM_CENTER[1], 180, "B")   # DOUT faces the next LED
     # beside the LED's VDD pad (bottom-right once flipped and turned), clear of the light cut-out
-    P["C21" if led == "D1" else "C22"] = (cx + 3.55, KEY_Y + 8.2, 270, "B")
+    P["C21" if led == "D1" else "C22"] = (cx + 3.55, KEY_Y + LED_FROM_CENTER[1] + 3.12, 270, "B")
 
 missing = set(comps) - set(P)
 extra = set(P) - set(comps)
@@ -140,7 +141,8 @@ for name in netnames:
 print("nets ok", flush=True)
 for ref, c in comps.items():
     lib, name = c["fp"].split(":")
-    fp = pcbnew.FootprintLoad(f"{FPDIR}/{lib}.pretty", name)
+    libdir = os.path.join(ROOT, f"{lib}.pretty") if lib == "DS2000" else f"{FPDIR}/{lib}.pretty"
+    fp = pcbnew.FootprintLoad(libdir, name)
     if fp is None:
         sys.exit(f"cannot load {c['fp']}")
     fp.SetFPID(pcbnew.LIB_ID(lib, name))
@@ -161,8 +163,8 @@ for ref, c in comps.items():
         fp.Models().clear()          # bare holes: no header is fitted
     # KiCad's library has no STEP for these three; use the project's own simplified models
     own = {"J1": ["USB_C_Receptacle_HRO_TYPE-C-31-M-12"], "U3": ["QFN-60-1EP_7x7mm_P0.4mm"],
-           "SW1": ["SW_Cherry_MX_1.00u_PCB", "Keycap_1u_MX"], "SW2": ["SW_Cherry_MX_1.00u_PCB", "Keycap_1u_MX"],
-           "SW3": ["SW_Cherry_MX_1.00u_PCB", "Keycap_1u_MX"]}
+           "SW1": ["SW_Kailh_Choc_V1", "Keycap_1u_MBK"], "SW2": ["SW_Kailh_Choc_V1", "Keycap_1u_MBK"],
+           "SW3": ["SW_Kailh_Choc_V1", "Keycap_1u_MBK"]}
     if ref in own:
         fp.Models().clear()
         for mname in own[ref]:

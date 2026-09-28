@@ -300,7 +300,7 @@ BOX(226.06, 114.3, 259.08, 151.13, "Keys")
 rows = [124.46, 132.08, 139.7]
 for i, (gp, net, name, turn) in enumerate([("2", "KEY_MUTE", "MUTE", 213.36), ("3", "KEY_DEAFEN", "DEAFEN", 218.44),
                                            ("4", "KEY_DISCONNECT", "DISCONNECT", 223.52)]):
-    sw = part(f"SW{i + 1}", "Switch:SW_Push", name, "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB",
+    sw = part(f"SW{i + 1}", "Switch:SW_Push", name, "DS2000:SW_Kailh_Choc_V1_1.00u",
               (238.76, rows[i]), {"1": net, "2": "GND"})
     W(U3.p(gp), (turn, U3.p(gp)[1]), (turn, rows[i]), sw.p("1"))
     W(sw.p("2"), (248.92, rows[i]))
@@ -437,7 +437,7 @@ if errors: sys.exit("\n".join(errors))
 sch = ["kicad_sch", ["version", Sym("20260306")], ["generator", "eeschema"], ["generator_version", "10.0"],
        ["uuid", ROOT], ["paper", "A3"],
        ["title_block", ["title", "DS-2000"], ["date", "2026-09-28"], ["rev", "A"], ["company", "Mechardo Labs"],
-        ["comment", Sym("1"), "RP2350A, 3x MX keys, SK6812MINI-E per key, USB-C"],
+        ["comment", Sym("1"), "RP2350A, 3x Choc V1 keys, SK6812MINI-E per key, USB-C"],
         ["comment", Sym("2"), "Pinout follows DS-2000-Firmware/include/pins.h"]],
        ["lib_symbols"] + list(lib_nodes.values())] + items + \
       [["sheet_instances", ["path", "/", ["page", "1"]]], ["embedded_fonts", Sym("no")]]
