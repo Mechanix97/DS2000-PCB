@@ -305,7 +305,7 @@ TEXT((227.33, 149.86), "GP0-GP2, internal pull-ups")
 # ====================================================================================
 # I. Key LEDs
 # ====================================================================================
-BOX(213.36, 167.64, 350.52, 228.6, "Key LEDs: 3.3 V -> 5 V level shift, SK6812MINI-E chain")
+BOX(213.36, 167.64, 322.58, 228.6, "Key LEDs: 3.3 V -> 5 V level shift, SK6812MINI-E")
 U5 = part("U5", "74xGxx:74AHCT1G125", "74AHCT1G125", "Package_TO_SOT_SMD:SOT-353_SC-70-5", (238.76, 190.5),
           {"1": "GND", "2": "LED_DIN_3V3", "3": "GND", "4": "LED_DIN_5V", "5": "+5V"},
           fields={"MPN": "74AHCT1G125GW", "Manufacturer": "Nexperia"},
@@ -316,16 +316,16 @@ W(U5.p("5"), (233.68, 177.8), (228.6, 177.8)); PWR("+5V", (228.6, 177.8))
 R10 = R("R10", "100", "LED_DIN_5V", "LED_DIN", (259.08, 190.5), rot=90, fields={"Note": "Damping, near D1"})
 W(U5.p("4"), R10.p("1"))
 C("C20", "100n", "+5V", "GND", (223.52, 215.9))
-chain = ["LED_DIN", "LED_D1_D2", "LED_D2_D3", None]
+chain = ["LED_DIN", "LED_D1_D2", None]
 leds = []
-for i, name in enumerate(["MUTE", "DEAFEN", "DISCONNECT"]):
+for i, name in enumerate(["MUTE", "DEAFEN"]):
     d = part(f"D{i + 1}", "LED:SK6812MINI-E", "SK6812MINI-E", "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
              (276.86 + i * 27.94, 190.5), {"3": "+5V", "1": "GND", "2": chain[i], "4": chain[i + 1]},
              fields={"MPN": "SK6812MINI-E", "Manufacturer": "Opsco", "Note": f"Under the {name} key"})
     leds.append(d)
     C(f"C{21 + i}", "100n", "+5V", "GND", (276.86 + i * 27.94, 215.9))
-W(R10.p("2"), leds[0].p("2")); W(leds[0].p("4"), leds[1].p("2")); W(leds[1].p("4"), leds[2].p("2"))
-TEXT((214.63, 227.33), "D1 mute, D2 deafen, D3 disconnect (reverse-mounted under each key). One 100n per LED.")
+W(R10.p("2"), leds[0].p("2")); W(leds[0].p("4"), leds[1].p("2"))
+TEXT((214.63, 227.33), "D1 under mute, D2 under deafen (reverse-mounted). Disconnect key has no LED. One 100n per LED.")
 
 # ====================================================================================
 # Decoupling row

@@ -1,14 +1,14 @@
 # DS-2000 PCB
 
-KiCad design for the DS-2000, a three-key Discord control deck: mute, deafen and disconnect, each
-lit from underneath by an RGB LED. The board is also the device's visible top face; it sits in a
+KiCad design for the DS-2000, a three-key Discord control deck: mute, deafen and disconnect. Mute
+and deafen are lit from underneath by an RGB LED; disconnect has none. The board is also the device's visible top face; it sits in a
 3D-printed tray.
 
 | | |
 |---|---|
 | MCU | Raspberry Pi RP2350A |
 | Keys | 3× Cherry MX compatible in a row, soldered (5-pin footprint, 3-pin fits) |
-| LEDs | SK6812MINI-E, reverse-mounted under each key |
+| LEDs | 2× SK6812MINI-E, reverse-mounted under the mute and deafen keys |
 | Connector | USB-C (USB 2.0 full speed), or a cable soldered to J3 |
 | Board | 4 layers, 1.6 mm, ~72 × 50 mm. RP2350A and USB-C on show on top, LEDs reverse-mounted underneath |
 | Tool | **KiCad 10** |
