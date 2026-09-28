@@ -1,0 +1,115 @@
+# DS-2000 rev A — design notes
+
+Rev A replaces the 2025 RP2040 draft (last seen at commit `7db9552`). It was drawn from scratch,
+using the draft only as a reference, and fixes every defect found in it (DS2000-PCB#2-#10).
+
+## Product decisions
+
+| Decision | Choice | Why |
+|---|---|---|
+| MCU | Discrete **RP2350A** (QFN-60) | Same family as the RP2350-Zero test module the firmware runs on |
+| Look | **Exposed PCB as the top face**, enclosure is a tray underneath | The board is the product's face: logo, art, legends in silkscreen |
+| Top side | Switches, silkscreen and art only | All other components on the bottom side |
+| Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Keeps tracks off the visible face, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
+| Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
+| Keys | 3× Cherry MX, **soldered, no plate** | Plate-mount (3-pin) or PCB-mount (5-pin) switches both fit the footprint; 5-pin is more stable without a plate |
+| Status | **SK6812MINI-E** reverse-mount under each key | Lights the key through the switch LED window; needs shine-through or translucent keycaps |
+| Pinout | Owned by `DS-2000-Firmware/include/pins.h` | See below |
+
+## Blocks
+
+**USB-C and power.** HRO TYPE-C-31-M-12 on the bottom side at the board edge. 5.1 kΩ on CC1/CC2
+(UFP). VBUS goes through F1 (500 mA hold PTC) to `+5V`, which feeds the LEDs and the level shifter.
+USBLC6-2SC6 ESD on D+/D- close to the connector. AP2112K-3.3 LDO (250 mV dropout, 600 mA) makes
+`+3V3`; the RP2350 minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
+a 4.75 V VBUS after the fuse.
+
+**RP2350A.** Straight from *Hardware design with RP2350* (Minimal design, R4):
+
+- Core supply from the on-chip switching regulator: `VREG_LX` → L1 3.3 µH → `+1V1` (DVDD ×3 and
+  `VREG_FB`), C3 4.7 µF output, C4 4.7 µF on `VREG_VIN`, `VREG_AVDD` through R5 33 Ω / C5 4.7 µF.
+  **L1 must be the polarity-marked Abracon AOTA-B201610S3R3-101-T, placed in the orientation and
+  layout the guide shows.** Raspberry Pi explicitly says other layouts are at your own risk.
+- `VREG_PGND` to GND, routed as the guide describes (not to an arbitrary via).
+- 100 nF per power pin: C6-C11 IOVDD, C12-C14 DVDD, C15 ADC_AVDD, C16 shared by USB_OTP_VDD and
+  QSPI_IOVDD (as in the reference).
+- Crystal ABM8-272-T3 12 MHz, 15 pF load caps, 1 kΩ on XOUT. Do not substitute.
+- USB 27 Ω series resistors R3/R4 close to the chip; D+/D- as a 90 Ω differential pair over
+  unbroken GND.
+- Flash W25Q32JVSSIQ (4 MB, same size as the RP2350-Zero, so the firmware image is identical).
+  R7 (10 kΩ CS pull-up) is DNP as in the reference.
+- BOOTSEL: SW4 pulls `QSPI_SS` low through R8 1 kΩ. RESET: SW5 on `RUN`, with R9 10 kΩ pull-up.
+- SWD on J2, JST-SH 3-pin in the Raspberry Pi Debug Probe pinout (SWCLK, GND, SWDIO).
+
+**Keys and LEDs.** SW1-SW3 to GPIO0-2 and GND; the firmware uses the internal pull-ups (not
+affected by the RP2350-E9 erratum, which concerns pull-downs). The LED data line leaves GPIO5 at
+3.3 V and is shifted to 5 V by U5 (74AHCT1G125, TTL-level input), then R10 100 Ω, then the chain
+D1 (mute) → D2 (deafen) → D3 (disconnect). Each LED has its own 100 nF. SK6812 data input needs
+0.7 × VDD = 3.5 V at 5 V, which a 3.3 V GPIO does not guarantee; hence the shifter.
+
+## Pinout
+
+| Function | GPIO | Net |
+|---|---|---|
+| Mute key | GP0 | `KEY_MUTE` |
+| Deafen key | GP1 | `KEY_DEAFEN` |
+| Disconnect key | GP2 | `KEY_DISCONNECT` |
+| LED data (to U5) | GP5 | `LED_DIN_3V3` |
+
+**Firmware impact:** the six PWM LED pins (GP5-GP10) are gone. The firmware needs a
+WS2812/SK6812 driver on GP5 (arduino-pico ships `Adafruit_NeoPixel`-compatible PIO drivers), and
+`pins.h` changes accordingly. The serial protocol does not change: it already carries a colour for
+each of the two status LEDs. What the third LED (disconnect key) shows is an open decision.
+
+## Bill of materials
+
+Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are still to be added
+(DS2000-PCB#13).
+
+| Refs | Value | MPN | Footprint |
+|---|---|---|---|
+| U3 | RP2350A | RP2350A | QFN-60 7×7 mm, thermal vias |
+| U4 | Flash 4 MB | W25Q32JVSSIQ | SOIC-8 5.3 mm |
+| Y1 | 12 MHz | ABM8-272-T3 | 3225 4-pin |
+| L1 | 3.3 µH | AOTA-B201610S3R3-101-T | 2016 metric (see open items) |
+| U2 | 3.3 V LDO | AP2112K-3.3TRG1 | SOT-23-5 |
+| U1 | USB ESD | USBLC6-2SC6 | SOT-23-6 |
+| U5 | Buffer, TTL in | 74AHCT1G125GW | SOT-353 |
+| D1-D3 | RGB LED | SK6812MINI-E | reverse mount 3.2×2.8 |
+| J1 | USB-C 16P | HRO TYPE-C-31-M-12 | |
+| J2 | SWD | JST SM03B-SRSS-TB | JST-SH 1×3 horizontal |
+| F1 | PTC 500 mA hold | Littelfuse 1206L050YR | 1206 |
+| SW1-SW3 | Keys | Cherry MX compatible | MX 1u PCB |
+| SW4, SW5 | BOOTSEL, RESET | XKB TS-1187A-B-A-B | SMD tactile |
+| C1, C2 | 10 µF | | 0805 |
+| C3-C5 | 4.7 µF | | 0402 |
+| C6-C16, C19-C23 | 100 nF | | 0402 |
+| C17, C18 | 15 pF C0G | | 0402 |
+| R1, R2 | 5.1 kΩ | | 0402 |
+| R3, R4 | 27 Ω | | 0402 |
+| R5 | 33 Ω | | 0402 |
+| R6, R8 | 1 kΩ | | 0402 |
+| R7 | 10 kΩ, **DNP** | | 0402 |
+| R9 | 10 kΩ | | 0402 |
+| R10 | 100 Ω | | 0402 |
+| H1-H4 | M2 plated hole to GND | | |
+
+## Open items
+
+- [ ] **Board outline, key layout and hole positions** — decided together with the enclosure
+      (DS2000-Enclosure#1, #5); blocks layout (#11)
+- [ ] L1 footprint: `L_Murata_DFE201610P` is a stand-in with the same 2.0×1.6 mm body. Check its
+      pads against the Abracon datasheet or draw a dedicated footprint
+- [ ] SK6812MINI-E placement: centred on each switch's LED window (north of the switch centre),
+      with the matching cut-out; verify against the switch model chosen
+- [ ] Keycaps must be shine-through or translucent for the key LEDs to be visible
+- [ ] What the disconnect key's LED shows (firmware + app decision)
+- [ ] LCSC numbers for every line, preferring JLCPCB basic parts (#13)
+- [ ] Soldermask colour, finish and silkscreen art (the visible face)
+
+## Regenerating the schematic
+
+`tools/schematic-generator/gen_sch.py` produced the first version of `DS2000.kicad_sch` from the
+netlist written in it, and was checked with ERC (0 violations) and a netlist export. From here on,
+**the `.kicad_sch` is the source of truth**: edit it in KiCad. The generator is kept only as a
+record of how the first version was derived.
