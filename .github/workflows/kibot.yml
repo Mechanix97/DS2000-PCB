@@ -50,6 +50,10 @@ jobs:
         if: hashFiles('DS2000.kicad_pcb') != ''
         run: kibot -c kibot/pcb.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out -E BASE=${{ steps.base.outputs.ref }}
 
+      - name: Fabrication (JLCPCB gerbers, drill, BOM, CPL) and STEP
+        if: hashFiles('DS2000.kicad_pcb') != ''
+        run: kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out _JLCPCB _JLCPCB_compress step
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

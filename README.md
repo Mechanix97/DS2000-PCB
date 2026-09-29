@@ -99,6 +99,18 @@ kicad-cli sch erc --severity-all DS2000.kicad_sch
 kicad-cli sch export netlist --format kicadsexpr -o /tmp/ds2000.net DS2000.kicad_sch
 ```
 
+CI (KiBot) runs ERC and DRC with schematic parity on every change and fails on any new error.
+
+## Manufacturing
+
+Every change also builds the files to order the board from JLCPCB, with assembly (artifact
+`kibot-out` of the KiBot workflow):
+
+- `JLCPCB/`: gerbers and drill (zipped), BOM with LCSC numbers, placement (CPL) with JLC's rotation fixes
+- `step/`: the populated board as STEP, origin at its centre, for the [enclosure](https://github.com/Mechanix97/DS2000-Enclosure)
+
+Board options, parts and what to check before ordering: [`docs/design-rev-a.md`](docs/design-rev-a.md#bill-of-materials).
+
 ## Related repositories
 
 - [DS2000](https://github.com/Mechanix97/DS2000): desktop application

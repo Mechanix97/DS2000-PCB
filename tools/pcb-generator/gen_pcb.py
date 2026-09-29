@@ -113,6 +113,7 @@ print("board ok", flush=True)
 board.SetCopperLayerCount(4)
 ds = board.GetDesignSettings()
 ds.SetBoardThickness(mm(1.6))
+ds.SetGridOrigin(pcbnew.VECTOR2I(mm((X0 + X1) / 2), mm((Y0 + Y1) / 2)))   # board centre: STEP origin for the enclosure
 # JLCPCB 4-layer capabilities, with some margin
 ds.m_MinClearance = mm(0.1)
 ds.m_TrackMinWidth = mm(0.1)

@@ -1,0 +1,27 @@
+# Fabrication and assembly files for JLCPCB, plus the board's STEP model.
+#
+# KiBot's JLCPCB template makes the gerbers, the drill files, the BOM and the placement (CPL) file in
+# the formats JLC's order page expects, with its footprint rotation corrections applied, and zips
+# them. Only parts with an LCSC field are assembled: the Kailh Choc switches are soldered by hand,
+# and the test pads, solder jumpers, holes and J3's wire holes are bare copper.
+#
+# The template's outputs do not run by default; CI asks for them by name:
+#   kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch _JLCPCB _JLCPCB_compress step
+kibot:
+  version: 1
+
+global:
+  field_lcsc_part: LCSC
+
+import:
+  - file: JLCPCB
+
+outputs:
+  - name: step
+    comment: 3D model of the populated board, for the enclosure (origin at the board centre)
+    type: step
+    dir: step
+    options:
+      # the board's grid origin is its centre (100, 94 mm), as in DS2000-Enclosure/pcb
+      origin: grid
+      subst_models: true
