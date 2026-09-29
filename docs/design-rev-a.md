@@ -189,9 +189,12 @@ round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
 3. `fanout.py` connects every GND and +3V3 pad to its plane: RP2350A supply pins go by a short
    track straight to their decoupling capacitor, pins 53/54 share one via between the USB and QSPI
    escapes, and every other pad gets its own via, each checked for clearance before it is placed.
-4. Freerouting routes the rest on F.Cu and B.Cu (In1 and In2 are planes). Incremental passes are
-   kept only when KiCad's own DRC counts fewer unconnected items, and `cleanup_vias.py` drops any
-   via left dangling.
+4. Freerouting routes the rest on F.Cu and B.Cu (In1 and In2 are planes). The top is the product's
+   face, so `top_keepout.py` first puts a track keepout on F.Cu over everything but the component
+   strip around the RP2350A (x 80.5-119, y 71-93.6): the keys, the logos and the sides stay free of
+   tracks and every longer run (+5V to the LEDs, the debug lines, the keys) goes underneath. The
+   keepout comes out again after routing. Incremental passes are kept only when KiCad's own DRC
+   counts fewer unconnected items, and `cleanup_vias.py` drops any via left dangling.
 5. `branding.py` finishes the face (see above) and `stitch.py` ties the F.Cu and B.Cu GND pours to
    In1 with a 3.5 mm grid of vias wherever they clear everything else (113 on rev A).
 
@@ -228,7 +231,6 @@ lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (
 - Core regulator: copied from the reference (see above). At assembly, check L1's dot sits on the
   left, towards +1V1 (the silkscreen dot marks it).
 - USB: confirm the 90 Ω pair geometry with JLC's impedance calculator for this stackup.
-- Visible face: the autorouter used F.Cu freely. Moving long runs to B.Cu makes the top cleaner.
 - Under the keycaps (outside each switch's 13.8 mm lower housing) parts are hidden but must stay under
   ~2 mm high: the switch flange is 2.2 mm up and a pressed Choc keycap comes down close to it.
 - Confirm the LED side against your switches: the footprint assumes the LED window is on the side
