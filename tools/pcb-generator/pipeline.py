@@ -65,6 +65,7 @@ def unconnected():
     return len(re.findall(r"^\[unconnected_items\]", open(os.path.join(WORK, "drc.rpt"), encoding="utf8").read(), re.M))
 
 if route:
+    print(run([KPY, "-u", script("top_keepout.py"), "DS2000.kicad_pcb", "add"]).strip())
     print(freeroute()[:150])
     import_ses()
     best = unconnected()
@@ -81,6 +82,8 @@ if route:
         else:
             shutil.copy(os.path.join(WORK, "best.kicad_pcb"), os.path.join(WORK, "DS2000.kicad_pcb"))
 
+if route:
+    print(run([KPY, "-u", script("top_keepout.py"), "DS2000.kicad_pcb", "remove"]).strip())
 print(run([KPY, "-u", script("vreg_pours.py"), "DS2000.kicad_pcb"]).strip())
 print(run([KPY, "-u", script("branding.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
 print(run([KPY, "-u", script("stitch.py"), "DS2000.kicad_pcb"]).strip().splitlines()[-1])
