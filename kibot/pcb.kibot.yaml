@@ -7,9 +7,9 @@ preflight:
   drc:
     format: HTML,RPT
     schematic_parity: true
-    # The layout still has known violations (DS2000-PCB#14). Report them without failing
-    # the job; switch this to false once rev A is DRC-clean.
-    dont_stop: true
+    # Rev A is DRC-clean: any new error fails the job. The known warnings (TrueType text
+    # thickness, J1/Y1 footprints edited on the board) are reported but do not fail it.
+    dont_stop: false
 
 outputs:
   - name: pcb_diff

@@ -70,37 +70,46 @@ each of the two status LEDs, which map one-to-one onto D1 and D2.
 
 ## Bill of materials
 
-Generated from the schematic (`kicad-cli sch export bom`). LCSC part numbers are still to be added
-(DS2000-PCB#13).
+The MPN, manufacturer and LCSC number of every assembled part live in the schematic's fields, written
+by `tools/bom/set_fields.py` (the parts table is there, with where each number was checked). The same
+script copies them onto the board's footprints so the schematic parity check stays clean. Change a
+part there and re-run it.
 
-| Refs | Value | MPN | Footprint |
-|---|---|---|---|
-| U3 | RP2350A | RP2350A | QFN-60 7×7 mm, thermal vias |
-| U4 | Flash 4 MB | W25Q32JVSSIQ | SOIC-8 5.3 mm |
-| Y1 | 12 MHz | ABM8-272-T3 | 3225 4-pin |
-| L1 | 3.3 µH | AOTA-B201610S3R3-101-T (LCSC C42411119) | 2016 metric, polarity dot on pad 1 = +1V1; `DS2000:L_Abracon_AOTA-B201610S3R3-101-T` |
-| U2 | 3.3 V LDO | AP2112K-3.3TRG1 | SOT-23-5 |
-| U1 | USB ESD | USBLC6-2SC6 | SOT-23-6 |
-| U5 | Buffer, TTL in | 74AHCT1G125GW | SOT-353 |
-| D1, D2 | RGB LED | SK6812MINI-E | reverse mount 3.2×2.8 |
-| J1 | USB-C 16P | HRO TYPE-C-31-M-12 | |
-| TP1-TP3 | SWD pads, not in BOM | — | 1.5 mm SMD pads, bottom |
-| J3 | USB wire holes, not in BOM | — | 1×4 2.54 mm holes |
-| F1 | PTC 500 mA hold | Littelfuse 1206L050YR | 1206 |
-| SW1-SW3 | Keys | Kailh Choc V1 (CPG1350) | `DS2000:SW_Kailh_Choc_V1_1.00u` |
-| JP1, JP2 | BOOTSEL and RESET pads, not in BOM | — | open solder jumper, 1.3 mm pitch |
-| C1, C2 | 10 µF | | 0805 |
-| C3-C5 | 4.7 µF | | 0402 |
-| C6-C16, C19-C22 | 100 nF | | 0402 |
-| C17, C18 | 15 pF C0G | | 0402 |
-| R1, R2 | 5.1 kΩ | | 0402 |
-| R3, R4 | 27 Ω | | 0402 |
-| R5 | 33 Ω | | 0402 |
-| R6, R8 | 1 kΩ | | 0402 |
-| R7 | 10 kΩ, **DNP** | | 0402 |
-| R9 | 10 kΩ | | 0402 |
-| R10 | 100 Ω | | 0402 |
-| H1-H4 | M2 plated hole to GND | | |
+| Refs | Value | MPN | LCSC | Footprint |
+|---|---|---|---|---|
+| U3 | RP2350A | RP2350A | C42411118 | QFN-60 7×7 mm, thermal vias |
+| U4 | Flash 4 MB | W25Q32JVSSIQ | C179173 | SOIC-8 5.3 mm |
+| Y1 | 12 MHz | ABM8-272-T3 | C20625731 | 3225 4-pin |
+| L1 | 3.3 µH | AOTA-B201610S3R3-101-T | C42411119 | 2016, polarity dot on pad 1 = +1V1 |
+| U2 | 3.3 V LDO | AP2112K-3.3TRG1 | C51118 | SOT-23-5 |
+| U1 | USB ESD | USBLC6-2SC6 | C7519 | SOT-23-6 |
+| U5 | Buffer, TTL in | 74AHCT1G125GW,125 | C12495 | SOT-353 |
+| D1, D2 | RGB LED | SK6812MINI-E | C5149201 | reverse mount 3.2×2.8, **bottom** |
+| J1 | USB-C 16P | HRO TYPE-C-31-M-12 | C165948 | **bottom** |
+| F1 | PTC 500 mA hold, 15 V | Littelfuse 1206L050/15YR | C151162 | 1206 (the 6 V 1206L050YR leaves little margin on VBUS) |
+| C1, C2 | 10 µF 25 V X5R | CL21A106KAYNNNE | C15850 | 0805 |
+| C3-C5 | 4.7 µF X5R | GRM155R60J475ME47D | C82453 | 0402 (C3/C4 wide land), as the RP2350 reference |
+| C6-C16, C19-C22 | 100 nF 16 V X7R | CL05B104KO5NNNC | C1525 | 0402 (C21/C22 bottom) |
+| C17, C18 | 15 pF C0G | 0402CG150J500NT | C1548 | 0402 |
+| R1, R2 | 5.1 kΩ 1 % | 0402WGF5101TCE | C25905 | 0402 |
+| R3, R4 | 27 Ω 1 % | RC0402FR-0727RL | C138021 | 0402, as the reference |
+| R5 | 33 Ω 1 % | RC0402FR-0733RL | C138002 | 0402, as the reference |
+| R6, R8 | 1 kΩ 1 % | 0402WGF1001TCE | C11702 | 0402 |
+| R7 | 10 kΩ, **DNP** | 0402WGF1002TCE | C25744 | 0402 |
+| R9 | 10 kΩ 1 % | 0402WGF1002TCE | C25744 | 0402 |
+| R10 | 100 Ω 1 % | 0402WGF1000TCE | C25076 | 0402 |
+| SW1-SW3 | Keys | Kailh Choc V1 (CPG1350) | — | soldered by hand |
+| TP1-TP3, JP1, JP2, J3, H1-H4 | pads, jumpers, wire holes, M2 holes | — | — | bare copper |
+
+**Ordering from JLCPCB.** CI builds the files on every change (KiBot's JLCPCB template, artifact
+`kibot-out`, folder `JLCPCB/`): gerbers and drill zipped, the BOM and the placement (CPL) file with
+JLC's rotation corrections. Upload the zip as the PCB, then the BOM and CPL for assembly:
+
+- 4 layers, 1.6 mm, **black** mask, white silk, **ENIG**, JLC04161H-7628 stackup
+- assembly on **both sides**: D1, D2, C21, C22 and J1 are on the bottom
+- JLC's BOM page shows which lines are basic or extended parts (extended ones add a setup fee each)
+- check the placement preview, above all the rotation of U3, U5, D1/D2 and J1, before confirming
+- the switches are fitted by hand after assembly
 
 ## Layout
 
@@ -240,7 +249,6 @@ lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (
 
 - [ ] Review the routed board (see Layout, *Review before ordering*)
 - [ ] Mute and deafen keycaps must be shine-through or translucent for their LEDs to be visible
-- [ ] LCSC numbers for every line, preferring JLCPCB basic parts (#13)
 
 ## Regenerating the schematic
 
