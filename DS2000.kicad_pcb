@@ -7674,7 +7674,7 @@
 				)
 			)
 		)
-		(property "Value" "W25Q32JVSS"
+		(property "Value" "W25Q16JVSS"
 			(at 0 3.6 0)
 			(layer "F.Fab")
 			(uuid "a426799f-df70-4fa3-9abe-bb27f0e10c3a")
