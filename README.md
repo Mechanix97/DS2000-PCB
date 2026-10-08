@@ -10,7 +10,7 @@
 
 <p align="center">
   <b>Three keys for Discord: mute, deafen, disconnect.</b><br>
-  RP2350A · Kailh Choc V1 · reverse-mounted RGB · USB-C · the board <i>is</i> the top face
+  RP2350A · Kailh Choc V1 · RGB inside the switch · soldered USB cable · the board <i>is</i> the top face
 </p>
 
 KiCad design for the DS2000, a three-key Discord control deck. Mute and deafen are lit from
@@ -22,9 +22,9 @@ RP2350A, the logos and the legends are meant to be seen. It sits in a 3D-printed
 |---|---|
 | MCU | Raspberry Pi RP2350A |
 | Keys | 3× Kailh Choc V1 (low profile) in a row, 18 mm pitch, soldered, MBK-style caps |
-| LEDs | 2× SK6812MINI-E, reverse-mounted under the mute and deafen keys |
-| Connector | USB-C (USB 2.0 full speed), or a cable soldered to J3 |
-| Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. RP2350A on show on top; USB-C, LEDs and debug pads underneath |
+| LEDs | 2× WS2812B-2020, on top inside the LED window of the mute and deafen switches |
+| Connector | A USB cable (USB 2.0 full speed) soldered to J3; no receptacle |
+| Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. Every part on top (one-sided assembly), RP2350A on show; only debug pads underneath |
 | Tool | **KiCad 10** |
 
 Design decisions, block descriptions, BOM and open items: [`docs/design-rev-a.md`](docs/design-rev-a.md).
@@ -53,16 +53,16 @@ board screws into it through its four corner holes.
 | Top face, without switches | Underneath |
 |---|---|
 | ![Top, without switches](docs/img/rev-a-layout.png) | ![Bottom](docs/img/rev-a-bottom.png) |
-| The visible face: RP2350A, logos and legends | USB-C at the back edge, the two LEDs, debug pads (SWD, BOOT, RST) |
+| The visible face: RP2350A, logos and legends | No parts: debug pads (SWD, BOOT, RST) and J3's cable holes |
 
 ### Close up
 
 | | |
 |---|---|
-| ![RP2350A and its support parts](docs/img/closeup-rp2350.png) | ![LED under the Choc switch](docs/img/closeup-led.png) |
-| **RP2350A on show**, with the flash, the 12 MHz crystal and the core regulator around it | **Light through the switch**: the SK6812MINI-E is mounted from below and shines through the Choc's LED window |
-| ![LEDs from below](docs/img/closeup-bottom.png) | ![Low-profile keys](docs/img/keys-low.png) |
-| **Underneath**: both LEDs in a chain, each with its own 100 nF, and the debug pads | **Low profile**: Choc V1 with flat caps, keycap tops ~8.7 mm above the board |
+| ![RP2350A and its support parts](docs/img/closeup-rp2350.png) | ![LED in the Choc LED window](docs/img/closeup-led.png) |
+| **RP2350A on show**, with the flash, the 12 MHz crystal and the core regulator around it | **Light inside the switch**: the WS2812B-2020 sits in the Choc's LED window (switch hidden here); its 100 nF hides under the keycap |
+| ![Debug pads underneath](docs/img/closeup-bottom.png) | ![Low-profile keys](docs/img/keys-low.png) |
+| **Underneath**: only the debug pads, so JLC assembles one side | **Low profile**: Choc V1 with flat caps, keycap tops ~8.7 mm above the board |
 
 <details>
 <summary>More views</summary>
@@ -78,7 +78,7 @@ board screws into it through its four corner holes.
 
 [![Schematic](docs/img/schematic.png)](docs/img/schematic.png)
 
-One sheet, one box per block: USB-C input, 3.3 V regulator, RP2350A supplies, QSPI flash, crystal
+One sheet, one box per block: USB input (soldered cable) and ESD, 3.3 V regulator, RP2350A supplies, QSPI flash, crystal
 and SWD, keys, and the LED chain with its 5 V level shifter.
 
 ## Pinout
@@ -90,7 +90,7 @@ The pinout is defined by the firmware (`DS2000-Firmware/include/pins.h`). Change
 | Mute key | GP0 |
 | Deafen key | GP1 |
 | Disconnect key | GP2 |
-| LED data (SK6812 chain, via 5 V level shifter) | GP5 |
+| LED data (WS2812B chain, via 5 V level shifter) | GP5 |
 
 ## Checks
 
