@@ -1,10 +1,11 @@
 (version 1)
 
-# The SK6812MINI-E reverse-mount footprint puts its pads 0.25 mm from its own light cut-out.
-# Everything else keeps the 0.3 mm board setting.
-(rule "SK6812MINI-E cut-out"
-  (constraint edge_clearance (min 0.2mm))
-  (condition "A.memberOfFootprint('D*') || B.memberOfFootprint('D*')"))
+# The WS2812B-2020 under each lit key sits inside the Choc V1's LED window, so its courtyard is inside
+# the switch's on purpose.
+(rule "LED in the Choc window"
+  (constraint courtyard_clearance)
+  (condition "A.Reference == 'D*' && B.Reference == 'SW*'")
+  (severity ignore))
 
 # The top GND pour is cosmetic as much as electrical: every GND pad already reaches In1 through its
 # own via, so one thermal spoke where routing leaves room for only one is enough.
