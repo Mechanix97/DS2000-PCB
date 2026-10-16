@@ -42,10 +42,10 @@ minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
   *Core regulator* under Layout.
 - 100 nF per power pin: C6-C11 IOVDD, C12-C14 DVDD, C15 ADC_AVDD, C16 shared by USB_OTP_VDD and
   QSPI_IOVDD (as in the reference).
-- Crystal YXC X322512MSB4SI 12 MHz (20 pF load, 80 Ω max ESR, a JLC basic part) with 33 pF load caps
-  and 1 kΩ on XOUT. The reference uses the Abracon ABM8-272-T3 (10 pF, 50 Ω) with 15 pF; this one
-  was swapped for cost and **must be validated on the first boards**: start-up from cold, and USB
-  enumeration. If it misbehaves, try 0 Ω for R6 first, then go back to the ABM8 (C20625731) and 15 pF.
+- Crystal Abracon ABM8-272-T3 12 MHz (10 pF load, 50 Ω max ESR) with 15 pF load caps and 1 kΩ on
+  XOUT, exactly as the reference. A cheaper basic crystal (YXC X322512MSB4SI with 33 pF) was tried in
+  the cost-down, but JLC's design review flagged it against Raspberry Pi's guide; a crystal that does
+  not start makes the whole batch useless, so the recommended part stays (one extended-part fee).
 - USB 27 Ω series resistors R3/R4 close to the chip; D+/D- as a 90 Ω differential pair over
   unbroken GND.
 - Flash W25Q16JVSSIQ (2 MB, same 208 mil SOIC-8 as the W25Q32). The firmware is far smaller and uses
@@ -89,7 +89,7 @@ part there and re-run it.
 |---|---|---|---|---|
 | U3 | RP2350A | RP2350A | C42411118 | QFN-60 7×7 mm, thermal vias |
 | U4 | Flash 2 MB | W25Q16JVSSIQ | C82317 | SOIC-8 5.3 mm |
-| Y1 | 12 MHz, 20 pF | YXC X322512MSB4SI | C9002 | 3225 4-pin, **basic**; validate on the first boards |
+| Y1 | 12 MHz, 10 pF | ABM8-272-T3 | C20625731 | 3225 4-pin, as the reference |
 | L1 | 3.3 µH | AOTA-B201610S3R3-101-T | C42411119 | 2016, polarity dot on pad 1 = +1V1 |
 | U2 | 3.3 V LDO, 200 mA | XC6206P332MR-G | C5446 | SOT-23-3, **basic** |
 | U1 | USB ESD | USBLC6-2SC6 (UMW) | C2687116 | SOT-23-6 |
@@ -98,7 +98,7 @@ part there and re-run it.
 | C1, C2 | 10 µF 25 V X5R | CL21A106KAYNNNE | C15850 | 0805 |
 | C3-C5 | 4.7 µF 10 V X5R | CL05A475MP5NRNC | C23733 | 0402 (C3/C4 wide land), **basic** |
 | C6-C16, C19-C22 | 100 nF 16 V X7R | CL05B104KO5NNNC | C1525 | 0402 (C21/C22 between the keys) |
-| C17, C18 | 33 pF C0G | 0402CG330J500NT | C1562 | 0402 |
+| C17, C18 | 15 pF C0G | 0402CG150J500NT | C1548 | 0402 |
 | R1, R2 | 5.1 kΩ 1 %, USB-C CC pull-downs | 0402WGF5101TCE | C25905 | 0402, **basic** |
 | R3, R4 | 27 Ω 1 % | RC0402FR-0727RL | C138021 | 0402, as the reference |
 | R5 | 33 Ω | 0402WGF330JTCE | C25105 | 0402, **basic** |
@@ -247,7 +247,6 @@ lines run ~25 mm from J3 to U1, which is harmless at full speed (12 Mbit/s).
 - **LED window height:** the WS2812B-2020 is 0.84 mm tall and sits inside the Choc V1 LED window.
   Measure the window's height above the board on a real switch (it needs at least 0.9 mm) before
   ordering.
-- Crystal: Y1 is not the reference part (see *RP2350A*); validate start-up and USB on the first boards.
 - Core regulator: copied from the reference (see above). At assembly, check L1's dot sits on the
   left, towards +1V1 (the silkscreen dot marks it).
 - USB: confirm the 90 Ω pair geometry with JLC's impedance calculator for this stackup.

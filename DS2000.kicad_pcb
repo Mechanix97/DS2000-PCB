@@ -2122,7 +2122,7 @@
 				)
 			)
 		)
-		(property "MPN" "X322512MSB4SI"
+		(property "MPN" "ABM8-272-T3"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -2134,7 +2134,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YXC"
+		(property "Manufacturer" "Abracon"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -2146,7 +2146,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C9002"
+		(property "LCSC" "C20625731"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -6949,7 +6949,7 @@
 				)
 			)
 		)
-		(property "Value" "33p"
+		(property "Value" "15p"
 			(at 0 1.16 90)
 			(layer "F.Fab")
 			(uuid "7048f244-e6a9-43e9-b606-0a3e524952f2")
@@ -6982,7 +6982,7 @@
 				)
 			)
 		)
-		(property "MPN" "0402CG330J500NT"
+		(property "MPN" "0402CG150J500NT"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -7006,7 +7006,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1562"
+		(property "LCSC" "C1548"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -8723,7 +8723,7 @@
 				)
 			)
 		)
-		(property "Value" "33p"
+		(property "Value" "15p"
 			(at 0 1.16 180)
 			(layer "F.Fab")
 			(uuid "68211c7c-7b45-492f-bd49-a26b41dbaf49")
@@ -8756,7 +8756,7 @@
 				)
 			)
 		)
-		(property "MPN" "0402CG330J500NT"
+		(property "MPN" "0402CG150J500NT"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -8780,7 +8780,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1562"
+		(property "LCSC" "C1548"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)

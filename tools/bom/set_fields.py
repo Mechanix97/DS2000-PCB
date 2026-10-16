@@ -3,7 +3,8 @@
 PARTS below is the parts list for JLCPCB assembly. Every LCSC number was checked against its LCSC /
 JLCPCB product page on 2026-09-28, or comes from Raspberry Pi's RP2350A minimal design BOM (R4-S1),
 whose parts rev A copies around the core regulator. On 2026-10-08 the parts that have a JLC basic
-equivalent (no extended-part fee) or a cheaper drop-in were swapped (DS2000-PCB cost-down PR). Parts without an LCSC number (switches, test and
+equivalent (no extended-part fee) or a cheaper drop-in were swapped (DS2000-PCB cost-down PR), except
+the crystal: JLC's review flagged the swap, so Y1 stays the Abracon part Raspberry Pi recommends. Parts without an LCSC number (switches, test and
 jumper pads, holes, J3's wire holes) are fitted by hand or are bare copper, and stay out of the JLC
 BOM and placement files. So do DNP parts (R7, and J1, the USB-C receptacle soldered by hand so that
 JLC only assembles the top side), which keep their LCSC number for ordering them separately.
@@ -23,7 +24,7 @@ PARTS = {
     **{r: ("CL21A106KAYNNNE", "Samsung Electro-Mechanics", "C15850") for r in ("C1", "C2")},        # 10u 25V X5R 0805
     **{r: ("CL05A475MP5NRNC", "Samsung Electro-Mechanics", "C23733") for r in ("C3", "C4", "C5")},  # 4.7u 10V X5R, basic
     **{f"C{i}": C100N for i in list(range(6, 17)) + [19, 20, 21, 22]},                               # 100n 16V X7R 0402
-    **{r: ("0402CG330J500NT", "FH", "C1562") for r in ("C17", "C18")},                             # 33p 50V C0G 0402, for Y1's 20 pF load
+    **{r: ("0402CG150J500NT", "FH", "C1548") for r in ("C17", "C18")},                             # 15p 50V C0G 0402, as the reference
     # resistors
     **{r: ("0402WGF5101TCE", "UNI-ROYAL", "C25905") for r in ("R1", "R2")},                        # 5.1k 1%, USB-C CC pull-downs
     **{r: ("RC0402FR-0727RL", "Yageo", "C138021") for r in ("R3", "R4")},                          # 27R 1%, as the reference
@@ -38,7 +39,7 @@ PARTS = {
     "U3": ("RP2350A", "Raspberry Pi", "C42411118"),
     "U4": ("W25Q16JVSSIQ", "Winbond", "C82317"),                                                  # 2 MB, same 208 mil footprint
     "U5": ("74AHCT1G125GW,125", "Nexperia", "C12495"),
-    "Y1": ("X322512MSB4SI", "YXC", "C9002"),                                                      # 12 MHz, 20 pF, 80 ohm ESR, basic
+    "Y1": ("ABM8-272-T3", "Abracon", "C20625731"),                                                # 12 MHz, 10 pF, 50 ohm ESR: the RP2350 guide's crystal
     "L1": ("AOTA-B201610S3R3-101-T", "Abracon", "C42411119"),
     **{r: ("WS2812B-2020-V6", "Worldsemi", "C52917434") for r in ("D1", "D2")},                 # top side, in the Choc LED window
 }

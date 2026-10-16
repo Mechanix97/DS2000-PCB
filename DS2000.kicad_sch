@@ -10010,7 +10010,7 @@
 				)
 			)
 		)
-		(property "MPN" "X322512MSB4SI"
+		(property "MPN" "ABM8-272-T3"
 			(at 127 214.63 0)
 			(hide yes)
 			(show_name no)
@@ -10021,7 +10021,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "YXC"
+		(property "Manufacturer" "Abracon"
 			(at 127 214.63 0)
 			(hide yes)
 			(show_name no)
@@ -10032,7 +10032,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C9002"
+		(property "LCSC" "C20625731"
 			(at 127 214.63 0)
 			(hide yes)
 			(show_name no)
@@ -11120,7 +11120,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "33p"
+		(property "Value" "15p"
 			(at 133.6 224.79 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11165,7 +11165,7 @@
 				)
 			)
 		)
-		(property "MPN" "0402CG330J500NT"
+		(property "MPN" "0402CG150J500NT"
 			(at 133.6 222.88 0)
 			(hide yes)
 			(show_name no)
@@ -11187,7 +11187,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1562"
+		(property "LCSC" "C1548"
 			(at 133.6 222.88 0)
 			(hide yes)
 			(show_name no)
@@ -11235,7 +11235,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "33p"
+		(property "Value" "15p"
 			(at 115.82 214.63 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11280,7 +11280,7 @@
 				)
 			)
 		)
-		(property "MPN" "0402CG330J500NT"
+		(property "MPN" "0402CG150J500NT"
 			(at 115.82 212.72 0)
 			(hide yes)
 			(show_name no)
@@ -11302,7 +11302,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1562"
+		(property "LCSC" "C1548"
 			(at 115.82 212.72 0)
 			(hide yes)
 			(show_name no)
