@@ -5,7 +5,8 @@ JLCPCB product page on 2026-09-28, or comes from Raspberry Pi's RP2350A minimal 
 whose parts rev A copies around the core regulator. On 2026-10-08 the parts that have a JLC basic
 equivalent (no extended-part fee) or a cheaper drop-in were swapped (DS2000-PCB cost-down PR). Parts without an LCSC number (switches, test and
 jumper pads, holes, J3's wire holes) are fitted by hand or are bare copper, and stay out of the JLC
-BOM and placement files.
+BOM and placement files. So do DNP parts (R7, and J1, the USB-C receptacle soldered by hand so that
+JLC only assembles the top side), which keep their LCSC number for ordering them separately.
 
 Basic or extended: JLC's BOM upload shows it per line; the generic passives here are the common
 Samsung / UNI-ROYAL / FH parts of its library.
@@ -24,12 +25,14 @@ PARTS = {
     **{f"C{i}": C100N for i in list(range(6, 17)) + [19, 20, 21, 22]},                               # 100n 16V X7R 0402
     **{r: ("0402CG330J500NT", "FH", "C1562") for r in ("C17", "C18")},                             # 33p 50V C0G 0402, for Y1's 20 pF load
     # resistors
+    **{r: ("0402WGF5101TCE", "UNI-ROYAL", "C25905") for r in ("R1", "R2")},                        # 5.1k 1%, USB-C CC pull-downs
     **{r: ("RC0402FR-0727RL", "Yageo", "C138021") for r in ("R3", "R4")},                          # 27R 1%, as the reference
     "R5": ("0402WGF330JTCE", "UNI-ROYAL", "C25105"),                                              # 33R, basic (AVDD filter, tolerance irrelevant)
     **{r: ("0402WGF1001TCE", "UNI-ROYAL", "C11702") for r in ("R6", "R8")},                        # 1k 1%
     **{r: ("0402WGF1002TCE", "UNI-ROYAL", "C25744") for r in ("R7", "R9")},                        # 10k 1% (R7 is DNP)
     "R10": ("0402WGF1000TCE", "UNI-ROYAL", "C25076"),                                             # 100R 1%
     # the rest
+    "J1": ("TYPE-C-31-M-12", "Korean Hroparts Elec", "C165948"),                                  # DNP: hand-soldered, like R7 left out of the JLC files
     "U1": ("USBLC6-2SC6", "UMW", "C2687116"),                                                     # same part, second source, 1/4 the price
     "U2": ("XC6206P332MR-G", "Torex", "C5446"),                                                   # 200 mA LDO, basic
     "U3": ("RP2350A", "Raspberry Pi", "C42411118"),
