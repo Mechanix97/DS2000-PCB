@@ -98,24 +98,25 @@ def keycap_mbk():
     cap = cap - Pos(0, 0, z0 + hgt + 60.0 - 0.35) * Sphere(60.0)
     return Compound(children=[colored(cap, KEYCAP)])
 
-# ---------------------------------------------------------------- WS2812B-2020 (KiCad has no model)
-def ws2812b_2020():
-    # Worldsemi WS2812B-2020-V6: 2.2 x 2.0 mm base 0.28 mm thick, lens to 0.84 mm, pads at the corners
-    base = colored(Pos(0, 0, 0.14) * Box(2.2, 2.0, 0.28), WHITE)
-    lens = colored(Pos(0, 0, 0.28 + 0.28) * Box(1.5, 2.0, 0.56), (0.97, 0.97, 0.92))
+# ---------------------------------------------------------------- SK6805-EC20 (KiCad has no model)
+def sk6805_ec20():
+    # OPSCO SK6805-EC20: 2.0 x 2.0 mm PCB-bracket package 0.65 mm tall, clear epoxy over a white base,
+    # pads at the corners underneath
+    base = colored(Pos(0, 0, 0.125) * Box(2.0, 2.0, 0.25), WHITE)
+    lens = colored(Pos(0, 0, 0.25 + 0.2) * Box(2.0, 2.0, 0.4), (0.97, 0.97, 0.92))
     parts = [base, lens]
-    for x in (-0.915, 0.915):
-        for y in (-0.55, 0.55):
-            parts.append(colored(Pos(x, y, 0.05) * Box(0.4, 0.5, 0.1), SILVER))
-    # pin 1 (DOUT) is footprint (-0.915, -0.55): model (-x, +y)
-    parts.append(colored(Pos(-0.45, 0.6, 0.84) * Box(0.3, 0.3, 0.02), GREY))
+    for x in (-0.65, 0.65):
+        for y in (-0.6, 0.6):
+            parts.append(colored(Pos(x, y, 0.02) * Box(0.6, 0.6, 0.04), SILVER))
+    # pin 1 (VDD) is footprint (0.65, 0.6): model (+x, -y)
+    parts.append(colored(Pos(0.65, -0.6, 0.65) * Box(0.3, 0.3, 0.02), GREY))
     return Compound(children=parts)
 
 if __name__ == "__main__":
     for name, fn in [("QFN-60-1EP_7x7mm_P0.4mm", qfn60), ("USB_C_Receptacle_HRO_TYPE-C-31-M-12", usb_c),
                      ("SW_Cherry_MX_1.00u_PCB", mx_switch), ("Keycap_1u_MX", keycap),
                      ("SW_Kailh_Choc_V1", choc_v1), ("Keycap_1u_MBK", keycap_mbk),
-                     ("LED_WS2812B-2020", ws2812b_2020)]:
+                     ("LED_SK6805-EC20", sk6805_ec20)]:
         shape = fn()
         bb = shape.bounding_box()
         export_step(shape, f"{OUT}/{name}.step")

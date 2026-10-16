@@ -13,7 +13,7 @@
 		(comment 2 "Pinout follows DS-2000-Firmware/include/pins.h")
 	)
 	(lib_symbols
-		(symbol "LED:WS2812B-2020"
+		(symbol "DS2000:SK6805-EC20"
 			(pin_names
 				(offset 0.254)
 			)
@@ -33,7 +33,7 @@
 					(justify right bottom)
 				)
 			)
-			(property "Value" "WS2812B-2020"
+			(property "Value" "SK6805-EC20"
 				(at 1.27 -5.715 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -44,7 +44,7 @@
 					(justify left top)
 				)
 			)
-			(property "Footprint" "LED_SMD:LED_WS2812B-2020_PLCC4_2.0x2.0mm"
+			(property "Footprint" "DS2000:LED_SK6805-EC20_2.0x2.0mm"
 				(at 1.27 -7.62 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -56,7 +56,7 @@
 					(justify left top)
 				)
 			)
-			(property "Datasheet" "https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf"
+			(property "Datasheet" "https://jlcpcb.com/partdetail/OPSCOOptoelectronics-SK6805EC20/C2890036"
 				(at 2.54 -9.525 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -68,7 +68,7 @@
 					(justify left top)
 				)
 			)
-			(property "Description" "RGB LED with integrated controller, 2.0 x 2.0 mm, 12 mA"
+			(property "Description" "Addressable RGB LED, 2.0 x 2.0 x 0.65 mm, 5 mA per colour, GRB, 800 kHz; pins 1 VDD, 2 DOUT, 3 GND, 4 DIN"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -79,7 +79,7 @@
 					)
 				)
 			)
-			(property "ki_keywords" "RGB LED NeoPixel Nano addressable"
+			(property "ki_keywords" "RGB LED addressable SK6805 EC20"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -90,7 +90,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "LED*WS2812*-2020_PLCC4*"
+			(property "ki_fp_filters" "LED*SK6805*EC20*"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -101,7 +101,7 @@
 					)
 				)
 			)
-			(symbol "WS2812B-2020_0_0"
+			(symbol "SK6805-EC20_0_0"
 				(text "RGB"
 					(at 2.286 -4.191 0)
 					(effects
@@ -111,10 +111,11 @@
 					)
 				)
 			)
-			(symbol "WS2812B-2020_0_1"
+			(symbol "SK6805-EC20_0_1"
 				(polyline
 					(pts
-						(xy 1.27 -2.54) (xy 1.778 -2.54)
+						(xy 1.27 -2.54)
+						(xy 1.778 -2.54)
 					)
 					(stroke
 						(width 0)
@@ -126,7 +127,8 @@
 				)
 				(polyline
 					(pts
-						(xy 1.27 -3.556) (xy 1.778 -3.556)
+						(xy 1.27 -3.556)
+						(xy 1.778 -3.556)
 					)
 					(stroke
 						(width 0)
@@ -138,7 +140,9 @@
 				)
 				(polyline
 					(pts
-						(xy 2.286 -1.524) (xy 1.27 -2.54) (xy 1.27 -2.032)
+						(xy 2.286 -1.524)
+						(xy 1.27 -2.54)
+						(xy 1.27 -2.032)
 					)
 					(stroke
 						(width 0)
@@ -150,7 +154,9 @@
 				)
 				(polyline
 					(pts
-						(xy 2.286 -2.54) (xy 1.27 -3.556) (xy 1.27 -3.048)
+						(xy 2.286 -2.54)
+						(xy 1.27 -3.556)
+						(xy 1.27 -3.048)
 					)
 					(stroke
 						(width 0)
@@ -162,7 +168,9 @@
 				)
 				(polyline
 					(pts
-						(xy 3.683 -1.016) (xy 3.683 -3.556) (xy 3.683 -4.064)
+						(xy 3.683 -1.016)
+						(xy 3.683 -3.556)
+						(xy 3.683 -4.064)
 					)
 					(stroke
 						(width 0)
@@ -174,7 +182,10 @@
 				)
 				(polyline
 					(pts
-						(xy 4.699 -1.524) (xy 2.667 -1.524) (xy 3.683 -3.556) (xy 4.699 -1.524)
+						(xy 4.699 -1.524)
+						(xy 2.667 -1.524)
+						(xy 3.683 -3.556)
+						(xy 4.699 -1.524)
 					)
 					(stroke
 						(width 0)
@@ -186,7 +197,8 @@
 				)
 				(polyline
 					(pts
-						(xy 4.699 -3.556) (xy 2.667 -3.556)
+						(xy 4.699 -3.556)
+						(xy 2.667 -3.556)
 					)
 					(stroke
 						(width 0)
@@ -208,7 +220,7 @@
 					)
 				)
 			)
-			(symbol "WS2812B-2020_1_1"
+			(symbol "SK6805-EC20_1_1"
 				(pin output line
 					(at 7.62 0 180)
 					(length 2.54)
@@ -219,7 +231,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -237,7 +249,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -255,7 +267,7 @@
 							)
 						)
 					)
-					(number "3"
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -273,7 +285,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -5785,7 +5797,7 @@
 		)
 		(uuid "bf070a66-ae58-5e04-9db5-13ce6235d2cc")
 	)
-	(text "Key LEDs: 3.3 V -> 5 V level shift, WS2812B-2020"
+	(text "Key LEDs: 3.3 V -> 5 V level shift, SK6805-EC20"
 		(exclude_from_sim no)
 		(at 214.63 166.37 0)
 		(effects
@@ -12002,7 +12014,7 @@
 		)
 	)
 	(symbol
-		(lib_id "LED:WS2812B-2020")
+		(lib_id "DS2000:SK6805-EC20")
 		(at 304.8 190.5 0)
 		(unit 1)
 		(body_style 1)
@@ -12022,7 +12034,7 @@
 				)
 			)
 		)
-		(property "Value" "WS2812B-2020"
+		(property "Value" "SK6805-EC20"
 			(at 306.07 196.215 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12032,7 +12044,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_WS2812B-2020_PLCC4_2.0x2.0mm"
+		(property "Footprint" "DS2000:LED_SK6805-EC20_2.0x2.0mm"
 			(at 304.8 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -12075,7 +12087,7 @@
 				)
 			)
 		)
-		(property "MPN" "WS2812B-2020-V6"
+		(property "MPN" "SK6805-EC20"
 			(at 309.88 184.785 0)
 			(hide yes)
 			(show_name no)
@@ -12086,7 +12098,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Worldsemi"
+		(property "Manufacturer" "OPSCO Optoelectronics"
 			(at 309.88 184.785 0)
 			(hide yes)
 			(show_name no)
@@ -12097,7 +12109,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C52917434"
+		(property "LCSC" "C2890036"
 			(at 309.88 184.785 0)
 			(hide yes)
 			(show_name no)
@@ -14880,7 +14892,7 @@
 		)
 	)
 	(symbol
-		(lib_id "LED:WS2812B-2020")
+		(lib_id "DS2000:SK6805-EC20")
 		(at 276.86 190.5 0)
 		(unit 1)
 		(body_style 1)
@@ -14900,7 +14912,7 @@
 				)
 			)
 		)
-		(property "Value" "WS2812B-2020"
+		(property "Value" "SK6805-EC20"
 			(at 278.13 196.215 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14910,7 +14922,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_WS2812B-2020_PLCC4_2.0x2.0mm"
+		(property "Footprint" "DS2000:LED_SK6805-EC20_2.0x2.0mm"
 			(at 276.86 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -14953,7 +14965,7 @@
 				)
 			)
 		)
-		(property "MPN" "WS2812B-2020-V6"
+		(property "MPN" "SK6805-EC20"
 			(at 281.94 184.785 0)
 			(hide yes)
 			(show_name no)
@@ -14964,7 +14976,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Worldsemi"
+		(property "Manufacturer" "OPSCO Optoelectronics"
 			(at 281.94 184.785 0)
 			(hide yes)
 			(show_name no)
@@ -14975,7 +14987,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C52917434"
+		(property "LCSC" "C2890036"
 			(at 281.94 184.785 0)
 			(hide yes)
 			(show_name no)

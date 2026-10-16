@@ -41,7 +41,7 @@ PARTS = {
     "U5": ("74AHCT1G125GW,125", "Nexperia", "C12495"),
     "Y1": ("ABM8-272-T3", "Abracon", "C20625731"),                                                # 12 MHz, 10 pF, 50 ohm ESR: the RP2350 guide's crystal
     "L1": ("AOTA-B201610S3R3-101-T", "Abracon", "C42411119"),
-    **{r: ("WS2812B-2020-V6", "Worldsemi", "C52917434") for r in ("D1", "D2")},                 # top side, in the Choc LED window
+    **{r: ("SK6805-EC20", "OPSCO Optoelectronics", "C2890036") for r in ("D1", "D2")},            # top side, in the Choc LED window; Economic PCBA (the WS2812B-2020 is Standard only)
 }
 
 def prop(name, value, at):

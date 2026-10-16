@@ -16,7 +16,7 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 | Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
 | Keys | 3× Kailh Choc V1 (low profile), **soldered, no plate**, in a row, MBK-style keycaps | Changed from Cherry MX for a lower, flatter device. Choc V1 has two locating posts, so it sits steady without a plate |
 | Size | 72 × 46 mm | 3 keys at the Choc 18 mm pitch plus corner M2 holes; the extra depth is the component strip behind the keys. Kept from the MX layout so the enclosure's numbers stay put |
-| Status | **WS2812B-2020** on the top side, inside the Choc V1 LED window of the mute and deafen keys; **disconnect has no LED** | Lights the key from inside the switch; top-side, so no board cut-out and no bottom-side assembly. Needs shine-through or translucent keycaps |
+| Status | **SK6805-EC20** on the top side, inside the Choc V1 LED window of the mute and deafen keys; **disconnect has no LED** | Lights the key from inside the switch; top-side, so no board cut-out and no bottom-side assembly. The WS2812B-2020 first chosen is Standard-PCBA-only at JLC; the SK6805-EC20 assembles in Economic and is thinner (0.65 mm). Needs shine-through or translucent keycaps |
 | Pinout | Owned by `DS2000-Firmware/include/pins.h` | See below |
 
 ## Blocks
@@ -61,8 +61,10 @@ minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
 affected by the RP2350-E9 erratum, which concerns pull-downs). The LED data line leaves GPIO5 at
 3.3 V and is shifted to 5 V by U5 (74AHCT1G125, TTL-level input), then R10 100 Ω, then the chain
 D1 (mute) → D2 (deafen); D2's DOUT is unused. Each LED has its own 100 nF, on the top between the
-keys. The WS2812B-2020-V6 datasheet asks for 0.55 × VDD = 2.75 V at 5 V, which a 3.3 V GPIO meets
-with little margin; the shifter stays until a board proves it can go.
+keys. The SK6805-EC20 needs 0.7 × VDD = 3.5 V at 5 V on DIN, above a 3.3 V GPIO, so the shifter is
+required. It speaks the WS2812 protocol (800 kHz, GRB, reset > 80 µs) and is the 5 mA-per-colour
+version: about half a WS2812B's brightness, plenty for an indicator, to confirm through a keycap on
+the first boards.
 
 ## Pinout
 
@@ -94,7 +96,7 @@ part there and re-run it.
 | U2 | 3.3 V LDO, 200 mA | XC6206P332MR-G | C5446 | SOT-23-3, **basic** |
 | U1 | USB ESD | USBLC6-2SC6 (UMW) | C2687116 | SOT-23-6 |
 | U5 | Buffer, TTL in | 74AHCT1G125GW,125 | C12495 | SOT-353 |
-| D1, D2 | RGB LED | WS2812B-2020-V6 | C52917434 | 2.0×2.0×0.84 mm, top, in the switch LED window |
+| D1, D2 | RGB LED | SK6805-EC20 (OPSCO) | C2890036 | 2.0×2.0×0.65 mm, top, in the switch LED window; own footprint and symbol (`DS2000.pretty`, `DS2000.kicad_sym`) |
 | C1, C2 | 10 µF 25 V X5R | CL21A106KAYNNNE | C15850 | 0805 |
 | C3-C5 | 4.7 µF 10 V X5R | CL05A475MP5NRNC | C23733 | 0402 (C3/C4 wide land), **basic** |
 | C6-C16, C19-C22 | 100 nF 16 V X7R | CL05B104KO5NNNC | C1525 | 0402 (C21/C22 between the keys) |
@@ -117,8 +119,8 @@ JLC's rotation corrections. Upload the zip as the PCB, then the BOM and CPL for 
 - 4 layers, 1.6 mm, **black** mask, white silk, **ENIG**, JLC04161H-7628 stackup
 - assembly on the **top side only** (Economic PCBA): nothing is assembled on the bottom
 - JLC's BOM page shows which lines are basic or extended parts (extended ones add a setup fee each)
-- check the placement preview, above all the rotation of U3, U5, U2 and D1/D2 (pin 1 = DOUT, towards
-  the next LED), before confirming
+- check the placement preview, above all the rotation of U3, U5, U2 and D1/D2 (pin 1 = VDD, at the
+  bottom-left corner of each LED as placed, turned 270°), before confirming
 - the switches, and J1 if the USB-C is wanted instead of a cable on J3, are fitted by hand after
   assembly. J1 is fine pitch (0.5 mm): flux, a fine tip, and the four shell pins first to hold it
 
@@ -236,16 +238,18 @@ courtyards sit inside the switch courtyards. Net classes: *Plane* (GND, +3V3) re
 +1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm tracks / 0.2 mm gap.
 
 **Review (2026-09-28).** Every net was checked against Raspberry Pi's RP2350 minimal design and
-every footprint's pin mapping against its datasheet. No wrong connection was found. (2026-10-08: the
-WS2812B-2020-V6 pinout, 1 DO, 2 GND, 3 DI, 4 VDD, matches KiCad's footprint turned 180°.)
+every footprint's pin mapping against its datasheet. No wrong connection was found. (2026-10-16: the
+SK6805-EC20 pinout, 1 VDD, 2 DOUT, 3 GND, 4 DIN, and its land pattern are taken from OPSCO's
+datasheet OSK-SPC-SK6805/12-EC20 rev A2; turned 270°, every net keeps the corner it had with the
+WS2812B-2020.)
 The review did find routing the autorouter had done poorly, since fixed: XIN was 14 mm with two
 vias and the QSPI clock 35.5 mm with four (now 7.4 mm with none, and 11 mm with two). The USB data
 lines run ~25 mm from J3 to U1, which is harmless at full speed (12 Mbit/s).
 
 **Review before ordering:**
 
-- **LED window height:** the WS2812B-2020 is 0.84 mm tall and sits inside the Choc V1 LED window.
-  Measure the window's height above the board on a real switch (it needs at least 0.9 mm) before
+- **LED window height:** the SK6805-EC20 is 0.65 mm tall and sits inside the Choc V1 LED window.
+  Measure the window's height above the board on a real switch (it needs at least 0.7 mm) before
   ordering.
 - Core regulator: copied from the reference (see above). At assembly, check L1's dot sits on the
   left, towards +1V1 (the silkscreen dot marks it).

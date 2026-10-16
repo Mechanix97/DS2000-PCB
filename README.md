@@ -22,7 +22,7 @@ RP2350A, the logos and the legends are meant to be seen. It sits in a 3D-printed
 |---|---|
 | MCU | Raspberry Pi RP2350A |
 | Keys | 3× Kailh Choc V1 (low profile) in a row, 18 mm pitch, soldered, MBK-style caps |
-| LEDs | 2× WS2812B-2020, on top inside the LED window of the mute and deafen switches |
+| LEDs | 2× SK6805-EC20 (2.0 × 2.0 × 0.65 mm, WS2812-compatible), on top inside the LED window of the mute and deafen switches |
 | Connector | USB-C receptacle J1 on the bottom, **not assembled by JLC**: soldered by hand. Or a USB cable soldered to J3. USB 2.0 full speed |
 | Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. Every assembled part on top (one-sided assembly), RP2350A on show; underneath only J1 (hand-soldered) and the debug pads |
 | Tool | **KiCad 10** |
@@ -60,7 +60,7 @@ board screws into it through its four corner holes.
 | | |
 |---|---|
 | ![RP2350A and its support parts](docs/img/closeup-rp2350.png) | ![LED in the Choc LED window](docs/img/closeup-led.png) |
-| **RP2350A on show**, with the flash, the 12 MHz crystal and the core regulator around it | **Light inside the switch**: the WS2812B-2020 sits in the Choc's LED window (switch hidden here); its 100 nF hides under the keycap |
+| **RP2350A on show**, with the flash, the 12 MHz crystal and the core regulator around it | **Light inside the switch**: the SK6805-EC20 sits in the Choc's LED window (switch hidden here); its 100 nF hides under the keycap |
 | ![Debug pads underneath](docs/img/closeup-bottom.png) | ![Low-profile keys](docs/img/keys-low.png) |
 | **Underneath**: only the debug pads, so JLC assembles one side | **Low profile**: Choc V1 with flat caps, keycap tops ~8.7 mm above the board |
 
@@ -90,7 +90,7 @@ The pinout is defined by the firmware (`DS2000-Firmware/include/pins.h`). Change
 | Mute key | GP0 |
 | Deafen key | GP1 |
 | Disconnect key | GP2 |
-| LED data (WS2812B chain, via 5 V level shifter) | GP5 |
+| LED data (WS2812-compatible chain, via 5 V level shifter) | GP5 |
 
 ## Checks
 
