@@ -121,3 +121,7 @@ Board options, parts and what to check before ordering: [`docs/design-rev-a.md`]
 
 AGPL-3.0, see [`LICENSE`](LICENSE). Whether the hardware should move to CERN-OHL-S is discussed
 in #16.
+
+The DS2000 name and the DS2000 and Mechardo Labs logos are not covered by the license: as an
+additional term under AGPL-3.0 section 7(e), their use is governed by the
+[trademark policy](TRADEMARKS.md). Forks are welcome under a name of their own.
