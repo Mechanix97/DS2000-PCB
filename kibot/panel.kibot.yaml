@@ -3,14 +3,15 @@
 # over the gap where the tabs are.
 #
 # 2 x 2 boards, 3 mm apart, mouse-bite tabs, 5 mm rails top and bottom with three fiducials and three
-# tooling holes, so the boards' own faces carry no fiducials. KiKit renames each copy's references
-# to <ref>_<n> (C1_1 ... C1_4), so the placement file stays unique.
+# tooling holes, so the boards' own faces carry no fiducials. Each copy keeps its references as on
+# the single board, so the visible silkscreen reads as designed; tools/bom/panel_bom.py numbers the
+# copies (C1_1 ... C1_4) in the placement file and BOM JLC gets.
 #
 # Two steps in CI (see .github/workflows/kibot.yml):
 #   kibot -c kibot/panel.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out panel
 #   kibot -c kibot/panel.kibot.yaml -b kibot-out/panel/DS2000-panel.kicad_pcb -d kibot-out/panel \
 #         _JLCPCB_fab _JLCPCB_position _JLCPCB_compress
-# and tools/bom/panel_bom.py expands the single board's economic BOM to the panel's references.
+# and tools/bom/panel_bom.py writes the panel's BOM and numbers the copies in its placement file.
 kibot:
   version: 1
 
@@ -26,10 +27,10 @@ filters:
         regex: '^C\d+'
     exclude_any:
       - column: Reference
-        regex: '^J1_'
+        regex: '^J1$'
       # KiKit's copies lose the DNP flag, so the DNP parts are named here
       - column: Reference
-        regex: '^R7_'
+        regex: '^R7$'
       - column: Reference
         regex: '^KiKit_'
 
@@ -53,7 +54,6 @@ outputs:
             rows: 2
             cols: 2
             space: 3
-            renameref: '{orig}_{n}'
           tabs:
             type: fixed
             width: 3
