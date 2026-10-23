@@ -1,0 +1,84 @@
+# Our own production panel, as an alternative to ordering single boards and letting JLC panelise
+# them. Economic variant only: in the standard one J1's USB-C overhangs the back edge by 1.2 mm,
+# over the gap where the tabs are.
+#
+# 2 x 2 boards, 3 mm apart, mouse-bite tabs, 5 mm rails top and bottom with three fiducials and three
+# tooling holes, so the boards' own faces carry no fiducials. Each copy keeps its references as on
+# the single board, so the visible silkscreen reads as designed; tools/bom/panel_bom.py numbers the
+# copies (C1_1 ... C1_4) in the placement file and BOM JLC gets.
+#
+# Two steps in CI (see .github/workflows/kibot.yml):
+#   kibot -c kibot/panel.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out panel
+#   kibot -c kibot/panel.kibot.yaml -b kibot-out/panel/DS2000-panel.kicad_pcb -d kibot-out/panel \
+#         _JLCPCB_fab _JLCPCB_position _JLCPCB_compress
+# and tools/bom/panel_bom.py writes the panel's BOM and numbers the copies in its placement file.
+kibot:
+  version: 1
+
+global:
+  field_lcsc_part: LCSC
+
+filters:
+  - name: panel_assembly
+    comment: 'What JLC assembles on the panel: parts with an LCSC number, but not J1 (economic) nor R7 (DNP)'
+    type: generic
+    include_only:
+      - column: _field_lcsc_part
+        regex: '^C\d+'
+    exclude_any:
+      - column: Reference
+        regex: '^J1$'
+      # KiKit's copies lose the DNP flag, so the DNP parts are named here
+      - column: Reference
+        regex: '^R7$'
+      - column: Reference
+        regex: '^KiKit_'
+
+import:
+  - file: JLCPCB_stencil
+    definitions:
+      _KIBOT_POS_DNF_FILTER: panel_assembly
+      _KIBOT_BOM_ENABLED: false
+
+outputs:
+  - name: panel
+    comment: 2 x 2 production panel (KiKit)
+    type: panelize
+    dir: panel
+    options:
+      create_preview: true
+      configs:
+        - name: ds2000_2x2
+          layout:
+            type: grid
+            rows: 2
+            cols: 2
+            space: 3
+          tabs:
+            type: fixed
+            width: 3
+            hcount: 2
+            vcount: 1
+          cuts:
+            type: mousebites
+            drill: 0.5
+            spacing: 0.8
+            offset: 0.2
+          framing:
+            type: railstb
+            width: 5
+            space: 3
+          fiducials:
+            type: 3fid
+            hoffset: 5
+            voffset: 2.5
+            coppersize: 1
+            opening: 2
+          tooling:
+            type: 3hole
+            hoffset: 2.5
+            voffset: 2.5
+            size: 1.152
+          post:
+            millradius: 1
+            refillzones: true

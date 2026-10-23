@@ -5,9 +5,13 @@ JLCPCB product page on 2026-09-28, or comes from Raspberry Pi's RP2350A minimal 
 whose parts rev A copies around the core regulator. On 2026-10-08 the parts that have a JLC basic
 equivalent (no extended-part fee) or a cheaper drop-in were swapped (DS2000-PCB cost-down PR), except
 the crystal: JLC's review flagged the swap, so Y1 stays the Abracon part Raspberry Pi recommends. Parts without an LCSC number (switches, test and
-jumper pads, holes, J3's wire holes) are fitted by hand or are bare copper, and stay out of the JLC
-BOM and placement files. So do DNP parts (R7, and J1, the USB-C receptacle soldered by hand so that
-JLC only assembles the top side), which keep their LCSC number for ordering them separately.
+jumper pads, holes, J3's wire pads) are fitted by hand or are bare copper, and stay out of the JLC
+BOM and placement files. So does R7 (DNP), which keeps its LCSC number. J1, the USB-C receptacle on
+the bottom, is fitted only in the `standard` board variant (KiBot, `Config` field `+standard`): in
+the default `economic` variant JLC assembles the top side only and J1 is soldered by hand.
+
+2026-10-23 (production review): C1/C2 10u -> 4.7u, a basic part, to keep VBUS near USB 2.0's 10 uF;
+U4 2 MB -> 4 MB (W25Q32JVSSIQ), the RP2350-Zero's size and room for A/B firmware updates.
 
 Basic or extended: JLC's BOM upload shows it per line; the generic passives here are the common
 Samsung / UNI-ROYAL / FH parts of its library.
@@ -21,7 +25,7 @@ SCH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "DS20
 C100N = ("CL05B104KO5NNNC", "Samsung Electro-Mechanics", "C1525")
 PARTS = {
     # capacitors
-    **{r: ("CL21A106KAYNNNE", "Samsung Electro-Mechanics", "C15850") for r in ("C1", "C2")},        # 10u 25V X5R 0805
+    **{r: ("CL21A475KAQNNNE", "Samsung Electro-Mechanics", "C1779") for r in ("C1", "C2")},         # 4.7u 25V X5R 0805, basic
     **{r: ("CL05A475MP5NRNC", "Samsung Electro-Mechanics", "C23733") for r in ("C3", "C4", "C5")},  # 4.7u 10V X5R, basic
     **{f"C{i}": C100N for i in list(range(6, 17)) + [19, 20, 21, 22]},                               # 100n 16V X7R 0402
     **{r: ("0402CG150J500NT", "FH", "C1548") for r in ("C17", "C18")},                             # 15p 50V C0G 0402, as the reference
@@ -33,11 +37,11 @@ PARTS = {
     **{r: ("0402WGF1002TCE", "UNI-ROYAL", "C25744") for r in ("R7", "R9")},                        # 10k 1% (R7 is DNP)
     "R10": ("0402WGF1000TCE", "UNI-ROYAL", "C25076"),                                             # 100R 1%
     # the rest
-    "J1": ("TYPE-C-31-M-12", "Korean Hroparts Elec", "C165948"),                                  # DNP: hand-soldered, like R7 left out of the JLC files
+    "J1": ("TYPE-C-31-M-12", "Korean Hroparts Elec", "C165948"),                                  # fitted by JLC only in the `standard` variant
     "U1": ("USBLC6-2SC6", "UMW", "C2687116"),                                                     # same part, second source, 1/4 the price
     "U2": ("XC6206P332MR-G", "Torex", "C5446"),                                                   # 200 mA LDO, basic
     "U3": ("RP2350A", "Raspberry Pi", "C42411118"),
-    "U4": ("W25Q16JVSSIQ", "Winbond", "C82317"),                                                  # 2 MB, same 208 mil footprint
+    "U4": ("W25Q32JVSSIQ", "Winbond", "C82344"),                                                  # 4 MB, as the RP2350-Zero
     "U5": ("74AHCT1G125GW,125", "Nexperia", "C12495"),
     "Y1": ("ABM8-272-T3", "Abracon", "C20625731"),                                                # 12 MHz, 10 pF, 50 ohm ESR: the RP2350 guide's crystal
     "L1": ("AOTA-B201610S3R3-101-T", "Abracon", "C42411119"),

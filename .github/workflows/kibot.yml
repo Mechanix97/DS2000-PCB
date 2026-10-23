@@ -50,9 +50,25 @@ jobs:
         if: hashFiles('DS2000.kicad_pcb') != ''
         run: kibot -c kibot/pcb.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out -E BASE=${{ steps.base.outputs.ref }}
 
-      - name: Fabrication (JLCPCB gerbers, drill, BOM, CPL) and STEP
+      # Two variants of the same board: economic (JLC assembles the top only, J1 by hand) and
+      # standard (JLC also fits J1). The STEP keeps J1 for the enclosure, so it comes from standard.
+      - name: Fabrication, economic variant (JLCPCB gerbers, drill, BOM, CPL)
         if: hashFiles('DS2000.kicad_pcb') != ''
-        run: kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out _JLCPCB _JLCPCB_compress step
+        run: kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch --variant economic -d kibot-out/economic _JLCPCB _JLCPCB_compress
+
+      - name: Fabrication, standard variant (with J1) and STEP
+        if: hashFiles('DS2000.kicad_pcb') != ''
+        run: kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch --variant standard -d kibot-out/standard _JLCPCB _JLCPCB_compress step
+
+      - name: Production panel (2 x 2, economic)
+        if: hashFiles('DS2000.kicad_pcb') != ''
+        run: |
+          kibot -c kibot/panel.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch -d kibot-out panel
+          panel=$(ls kibot-out/panel/*.kicad_pcb | head -n1)
+          kibot -c kibot/panel.kibot.yaml -b "$panel" -d kibot-out/panel _JLCPCB_fab _JLCPCB_position _JLCPCB_compress
+          out=kibot-out/panel/JLCPCB/$(basename "$panel" .kicad_pcb)
+          python3 tools/bom/panel_bom.py kibot-out/economic/JLCPCB/DS2000_bom_jlc.csv \
+            "${out}_cpl_jlc.csv" "${out}_bom_jlc.csv" "${out}_cpl_jlc.csv"
 
       - uses: actions/upload-artifact@v4
         if: always()
