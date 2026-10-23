@@ -19,7 +19,7 @@ global:
 
 filters:
   - name: panel_assembly
-    comment: 'What JLC assembles on the panel: parts with an LCSC number, but not J1 (economic)'
+    comment: 'What JLC assembles on the panel: parts with an LCSC number, but not J1 (economic) nor R7 (DNP)'
     type: generic
     include_only:
       - column: _field_lcsc_part
@@ -27,6 +27,9 @@ filters:
     exclude_any:
       - column: Reference
         regex: '^J1_'
+      # KiKit's copies lose the DNP flag, so the DNP parts are named here
+      - column: Reference
+        regex: '^R7_'
       - column: Reference
         regex: '^KiKit_'
 
