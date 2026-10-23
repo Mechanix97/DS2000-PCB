@@ -10,21 +10,26 @@ using the draft only as a reference, and fixes every defect found in it (DS2000-
 | MCU | Discrete **RP2350A** (QFN-60) | Same family as the RP2350-Zero test module the firmware runs on |
 | Look | **Exposed PCB as the top face**, enclosure is a tray underneath | The board is the product's face: logo, art, legends in silkscreen |
 | Top side | Switches, and **the RP2350A and its circuitry on show** in a strip behind the keys | The visible chip is part of the look |
-| Bottom side | The two reverse-mount LEDs, the **USB-C receptacle** and **all debug pads** (SWD, BOOT, RST) | The plug and cable sit low, level with the tray, the top strip gains space, and debug stays off the visible face. Assembly is two-sided |
+| Bottom side | **No assembled parts**: J1's USB-C footprint (DNP, soldered by hand), the debug pads (SWD, BOOT, RST) and J3's wire holes | Every part JLC assembles is on the top, so it assembles one side (Economic PCBA). Debug stays off the visible face |
+| Connection | **USB-C receptacle J1 on the bottom, marked DNP** and soldered by hand; or a USB cable soldered to J3 | Cost: having JLC fit J1 on the bottom forced two-sided assembly (Standard PCBA, about $50 more per order in fixed fees). As DNP it stays out of the JLC BOM and placement file, and the footprint is ready for it |
 | Layers | 4 (Sig / GND / PWR / Sig), 1.6 mm | Routes mostly on inner layers so the face stays clean, solid reference for USB and the core regulator, stiff enough to hold switches without a plate |
 | Finish (proposed) | Matte black soldermask, ENIG | Gold for exposed logo copper and mounting rings |
 | Keys | 3× Kailh Choc V1 (low profile), **soldered, no plate**, in a row, MBK-style keycaps | Changed from Cherry MX for a lower, flatter device. Choc V1 has two locating posts, so it sits steady without a plate |
 | Size | 72 × 46 mm | 3 keys at the Choc 18 mm pitch plus corner M2 holes; the extra depth is the component strip behind the keys. Kept from the MX layout so the enclosure's numbers stay put |
-| Status | **SK6812MINI-E** reverse-mount under the mute and deafen keys; **disconnect has no LED** | Lights the key through the switch LED window; needs shine-through or translucent keycaps |
+| Status | **SK6805-EC20** on the top side, inside the Choc V1 LED window of the mute and deafen keys; **disconnect has no LED** | Lights the key from inside the switch; top-side, so no board cut-out and no bottom-side assembly. The WS2812B-2020 first chosen is Standard-PCBA-only at JLC; the SK6805-EC20 assembles in Economic and is thinner (0.65 mm). Needs shine-through or translucent keycaps |
 | Pinout | Owned by `DS2000-Firmware/include/pins.h` | See below |
 
 ## Blocks
 
-**USB-C and power.** HRO TYPE-C-31-M-12 on the **bottom** side at the back edge, pointing backwards, so the plug and cable sit low and the top strip stays free. The tray needs a pocket of at least 4 mm under the board and a cut-out in its back wall for the plug overmould (about 12.5 × 6.5 mm). J3 is four bare 2.54 mm holes (VBUS, D-, D+, GND) to solder a USB cable instead of fitting J1; it sits upstream of the fuse and ESD, so a soldered cable is protected the same way. 5.1 kΩ on CC1/CC2
-(UFP). VBUS goes through F1 (500 mA hold PTC) to `+5V`, which feeds the LEDs and the level shifter.
-USBLC6-2SC6 ESD on D+/D- close to the connector. AP2112K-3.3 LDO (250 mV dropout, 600 mA) makes
-`+3V3`; the RP2350 minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
-a 4.75 V VBUS after the fuse.
+**USB input and power.** Two alternatives, both wired in parallel: J1, an HRO TYPE-C-31-M-12
+USB-C receptacle on the bottom at the back edge, which JLC does not fit (DNP) and is soldered by hand
+after assembly; or a USB cable soldered to J3, four 2.54 mm holes at the back left (VBUS, D-, D+,
+GND). R1/R2 (5.1 kΩ, top side, assembled) are the CC pull-downs that make a USB-C host supply 5 V;
+they are harmless when J3 is used. VBUS is `+5V` directly, which feeds the LEDs, the level
+shifter and the regulator; there is no fuse, as the host port already limits the current. USBLC6-2SC6
+ESD on D+/D- between J1 and the RP2350, beside J1. XC6206P332MR LDO (SOT-23-3, 200 mA, a JLC basic part) makes `+3V3`; the
+RP2350A, the flash and the shifter draw well under 100 mA, and the LEDs run from `+5V`. The RP2350
+minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from a 4.75 V VBUS.
 
 **RP2350A.** Straight from *Hardware design with RP2350* (Minimal design, R4):
 
@@ -37,10 +42,14 @@ a 4.75 V VBUS after the fuse.
   *Core regulator* under Layout.
 - 100 nF per power pin: C6-C11 IOVDD, C12-C14 DVDD, C15 ADC_AVDD, C16 shared by USB_OTP_VDD and
   QSPI_IOVDD (as in the reference).
-- Crystal ABM8-272-T3 12 MHz, 15 pF load caps, 1 kΩ on XOUT. Do not substitute.
+- Crystal Abracon ABM8-272-T3 12 MHz (10 pF load, 50 Ω max ESR) with 15 pF load caps and 1 kΩ on
+  XOUT, exactly as the reference. A cheaper basic crystal (YXC X322512MSB4SI with 33 pF) was tried in
+  the cost-down, but JLC's design review flagged it against Raspberry Pi's guide; a crystal that does
+  not start makes the whole batch useless, so the recommended part stays (one extended-part fee).
 - USB 27 Ω series resistors R3/R4 close to the chip; D+/D- as a 90 Ω differential pair over
   unbroken GND.
-- Flash W25Q32JVSSIQ (4 MB, same size as the RP2350-Zero, so the firmware image is identical).
+- Flash W25Q16JVSSIQ (2 MB, same 208 mil SOIC-8 as the W25Q32). The firmware is far smaller and uses
+  no filesystem; the rev A firmware target must declare 2 MB (the RP2350-Zero has 4 MB).
   R7 (10 kΩ CS pull-up) is DNP as in the reference.
 - BOOTSEL: no button. JP1 is a pair of bare pads (open solder jumper) that pull `QSPI_SS` low through
   R8 1 kΩ when bridged with tweezers or a wire while USB is plugged in (or RESET pressed).
@@ -51,8 +60,11 @@ a 4.75 V VBUS after the fuse.
 **Keys and LEDs.** SW1-SW3 to GPIO0-2 and GND; the firmware uses the internal pull-ups (not
 affected by the RP2350-E9 erratum, which concerns pull-downs). The LED data line leaves GPIO5 at
 3.3 V and is shifted to 5 V by U5 (74AHCT1G125, TTL-level input), then R10 100 Ω, then the chain
-D1 (mute) → D2 (deafen); D2's DOUT is unused. Each LED has its own 100 nF. SK6812 data input needs
-0.7 × VDD = 3.5 V at 5 V, which a 3.3 V GPIO does not guarantee; hence the shifter.
+D1 (mute) → D2 (deafen); D2's DOUT is unused. Each LED has its own 100 nF, on the top between the
+keys. The SK6805-EC20 needs 0.7 × VDD = 3.5 V at 5 V on DIN, above a 3.3 V GPIO, so the shifter is
+required. It speaks the WS2812 protocol (800 kHz, GRB, reset > 80 µs) and is the 5 mA-per-colour
+version: about half a WS2812B's brightness, plenty for an indicator, to confirm through a keycap on
+the first boards.
 
 ## Pinout
 
@@ -78,26 +90,25 @@ part there and re-run it.
 | Refs | Value | MPN | LCSC | Footprint |
 |---|---|---|---|---|
 | U3 | RP2350A | RP2350A | C42411118 | QFN-60 7×7 mm, thermal vias |
-| U4 | Flash 4 MB | W25Q32JVSSIQ | C179173 | SOIC-8 5.3 mm |
-| Y1 | 12 MHz | ABM8-272-T3 | C20625731 | 3225 4-pin |
+| U4 | Flash 2 MB | W25Q16JVSSIQ | C82317 | SOIC-8 5.3 mm |
+| Y1 | 12 MHz, 10 pF | ABM8-272-T3 | C20625731 | 3225 4-pin, as the reference |
 | L1 | 3.3 µH | AOTA-B201610S3R3-101-T | C42411119 | 2016, polarity dot on pad 1 = +1V1 |
-| U2 | 3.3 V LDO | AP2112K-3.3TRG1 | C51118 | SOT-23-5 |
-| U1 | USB ESD | USBLC6-2SC6 | C7519 | SOT-23-6 |
+| U2 | 3.3 V LDO, 200 mA | XC6206P332MR-G | C5446 | SOT-23-3, **basic** |
+| U1 | USB ESD | USBLC6-2SC6 (UMW) | C2687116 | SOT-23-6 |
 | U5 | Buffer, TTL in | 74AHCT1G125GW,125 | C12495 | SOT-353 |
-| D1, D2 | RGB LED | SK6812MINI-E | C5149201 | reverse mount 3.2×2.8, **bottom** |
-| J1 | USB-C 16P | HRO TYPE-C-31-M-12 | C165948 | **bottom** |
-| F1 | PTC 500 mA hold, 15 V | Littelfuse 1206L050/15YR | C151162 | 1206 (the 6 V 1206L050YR leaves little margin on VBUS) |
+| D1, D2 | RGB LED | SK6805-EC20 (OPSCO) | C2890036 | 2.0×2.0×0.65 mm, top, in the switch LED window; own footprint and symbol (`DS2000.pretty`, `DS2000.kicad_sym`) |
 | C1, C2 | 10 µF 25 V X5R | CL21A106KAYNNNE | C15850 | 0805 |
-| C3-C5 | 4.7 µF X5R | GRM155R60J475ME47D | C82453 | 0402 (C3/C4 wide land), as the RP2350 reference |
-| C6-C16, C19-C22 | 100 nF 16 V X7R | CL05B104KO5NNNC | C1525 | 0402 (C21/C22 bottom) |
+| C3-C5 | 4.7 µF 10 V X5R | CL05A475MP5NRNC | C23733 | 0402 (C3/C4 wide land), **basic** |
+| C6-C16, C19-C22 | 100 nF 16 V X7R | CL05B104KO5NNNC | C1525 | 0402 (C21/C22 between the keys) |
 | C17, C18 | 15 pF C0G | 0402CG150J500NT | C1548 | 0402 |
-| R1, R2 | 5.1 kΩ 1 % | 0402WGF5101TCE | C25905 | 0402 |
+| R1, R2 | 5.1 kΩ 1 %, USB-C CC pull-downs | 0402WGF5101TCE | C25905 | 0402, **basic** |
 | R3, R4 | 27 Ω 1 % | RC0402FR-0727RL | C138021 | 0402, as the reference |
-| R5 | 33 Ω 1 % | RC0402FR-0733RL | C138002 | 0402, as the reference |
+| R5 | 33 Ω | 0402WGF330JTCE | C25105 | 0402, **basic** |
 | R6, R8 | 1 kΩ 1 % | 0402WGF1001TCE | C11702 | 0402 |
 | R7 | 10 kΩ, **DNP** | 0402WGF1002TCE | C25744 | 0402 |
 | R9 | 10 kΩ 1 % | 0402WGF1002TCE | C25744 | 0402 |
 | R10 | 100 Ω 1 % | 0402WGF1000TCE | C25076 | 0402 |
+| J1 | USB-C receptacle, **DNP** | HRO TYPE-C-31-M-12 | C165948 | bottom; soldered by hand, left out of the JLC BOM and CPL |
 | SW1-SW3 | Keys | Kailh Choc V1 (CPG1350) | — | soldered by hand |
 | TP1-TP3, JP1, JP2, J3, H1-H4 | pads, jumpers, wire holes, M2 holes | — | — | bare copper |
 
@@ -106,10 +117,12 @@ part there and re-run it.
 JLC's rotation corrections. Upload the zip as the PCB, then the BOM and CPL for assembly:
 
 - 4 layers, 1.6 mm, **black** mask, white silk, **ENIG**, JLC04161H-7628 stackup
-- assembly on **both sides**: D1, D2, C21, C22 and J1 are on the bottom
+- assembly on the **top side only** (Economic PCBA): nothing is assembled on the bottom
 - JLC's BOM page shows which lines are basic or extended parts (extended ones add a setup fee each)
-- check the placement preview, above all the rotation of U3, U5, D1/D2 and J1, before confirming
-- the switches are fitted by hand after assembly
+- check the placement preview, above all the rotation of U3, U5, U2 and D1/D2 (pin 1 = VDD, at the
+  bottom-left corner of each LED as placed, turned 270°), before confirming
+- the switches, and J1 if the USB-C is wanted instead of a cable on J3, are fitted by hand after
+  assembly. J1 is fine pitch (0.5 mm): flux, a fine tip, and the four shell pins first to hold it
 
 ## Layout
 
@@ -117,7 +130,7 @@ JLC's rotation corrections. Upload the zip as the PCB, then the BOM and CPL for 
 
 **State:** placed and fully routed. ERC is clean; DRC reports no unconnected pads, no clearance or
 edge errors and full schematic parity (Update PCB from Schematic reports no changes). The only DRC
-item left is the intended USB-C footprint change described under *Face and branding*.
+items left are the text thickness notes under *Face and branding* and a local edit to Y1's footprint.
 
 **Fixed (mechanical, agreed with the enclosure):**
 
@@ -125,11 +138,11 @@ item left is the intended USB-C footprint change described under *Face and brand
 |---|---|
 | Outline | 72 × 46 mm, 3 mm corner radius |
 | Keys | row of 3 at 18 mm pitch, centres 16 mm from the front edge, middle key on the board's centre line |
-| LEDs | D1/D2 on the bottom, 4.7 mm south of the switch centre (the Choc V1 LED window, opposite the switch pins), turned so DOUT faces the next LED |
+| LEDs | D1/D2 on the top, 4.7 mm south of the switch centre, inside the Choc V1 LED window (5 × 3.15 mm, opposite the switch pins), turned so DOUT faces the next LED. Their vias sit under the switch housing; C21/C22 sit between the keys, under the keycap overhang |
 | Holes | 4 × M2, 4 mm in from each edge, clear of the keycaps |
-| USB-C | bottom side, centred on the back edge, face **1.2 mm past the edge** (its front shield tabs keep 0.6 mm of board), opening facing back |
 | Debug | **all on the bottom**, back right: SWD pads TP1-TP3 (CK, G, IO), BOOT (JP1), RST (JP2) |
-| USB wire holes (J3) | back edge, left |
+| USB-C (J1) | bottom, back edge centre, face overhanging the edge by 1.2 mm, as before the cost-down; the tray's USB-C cut-out stays |
+| USB cable (J3) | back edge, left: the alternative to J1, for a cable exit with strain relief |
 
 **Top side, around the RP2350A:** flash top-left by the QSPI pins, core regulator straight above the
 VREG pins, USB series resistors beside it above D+/D-, crystal below XIN/XOUT, each decoupling
@@ -158,10 +171,9 @@ round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
   small pours (PGND, VREG_LX, the +1V1 node, VREG_VIN) after autorouting.
 - The reference's +3V3 pour under the package (joining VREG_VIN to pins 53/54) becomes a track in the
   same place, between the pin ring and the exposed pad, with one via to the In2 plane.
-- **Two departures**, both forced by J1 underneath: the whole RP2350A cluster sits 0.5 mm lower than
-  first placed so L1 and C16 clear J1's plastic pegs, and R5 lies beside C5 instead of above it,
-  where J1's shell pin comes through. R5 only feeds the 200 µA AVDD filter, away from L1's field.
-- No via lands on J1's bottom-side contacts: every via on the board is at least 0.4 mm clear of them.
+- **Two departures**, both forced by the USB-C receptacle (J1) underneath: the whole RP2350A
+  cluster sits 0.5 mm lower than first placed so L1 and C16 clear J1's plastic pegs, and R5 lies
+  beside C5 instead of above it, where J1's shell pin comes through. R5 only feeds the 200 µA AVDD filter, away from L1's field.
 
 **Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run on the hand-edited board):
 
@@ -185,8 +197,6 @@ round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
   `DS2000.pretty/Logo_Mechardo_5mm`): a rounded square of ENIG copper whose mask opening leaves the
   "m" covered, so it reads black on gold. The SVG's "m" is a single self-overlapping contour, so it is
   first resolved to its nonzero-fill union; taken as-is the overlaps rendered as holes.
-- The USB-C's own silkscreen, which fell past the board edge, is on the fab layer; that is the one
-  intended `lib_footprint_mismatch` in the DRC output.
 
 **How it was routed** (`tools/pcb-generator/`, see `pipeline.py`):
 
@@ -223,20 +233,24 @@ tuck under its edge.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
-JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge (0.2 mm only for the LED
-cut-outs, in `DS2000.kicad_dru`). Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
+JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge. `DS2000.kicad_dru` lets the LED
+courtyards sit inside the switch courtyards. Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
 +1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm tracks / 0.2 mm gap.
 
 **Review (2026-09-28).** Every net was checked against Raspberry Pi's RP2350 minimal design and
-every footprint's pin mapping against its datasheet, including the SK6812MINI-E: its datasheet
-numbers pins differently from KiCad's symbol, but KiCad's reverse-mount footprint is drawn mirrored,
-so once placed on the bottom each pad lands on the right function. No wrong connection was found.
+every footprint's pin mapping against its datasheet. No wrong connection was found. (2026-10-16: the
+SK6805-EC20 pinout, 1 VDD, 2 DOUT, 3 GND, 4 DIN, and its land pattern are taken from OPSCO's
+datasheet OSK-SPC-SK6805/12-EC20 rev A2; turned 270°, every net keeps the corner it had with the
+WS2812B-2020.)
 The review did find routing the autorouter had done poorly, since fixed: XIN was 14 mm with two
 vias and the QSPI clock 35.5 mm with four (now 7.4 mm with none, and 11 mm with two). The USB data
-lines carry a ~2 cm stub to the J3 wire holes, which is harmless at full speed (12 Mbit/s).
+lines run ~25 mm from J3 to U1, which is harmless at full speed (12 Mbit/s).
 
 **Review before ordering:**
 
+- **LED window height:** the SK6805-EC20 is 0.65 mm tall and sits inside the Choc V1 LED window.
+  Measure the window's height above the board on a real switch (it needs at least 0.7 mm) before
+  ordering.
 - Core regulator: copied from the reference (see above). At assembly, check L1's dot sits on the
   left, towards +1V1 (the silkscreen dot marks it).
 - USB: confirm the 90 Ω pair geometry with JLC's impedance calculator for this stackup.
