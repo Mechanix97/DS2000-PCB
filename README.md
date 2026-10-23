@@ -10,7 +10,7 @@
 
 <p align="center">
   <b>Three keys for Discord: mute, deafen, disconnect.</b><br>
-  RP2350A · Kailh Choc V1 · RGB inside the switch · USB-C (hand-soldered) or a soldered cable · the board <i>is</i> the top face
+  RP2350A · Kailh Choc V1 · RGB inside the switch · USB-C (by JLC or by hand) or a soldered cable · the board <i>is</i> the top face
 </p>
 
 KiCad design for the DS2000, a three-key Discord control deck. Mute and deafen are lit from
@@ -23,8 +23,8 @@ RP2350A, the logos and the legends are meant to be seen. It sits in a 3D-printed
 | MCU | Raspberry Pi RP2350A |
 | Keys | 3× Kailh Choc V1 (low profile) in a row, 18 mm pitch, soldered, MBK-style caps |
 | LEDs | 2× SK6805-EC20 (2.0 × 2.0 × 0.65 mm, WS2812-compatible), on top inside the LED window of the mute and deafen switches |
-| Connector | USB-C receptacle J1 on the bottom, **not assembled by JLC**: soldered by hand. Or a USB cable soldered to J3. USB 2.0 full speed |
-| Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. Every assembled part on top (one-sided assembly), RP2350A on show; underneath only J1 (hand-soldered) and the debug pads |
+| Connector | USB-C receptacle J1 on the bottom, fitted by JLC (*standard* variant) or by hand (*economic*). Or a USB cable soldered to J3's pads on the bottom. USB 2.0 full speed |
+| Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. Every part but J1 on top, RP2350A on show; underneath J1, J3's wire pads, the debug pads and the test pads |
 | Tool | **KiCad 10** |
 
 Design decisions, block descriptions, BOM and open items: [`docs/design-rev-a.md`](docs/design-rev-a.md).
@@ -53,7 +53,7 @@ board screws into it through its four corner holes.
 | Top face, without switches | Underneath |
 |---|---|
 | ![Top, without switches](docs/img/rev-a-layout.png) | ![Bottom](docs/img/rev-a-bottom.png) |
-| The visible face: RP2350A, logos and legends | J1's USB-C footprint (fitted by hand), debug pads (SWD, BOOT, RST) and J3's cable holes |
+| The visible face: RP2350A, logos and legends | J1's USB-C, J3's wire pads, debug pads (SWD, BOOT, RST) and test pads (renders from before the 2026-10-23 review) |
 
 ### Close up
 
