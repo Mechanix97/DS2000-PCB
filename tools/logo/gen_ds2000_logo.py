@@ -123,6 +123,7 @@ out = f'''(footprint "{name}"
 {polys}\t(fp_rect (start {-w_mm} {-h_mm}) (end {w_mm} {h_mm}) (stroke (width 0.05) (type solid)) (fill no) (layer "F.CrtYd") (uuid "{uuid.uuid4()}"))
 )
 '''
-open(OUT, "w", encoding="utf8", newline="\n").write(out)
+from copper_pad import copper_as_pad   # the exposed copper becomes a pad the board ties to GND
+open(OUT, "w", encoding="utf8", newline="\n").write(copper_as_pad(out))
 print(f"wrote {OUT}: {W_PX * S:.2f} x {HEIGHT} mm; white {stats['white'][0]} shapes / {stats['white'][1]} holes, "
       f"blue {stats['blue'][0]} shapes / {stats['blue'][1]} holes")

@@ -5,12 +5,12 @@
 	(uuid "defea174-d404-5f0f-95d3-26e7103e2a73")
 	(paper "A3")
 	(title_block
-		(title "DS-2000")
-		(date "2026-09-28")
+		(title "DS2000")
+		(date "2026-10-23")
 		(rev "A")
 		(company "Mechardo Labs")
-		(comment 1 "RP2350A, 3x Choc V1 keys, SK6812MINI-E per key, USB-C")
-		(comment 2 "Pinout follows DS-2000-Firmware/include/pins.h")
+		(comment 1 "RP2350A, 3x Choc V1 keys, SK6805-EC20 under mute and deafen, USB-C")
+		(comment 2 "Pinout follows DS2000-Firmware/include/pins.h")
 	)
 	(lib_symbols
 		(symbol "DS2000:SK6805-EC20"
@@ -5613,7 +5613,7 @@
 		)
 		(uuid "1145b5e4-728e-56ad-b843-ec519a882cc0")
 	)
-	(text "J1 (USB-C) is not assembled: solder it by hand, or solder a cable to J3 instead. No fuse: the host port limits the current. R1/R2: USB-C CC pull-downs."
+	(text "J1 (USB-C, bottom): fitted by JLC in the standard variant, by hand in the economic one; or solder a cable to J3 (pads, bottom). No fuse: the host port limits the current. R1/R2: USB-C CC pull-downs."
 		(exclude_from_sim no)
 		(at 20.32 110.49 0)
 		(effects
@@ -9384,7 +9384,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "4.7u"
 			(at 189.48 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9429,7 +9429,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21A106KAYNNNE"
+		(property "MPN" "CL21A475KAQNNNE"
 			(at 189.48 57.78 0)
 			(hide yes)
 			(show_name no)
@@ -9451,7 +9451,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C15850"
+		(property "LCSC" "C1779"
 			(at 189.48 57.78 0)
 			(hide yes)
 			(show_name no)
@@ -14675,7 +14675,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+		(property "Footprint" "DS2000:WirePads_1x04_P2.54mm_SMD"
 			(at 71.12 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -17222,7 +17222,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "W25Q16JVSS"
+		(property "Value" "W25Q32JVSS"
 			(at 86.36 210.82 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17265,7 +17265,7 @@
 				)
 			)
 		)
-		(property "MPN" "W25Q16JVSSIQ"
+		(property "MPN" "W25Q32JVSSIQ"
 			(at 86.36 208.28 0)
 			(hide yes)
 			(show_name no)
@@ -17287,7 +17287,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C82317"
+		(property "LCSC" "C82344"
 			(at 86.36 208.28 0)
 			(hide yes)
 			(show_name no)
@@ -18328,7 +18328,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "4.7u"
 			(at 225.04 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18373,7 +18373,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL21A106KAYNNNE"
+		(property "MPN" "CL21A475KAQNNNE"
 			(at 225.04 57.78 0)
 			(hide yes)
 			(show_name no)
@@ -18395,7 +18395,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C15850"
+		(property "LCSC" "C1779"
 			(at 225.04 57.78 0)
 			(hide yes)
 			(show_name no)
@@ -19726,10 +19726,10 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
-		(in_pos_files no)
-		(dnp yes)
+		(in_pos_files yes)
+		(dnp no)
 		(uuid "17d7ee23-6eb7-49a7-8db9-1a7129235cca")
 		(property "Reference" "J1"
 			(at 22.86 52.07 0)
@@ -19784,8 +19784,19 @@
 				)
 			)
 		)
-		(property "LCSC" "C165948"
+		(property "Note" "DNP: not assembled by JLC (keeps assembly one-sided). Solder by hand, or use J3"
 			(at 30.48 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Config" "+standard"
+			(at 22.86 52.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19796,7 +19807,7 @@
 			)
 		)
 		(property "MPN" "TYPE-C-31-M-12"
-			(at 30.48 71.12 0)
+			(at 22.86 52.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19807,7 +19818,7 @@
 			)
 		)
 		(property "Manufacturer" "Korean Hroparts Elec"
-			(at 30.48 71.12 0)
+			(at 22.86 52.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19817,8 +19828,8 @@
 				)
 			)
 		)
-		(property "Note" "DNP: not assembled by JLC (keeps assembly one-sided). Solder by hand, or use J3"
-			(at 30.48 71.12 0)
+		(property "LCSC" "C165948"
+			(at 22.86 52.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20185,19 +20196,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C25905"
-			(at 76.2 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "0402WGF5101TCE"
-			(at 76.2 45.72 0)
+			(at 80.26 45.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20208,7 +20208,18 @@
 			)
 		)
 		(property "Manufacturer" "UNI-ROYAL"
-			(at 76.2 45.72 0)
+			(at 80.26 45.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25905"
+			(at 80.26 45.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20299,19 +20310,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C25905"
-			(at 66.04 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(property "MPN" "0402WGF5101TCE"
-			(at 66.04 45.72 0)
+			(at 70.1 45.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20322,7 +20322,18 @@
 			)
 		)
 		(property "Manufacturer" "UNI-ROYAL"
-			(at 66.04 45.72 0)
+			(at 70.1 45.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25905"
+			(at 70.1 45.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20346,6 +20357,541 @@
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 279.4 135.89 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "058824ec-b292-4414-98b6-b0aac931f8b7")
+		(property "Reference" "TP4"
+			(at 281.94 139.7 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+5V"
+			(at 281.94 141.605 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "Production test pad, bottom side"
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9f68fcf3-911a-4459-896f-65995dcd3524")
+		)
+		(instances
+			(project ""
+				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
+					(reference "TP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 279.4 135.89 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "74f0eec9-48d6-467f-8047-33b2d3a86634")
+		(property "Reference" "#PWR085"
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+5V"
+			(at 279.4 132.29 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 279.4 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "989da3c9-623a-4caf-8fa5-55ddff69af3a")
+		)
+		(instances
+			(project ""
+				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
+					(reference "#PWR085")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 299.72 135.89 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e64bd610-c555-445e-a040-4e8db4b5a527")
+		(property "Reference" "TP5"
+			(at 302.26000000000005 139.7 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 302.26000000000005 141.605 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "Production test pad, bottom side"
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "dfe8a65c-1de2-4fb6-8a37-6e134e23d91e")
+		)
+		(instances
+			(project ""
+				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
+					(reference "TP5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 299.72 135.89 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "aaaa3f1d-1825-4d9d-a535-a44253a8e348")
+		(property "Reference" "#PWR086"
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 299.72 132.29 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 299.72 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "fd899769-79bd-48da-bfeb-7370c43b4a49")
+		)
+		(instances
+			(project ""
+				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
+					(reference "#PWR086")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 320.04 135.89 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ec2f24a2-e0a0-4a64-9447-ea7ef9b3ff26")
+		(property "Reference" "TP6"
+			(at 322.58000000000004 139.7 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+1V1"
+			(at 322.58000000000004 141.605 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "Production test pad, bottom side"
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6b68d398-6478-4b59-a675-cb0c561cf458")
+		)
+		(instances
+			(project ""
+				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
+					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+1V1")
+		(at 320.04 135.89 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2278f4f1-ddb2-4783-945d-9643df9f10b3")
+		(property "Reference" "#PWR087"
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+1V1"
+			(at 320.04 132.29 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 320.04 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "858f20cd-bf66-4ccd-b365-ef42b352a34d")
+		)
+		(instances
+			(project ""
+				(path "/defea174-d404-5f0f-95d3-26e7103e2a73"
+					(reference "#PWR087")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(polyline
+		(pts
+			(xy 266.7 116.84) (xy 330.2 116.84) (xy 330.2 154.94) (xy 266.7 154.94) (xy 266.7 116.84)
+		)
+		(stroke
+			(width 0.254)
+			(type dash)
+			(color 72 72 160 1)
+		)
+		(uuid "38222056-84aa-41c1-aa0d-8c306ed1e565")
+	)
+	(text "Production test pads"
+		(exclude_from_sim no)
+		(at 267.97 115.57 0)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.3)
+				(bold yes)
+				(color 72 72 160 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "9f80e53a-3dec-4692-8e0c-7dc5cbe295e0")
+	)
+	(text "Bare pads on the bottom, beside SWD (GND is TP2)."
+		(exclude_from_sim no)
+		(at 269.24 152.4 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(italic yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "852d22be-8238-4d61-8d9c-03d776571eb7")
 	)
 	(sheet_instances
 		(path "/"
