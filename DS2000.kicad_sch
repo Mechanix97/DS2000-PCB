@@ -20377,7 +20377,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Value" "+5V"
@@ -20388,7 +20388,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
@@ -20543,7 +20543,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Value" "+3V3"
@@ -20554,7 +20554,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
@@ -20709,7 +20709,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Value" "+1V1"
@@ -20720,7 +20720,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
@@ -20881,7 +20881,7 @@
 		)
 		(uuid "9f80e53a-3dec-4692-8e0c-7dc5cbe295e0")
 	)
-	(text "Bare pads on the bottom, beside SWD (GND is TP2)."
+	(text "Bare pads on the bottom, under the RP2350A (GND is TP2)."
 		(exclude_from_sim no)
 		(at 269.24 152.4 0)
 		(effects
