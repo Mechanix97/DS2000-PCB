@@ -21,7 +21,7 @@ RP2350A, the logos and the legends are meant to be seen. It sits in a 3D-printed
 | | |
 |---|---|
 | MCU | Raspberry Pi RP2350A |
-| Keys | 3× Kailh Choc V1 (low profile) in a row, 18 mm pitch, soldered, MBK-style caps |
+| Keys | 3× Kailh Choc V1 (low profile) in a row, 18 mm pitch, soldered, MBK-style caps. The footprint also takes 3-pin MX switches, for prototypes |
 | LEDs | 2× SK6805-EC20 (2.0 × 2.0 × 0.65 mm, WS2812-compatible), on top inside the LED window of the mute and deafen switches |
 | Connector | USB-C receptacle J1 on the bottom, fitted by JLC (*standard* variant) or by hand (*economic*). Or a USB cable soldered to J3's pads on the bottom. USB 2.0 full speed |
 | Board | 4 layers, 1.6 mm, 72 × 46 mm, black mask, ENIG. Every part but J1 on top, RP2350A on show; underneath J1, J3's wire pads, the debug pads and the test pads |
