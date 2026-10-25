@@ -247,6 +247,17 @@ from Kailh's CPG1350 datasheet; the geometry matches kiswitch's footprint of the
 courtyard follows the 13.8 mm lower housing: the 15 mm flange is 2.2 mm up, so the crystal and C18
 tuck under its edge.
 
+**Hybrid footprint (2026-10-25):** SW1-SW3 use `DS2000.pretty/SW_Hybrid_Choc_V1_MX_1.00u`
+(`tools/footprints/gen_hybrid_choc_mx.py`): the Choc V1 holes plus the two pins of a 3-pin MX switch
+(at (2.54, -5.08) and (-3.81, -2.54), 1.5 mm drill) and one 4 mm centre hole that takes either post.
+The product keeps Choc V1 at 18 mm; MX switches are for prototypes. Every extra hole sits under the
+switch housing, and both switches have their LED window south of the centre (Choc 4.7 mm, MX 5.08 mm),
+so the SK6805-EC20 serves both. MX pin 1 joins Choc pin 1 with a short top track under the switch;
+MX pin 2 is GND, joined by the planes. With MX switches:
+- the keycaps must be 17 mm wide or less (18 mm pitch); 3D-printed ones are planned;
+- a 3-pin MX is meant to sit in a plate, which this board has none of: soldered, it holds, with a little play;
+- moving the +5V, LED data and BOOTSEL tracks around the new pins made BOOTSEL 53 → 63 mm.
+
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
 JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge. `DS2000.kicad_dru` lets the LED
@@ -282,6 +293,7 @@ coupled pair of ~12 mm (0.25 mm tracks, 0.15 mm gap, about 90 Ω on this stackup
 
 - [ ] Review the routed board (see Layout, *Review before ordering*)
 - [ ] Mute and deafen keycaps must be shine-through or translucent for their LEDs to be visible
+- [ ] First boards: fit a 3-pin MX (Kailh Blue) and check it seats flat over the LED and the light shows
 - [ ] ESD check of the exposed face on the first boards (IEC 61000-4-2 style: discharges to the logos,
   the RP2350A strip and the screw heads), now that the face has a GND pour and grounded logos
 

@@ -13504,7 +13504,7 @@
 				)
 			)
 		)
-		(property "Footprint" "DS2000:SW_Kailh_Choc_V1_1.00u"
+		(property "Footprint" "DS2000:SW_Hybrid_Choc_V1_MX_1.00u"
 			(at 238.76 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -15902,7 +15902,7 @@
 				)
 			)
 		)
-		(property "Footprint" "DS2000:SW_Kailh_Choc_V1_1.00u"
+		(property "Footprint" "DS2000:SW_Hybrid_Choc_V1_MX_1.00u"
 			(at 238.76 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -18934,7 +18934,7 @@
 				)
 			)
 		)
-		(property "Footprint" "DS2000:SW_Kailh_Choc_V1_1.00u"
+		(property "Footprint" "DS2000:SW_Hybrid_Choc_V1_MX_1.00u"
 			(at 238.76 124.46 0)
 			(hide yes)
 			(show_name no)

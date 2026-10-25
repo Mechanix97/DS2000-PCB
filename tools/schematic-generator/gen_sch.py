@@ -302,7 +302,7 @@ BOX(226.06, 114.3, 259.08, 151.13, "Keys")
 rows = [124.46, 132.08, 139.7]
 for i, (gp, net, name, turn) in enumerate([("2", "KEY_MUTE", "MUTE", 213.36), ("3", "KEY_DEAFEN", "DEAFEN", 218.44),
                                            ("4", "KEY_DISCONNECT", "DISCONNECT", 223.52)]):
-    sw = part(f"SW{i + 1}", "Switch:SW_Push", name, "DS2000:SW_Kailh_Choc_V1_1.00u",
+    sw = part(f"SW{i + 1}", "Switch:SW_Push", name, "DS2000:SW_Hybrid_Choc_V1_MX_1.00u",
               (238.76, rows[i]), {"1": net, "2": "GND"})
     W(U3.p(gp), (turn, U3.p(gp)[1]), (turn, rows[i]), sw.p("1"))
     W(sw.p("2"), (248.92, rows[i]))
