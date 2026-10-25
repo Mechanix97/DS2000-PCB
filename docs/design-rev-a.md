@@ -256,7 +256,7 @@ so the SK6805-EC20 serves both. MX pin 1 joins Choc pin 1 with a short top track
 MX pin 2 is GND, joined by the planes. With MX switches:
 - the keycaps must be 17 mm wide or less (18 mm pitch); 3D-printed ones are planned;
 - a 3-pin MX is meant to sit in a plate, which this board has none of: soldered, it holds, with a little play;
-- moving the +5V, LED data and BOOTSEL tracks around the new pins made BOOTSEL 53 → 61 mm.
+- moving the +5V, LED data and BOOTSEL tracks around the new pins made BOOTSEL 53 → 63 mm.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
