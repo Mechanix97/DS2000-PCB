@@ -119,9 +119,27 @@ Board options, parts and what to check before ordering: [`docs/design-rev-a.md`]
 
 ## License
 
-AGPL-3.0, see [`LICENSE`](LICENSE). Whether the hardware should move to CERN-OHL-S is discussed
-in #16.
+Copyright Mechardo Labs 2025-2026.
 
-The DS2000 name and the DS2000 and Mechardo Labs logos are not covered by the license: as an
-additional term under AGPL-3.0 section 7(e), their use is governed by the
-[trademark policy](TRADEMARKS.md). Forks are welcome under a name of their own.
+| What | License |
+|---|---|
+| The hardware design: schematic, board, footprints, symbols, 3D models, KiBot configs, docs | **CERN-OHL-S-2.0**, the strongly reciprocal CERN Open Hardware Licence v2, see [`LICENSE`](LICENSE) |
+| The scripts in [`tools/`](tools) | AGPL-3.0, see [`tools/LICENSE`](tools/LICENSE) |
+| The fonts in [`fonts/`](fonts) | SIL Open Font License 1.1, see the `OFL-*.txt` files there |
+
+This source describes Open Hardware and is licensed under the CERN-OHL-S v2. You may redistribute
+and modify this source and make products using it under the terms of the CERN-OHL-S v2
+(https://ohwr.org/cern_ohl_s_v2.txt). This source is distributed WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTY, INCLUDING OF MERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A PARTICULAR PURPOSE.
+Please see the CERN-OHL-S v2 for applicable conditions.
+
+Source location: https://github.com/Mechanix97/DS2000-PCB. As per CERN-OHL-S v2 section 4, should
+you produce hardware based on this source, you must where practicable maintain the Source Location
+visible on the external case of the product or in its documentation.
+
+The hardware moved from AGPL-3.0 to CERN-OHL-S-2.0 in #16: the GPL family talks about source and
+object code, which do not map cleanly onto schematics, gerbers and boards. The app and the firmware
+stay AGPL-3.0.
+
+The DS2000 name and the DS2000 and Mechardo Labs logos are not covered by these licenses: their use
+is governed by the [trademark policy](TRADEMARKS.md). Forks are welcome under a name of their own.

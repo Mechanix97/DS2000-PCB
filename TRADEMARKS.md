@@ -1,8 +1,10 @@
 # Trademark policy
 
-The code, firmware and hardware designs of DS2000 are free software under the
-[GNU Affero General Public License v3.0](LICENSE). The license covers what the
-project is made of. It does not cover its name or its logos, and this policy
+The hardware design in this repository is open hardware under the
+[CERN Open Hardware Licence v2, strongly reciprocal](LICENSE) (CERN-OHL-S-2.0);
+its scripts in `tools/`, like the DS2000 app and firmware, are free software
+under the [GNU Affero General Public License v3.0](tools/LICENSE). The licenses
+cover what the project is made of. It does not cover its name or its logos, and this policy
 says how you may use them.
 
 The point is simple: someone who downloads, installs or buys something called
@@ -20,14 +22,22 @@ This policy is also published at
   wordmark and the `m` mark.
 
 They belong to Mechardo Labs. The logo files in this repository are covered by
-this policy, not by the AGPL.
+this policy, not by the CERN-OHL-S or the AGPL.
 
-## Additional term under the AGPL
+## The licenses and the marks
 
-Under section 7(e) of the GNU Affero General Public License v3.0, the license of
-this repository does not grant rights under trademark law to use the marks
-above. Use of the marks is governed by this policy. The license text in
-[`LICENSE`](LICENSE) is unchanged, and every other right it gives you stands.
+Neither license grants rights to use the marks above:
+
+- CERN-OHL-S-2.0, section 8.2: the licence gives no right to use the name,
+  image or logo by which the Licensor is known, except where needed to comply
+  with its section 3 or as the law otherwise allows, and then only factually
+  and without implying endorsement.
+- AGPL-3.0, for the scripts in `tools/`: under its section 7(e), the license
+  does not grant rights under trademark law to use the marks.
+
+Use of the marks is governed by this policy. The license texts in
+[`LICENSE`](LICENSE) and [`tools/LICENSE`](tools/LICENSE) are unchanged, and
+every other right they give you stands.
 
 ## What you may do without asking
 
