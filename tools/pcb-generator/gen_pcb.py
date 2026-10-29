@@ -42,7 +42,7 @@ X0, X1, Y0, Y1, RAD = 64.0, 136.0, 71.0, 117.0, 3.0
 KEY_Y, PITCH = 101.0, 18.0                   # Kailh Choc spacing; 1 mm forward of rev A's MX row, clear of the crystal
 KEYS = {"SW1": 100 - PITCH, "SW2": 100.0, "SW3": 100 + PITCH}
 LED_UNDER = {"D1": "SW1", "D2": "SW2"}
-SWITCH_FP = "DS2000:SW_Kailh_Choc_V1_1.00u"   # origin is the switch centre
+SWITCH_FP = "DS2000:SW_Hybrid_Choc_V1_MX_1.00u"   # origin is the switch centre
 LED_FROM_CENTER = (0.0, 4.7)              # Choc V1 LED window, opposite the switch pins
 HOLE = 4.0                                # hole centre from each edge
 USB_OVERHANG = 1.2                        # receptacle face past the back edge
@@ -248,7 +248,7 @@ def text(s_, x, y, size=1.2, layer=pcbnew.F_SilkS):
 for ref, label in [("SW1", "MUTE"), ("SW2", "DEAFEN"), ("SW3", "DISCONNECT")]:
     text(label, KEYS[ref], Y1 - 3.0)
 # debug pads on the bottom: say what each one is instead of TP1/JP1
-def btext(s_, x, y, size=0.9):
+def btext(s_, x, y, size=1.0):
     t = pcbnew.PCB_TEXT(board); t.SetText(s_); t.SetLayer(pcbnew.B_SilkS); t.SetMirrored(True)
     t.SetPosition(pcbnew.VECTOR2I(mm(x), mm(y)))
     t.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size))); t.SetTextThickness(mm(size * 0.15))

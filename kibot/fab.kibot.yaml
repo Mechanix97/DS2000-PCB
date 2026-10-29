@@ -2,19 +2,38 @@
 #
 # KiBot's JLCPCB template makes the gerbers, the drill files, the BOM and the placement (CPL) file in
 # the formats JLC's order page expects, with its footprint rotation corrections applied, and zips
-# them. Only parts with an LCSC field are assembled: the Kailh Choc switches are soldered by hand,
-# and the test pads, solder jumpers, holes and J3's wire holes are bare copper.
+# them. The stencil flavour of the template also plots F.Paste and B.Paste, so JLC cuts the stencil
+# from the footprints' own paste (the RP2350A's windowed exposed pad) instead of from the copper.
+# Only parts with an LCSC field are assembled: the Kailh Choc switches are soldered by hand, and the
+# test pads, solder jumpers, holes and J3's wire pads are bare copper.
 #
-# The template's outputs do not run by default; CI asks for them by name:
-#   kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch _JLCPCB _JLCPCB_compress step
+# Two board variants, from the same board (KiBoM style, `Config` field):
+#   economic  JLC assembles the top side only (Economic PCBA); J1, the USB-C on the bottom, is
+#             soldered by hand, or a cable goes to J3
+#   standard  JLC also fits J1 on the bottom (two-sided, Standard PCBA)
+# The template's outputs do not run by default; CI asks for them by name, once per variant:
+#   kibot -c kibot/fab.kibot.yaml -b DS2000.kicad_pcb -e DS2000.kicad_sch --variant economic \
+#         -d kibot-out/economic _JLCPCB _JLCPCB_compress step
 kibot:
   version: 1
 
 global:
   field_lcsc_part: LCSC
 
+variants:
+  - name: economic
+    comment: JLC assembles the top side only; J1 (USB-C) by hand, or a cable on J3
+    type: kibom
+    file_id: _economic
+    variant: economic
+  - name: standard
+    comment: JLC also fits J1 (USB-C) on the bottom side
+    type: kibom
+    file_id: _standard
+    variant: standard
+
 import:
-  - file: JLCPCB
+  - file: JLCPCB_stencil
 
 outputs:
   - name: step
