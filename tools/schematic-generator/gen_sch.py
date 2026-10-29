@@ -168,7 +168,7 @@ LBL("USB_CONN_DM", (106.68, 76.2), (1, 0)); LBL("USB_CONN_DP", (109.22, 78.74), 
 # so a soldered cable gets the same protection as the receptacle.
 part("J3", "Connector_Generic:Conn_01x04", "USB wire", "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
      (127.0, 96.52), {"1": "VBUS", "2": "USB_CONN_DM", "3": "USB_CONN_DP", "4": "GND"}, bom=False,
-     fields={"Note": "Bare holes: solder a USB cable here instead of fitting J1 (red, white, green, black)"},
+     fields={"Note": "SMD wire pads on the bottom: solder a USB cable here instead of fitting J1 (red, white, green, black)"},
      props={"Reference": (129.54, 95.25), "Value": (129.54, 97.79)})
 TEXT((20.32, 110.49), "CC 5.1k: USB device (UFP). U1 at the connector, R3/R4 next to the RP2350. J3: optional soldered cable.")
 
@@ -320,7 +320,7 @@ U5 = part("U5", "74xGxx:74AHCT1G125", "74AHCT1G125", "Package_TO_SOT_SMD:SOT-353
 W(U3.p("8"), (210.82, U3.p("8")[1]), (210.82, 190.5), U5.p("2"))
 W(U5.p("1"), (238.76, 177.8)); PWR("GND", (238.76, 177.8), (0, -1))
 W(U5.p("5"), (233.68, 177.8), (228.6, 177.8)); PWR("+5V", (228.6, 177.8))
-R10 = R("R10", "100", "LED_DIN_5V", "LED_DIN", (259.08, 190.5), rot=90, fields={"Note": "Damping, near D1"})
+R10 = R("R10", "100", "LED_DIN_5V", "LED_DIN", (259.08, 190.5), rot=90, fields={"Note": "Damping, at the source (U5 output)"})
 W(U5.p("4"), R10.p("1"))
 C("C20", "100n", "+5V", "GND", (223.52, 215.9))
 chain = ["LED_DIN", "LED_D1_D2", None]

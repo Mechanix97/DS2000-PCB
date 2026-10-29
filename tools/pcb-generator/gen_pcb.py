@@ -248,7 +248,7 @@ def text(s_, x, y, size=1.2, layer=pcbnew.F_SilkS):
 for ref, label in [("SW1", "MUTE"), ("SW2", "DEAFEN"), ("SW3", "DISCONNECT")]:
     text(label, KEYS[ref], Y1 - 3.0)
 # debug pads on the bottom: say what each one is instead of TP1/JP1
-def btext(s_, x, y, size=0.9):
+def btext(s_, x, y, size=1.0):
     t = pcbnew.PCB_TEXT(board); t.SetText(s_); t.SetLayer(pcbnew.B_SilkS); t.SetMirrored(True)
     t.SetPosition(pcbnew.VECTOR2I(mm(x), mm(y)))
     t.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size))); t.SetTextThickness(mm(size * 0.15))

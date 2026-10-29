@@ -231,7 +231,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -249,7 +249,7 @@
 							)
 						)
 					)
-					(number "3"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -267,7 +267,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -285,7 +285,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -8211,7 +8211,7 @@
 				)
 			)
 		)
-		(property "Note" "Damping, near D1"
+		(property "Note" "Damping, at the source (U5 output)"
 			(at 259.08 193.54 0)
 			(hide yes)
 			(show_name no)
@@ -12120,16 +12120,16 @@
 				)
 			)
 		)
-		(pin "1"
+		(pin "3"
 			(uuid "ec54fb0d-0243-5d1d-9644-143c476cfbed")
 		)
-		(pin "2"
+		(pin "4"
 			(uuid "09664a21-8572-567e-a4fc-269e82a654ad")
 		)
-		(pin "3"
+		(pin "1"
 			(uuid "3eff53a5-e89d-5403-b8ee-230ebfb0503b")
 		)
-		(pin "4"
+		(pin "2"
 			(uuid "f349b512-2f98-5f5d-b827-0b6fb55e47c9")
 		)
 		(instances
@@ -14707,7 +14707,7 @@
 				)
 			)
 		)
-		(property "Note" "Bare holes: solder a USB cable here instead of fitting J1 (red, white, green, black)"
+		(property "Note" "SMD wire pads on the bottom: solder a USB cable here instead of fitting J1 (red, white, green, black)"
 			(at 71.12 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -14998,16 +14998,16 @@
 				)
 			)
 		)
-		(pin "1"
+		(pin "3"
 			(uuid "3a359de7-4bb1-59f0-8afa-5ebf6d8ecbfe")
 		)
-		(pin "2"
+		(pin "4"
 			(uuid "bddc56f4-20e7-5370-a77e-003ee92f6853")
 		)
-		(pin "3"
+		(pin "1"
 			(uuid "02352354-6d11-57d2-bb5f-93fe7444a9f4")
 		)
-		(pin "4"
+		(pin "2"
 			(uuid "96053edb-eb30-5376-bd60-d34bd37f8956")
 		)
 		(instances
@@ -19784,7 +19784,7 @@
 				)
 			)
 		)
-		(property "Note" "DNP: not assembled by JLC (keeps assembly one-sided). Solder by hand, or use J3"
+		(property "Note" "Fitted by JLC in the standard variant (bottom side); in the economic one solder by hand, or use J3"
 			(at 30.48 71.12 0)
 			(hide yes)
 			(show_name no)

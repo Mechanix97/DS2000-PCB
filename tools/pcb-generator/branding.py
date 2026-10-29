@@ -38,7 +38,8 @@ mm, tomm = pcbnew.FromMM, pcbnew.ToMM
 PX, PY = 75.5, 80.8          # DS2000 logo centre
 MX, MY = 126.0, 77.2         # Mechardo mark centre
 OURS = {"DS2000", "DS-2000", "rev A", "mechardo labs", "mechardo", "labs"}
-REF_SIZE = 0.8                                  # cap height; Plex Mono Bold stems are ~0.16 mm here, above JLC's 0.153 mm
+REF_SIZE = 1.0                                  # cap height; JLC's minimum text height is 1.0 mm, and at 0.8 mm the
+                                                # Plex Mono Bold strokes measured ~0.14 mm, under JLC's 0.153 mm line width
 MONO_ADVANCE = 0.6 / 0.7                        # Plex Mono: 600/1000 em per char; KiCad sizes TrueType by cap height (~0.7 em)
 FONTS = {                                       # text -> (face, bold)
     "DS2000": ("Sora", True), "mechardo": ("Sora SemiBold", False), "labs": ("Sora SemiBold", False),
@@ -74,8 +75,8 @@ for fp in list(b.GetFootprints()):
         stale.append(fp)
     elif fp.GetReference() in ("J1", "Y1"):     # J1's outline falls past the edge, Y1's meets SW2's under the keycap
         for item in fp.GraphicalItems():
-            if item.GetLayer() in (pcbnew.F_SilkS, pcbnew.B_SilkS):
-                item.SetLayer(pcbnew.B_Fab)
+            if item.GetLayer() in (pcbnew.F_SilkS, pcbnew.B_SilkS):     # to the fab layer of the part's own side
+                item.SetLayer(pcbnew.F_Fab if item.GetLayer() == pcbnew.F_SilkS else pcbnew.B_Fab)
 stale += [d for d in b.GetDrawings() if isinstance(d, pcbnew.PCB_TEXT) and d.GetText() in OURS]
 
 def text(s, x, y, size):
@@ -92,8 +93,8 @@ def place_logo(name, ref, x, y):
 place_logo("Logo_DS2000_8.6mm", "LOGO2", PX, PY)        # the product logo from mechardo3d.xyz
 text("rev A", PX, PY + 6.1, 1.0)
 place_logo("Logo_Mechardo_5mm", "LOGO1", MX, MY)
-text("mechardo", MX, MY + 4.3, 0.9)
-text("labs", MX, MY + 5.8, 0.9)
+text("mechardo", MX, MY + 4.3, 1.0)
+text("labs", MX, MY + 5.8, 1.0)
 
 # ---------------------------------------------------------------- reference placement
 def rect(bb):

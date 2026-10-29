@@ -2,8 +2,10 @@
 # them. Economic variant only: in the standard one J1's USB-C overhangs the back edge by 1.2 mm,
 # over the gap where the tabs are.
 #
-# 2 x 2 boards, 3 mm apart, mouse-bite tabs, 5 mm rails top and bottom with three fiducials and three
-# tooling holes, so the boards' own faces carry no fiducials. Each copy keeps its references as on
+# 2 x 2 boards, 3 mm apart, inside a 5 mm frame with three fiducials and three tooling holes, so the
+# boards' own faces carry no fiducials. Mouse-bite tabs only on the boards' short (46 mm) sides: the
+# front edge is the visible face, and the back edge has J3's pads, U1 and C1/C2/U2 within 1-2 mm of it
+# (a tab next to an MLCC can crack it when the panel is broken apart). Each copy keeps its references as on
 # the single board, so the visible silkscreen reads as designed; tools/bom/panel_bom.py numbers the
 # copies (C1_1 ... C1_4) in the placement file and BOM JLC gets.
 #
@@ -35,8 +37,11 @@ filters:
         regex: '^KiKit_'
 
 import:
-  - file: JLCPCB_stencil
+  # JLCPCB with a top stencil only: KiKit copies J1 into the panel, and its bottom paste would ask JLC
+  # for a bottom stencil this top-only build never uses
+  - file: JLCPCB
     definitions:
+      _KIBOT_F_PASTE: '- F.Paste'
       _KIBOT_POS_DNF_FILTER: panel_assembly
       _KIBOT_BOM_ENABLED: false
 
@@ -58,14 +63,14 @@ outputs:
             type: fixed
             width: 3
             hcount: 2
-            vcount: 1
+            vcount: 0
           cuts:
             type: mousebites
             drill: 0.5
             spacing: 0.8
             offset: 0.2
           framing:
-            type: railstb
+            type: frame
             width: 5
             space: 3
           fiducials:

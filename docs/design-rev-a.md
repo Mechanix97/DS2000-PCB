@@ -66,7 +66,8 @@ minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
 affected by the RP2350-E9 erratum, which concerns pull-downs). The LED data line leaves GPIO5 at
 3.3 V and is shifted to 5 V by U5 (74AHCT1G125, TTL-level input), then R10 100 Ω, then the chain
 D1 (mute) → D2 (deafen); D2's DOUT is unused. Each LED has its own 100 nF, on the top between the
-keys. The SK6805-EC20 needs 0.7 × VDD = 3.5 V at 5 V on DIN, above a 3.3 V GPIO, so the shifter is
+keys. The SK6805-EC20 wants DIN high at 0.6 × VDD (3.0 V at 5 V, datasheet Rev A1; rev A2 said 0.7 × VDD,
+3.5 V), with no margin from a 3.3 V GPIO, so the shifter is
 required. It speaks the WS2812 protocol (800 kHz, GRB, reset > 80 µs) and is the 5 mA-per-colour
 version: about half a WS2812B's brightness, plenty for an indicator, to confirm through a keycap on
 the first boards.
@@ -120,9 +121,11 @@ part there and re-run it.
 **Ordering from JLCPCB.** CI builds the files on every change (KiBot's JLCPCB template with paste
 layers, artifact `kibot-out`), once per variant: `economic/JLCPCB/` (top side only, J1 by hand) and
 `standard/JLCPCB/` (JLC also fits J1). Each has the gerbers and drill zipped, the BOM and the placement
-(CPL) file with JLC's rotation corrections. Upload the zip as the PCB, then the BOM and CPL for
-assembly. `panel/JLCPCB/` is our own 2 × 2 panel (economic, KiKit, `kibot/panel.kibot.yaml`): rails
-with fiducials and tooling holes, mouse bites; its BOM and CPL number each copy (C1_1 … C1_4) while
+(CPL) file with JLC's rotation corrections, named after the variant (`DS2000_economic_bom_jlc.csv`,
+…). Upload the zip as the PCB, then the BOM and CPL of the same variant for assembly; #31 lists what
+to check in JLC's placement preview before paying. `panel/JLCPCB/` is our own 2 × 2 panel (economic, KiKit, `kibot/panel.kibot.yaml`): a frame
+with fiducials and tooling holes, mouse-bite tabs on the short sides only (none on the visible front
+edge, none beside J3, U1 or the back-edge MLCCs), top stencil only; its BOM and CPL number each copy (C1_1 … C1_4) while
 the silkscreen keeps the board's references. Ordering single boards and letting JLC panelise them
 works as well:
 
@@ -130,8 +133,9 @@ works as well:
 - economic: assembly on the **top side only** (Economic PCBA); standard: both sides (Standard PCBA)
 - JLC prints its order number where the bottom silkscreen says `JLCJLCJLCJLC`, not on the face
 - JLC's BOM page shows which lines are basic or extended parts (extended ones add a setup fee each)
-- check the placement preview, above all the rotation of U3, U5, U2 and D1/D2 (pin 1 = VDD, at the
-  bottom-left corner of each LED as placed, turned 270°), before confirming
+- check the placement preview against #31, above all U1, J1 (standard), L1's polarity and D1/D2
+  (pin 1 = GND, as in the current datasheet; the GND pad is top-right of each LED as placed), before
+  confirming
 - the switches are fitted by hand after assembly, and so is J1 in the economic variant if the USB-C
   is wanted instead of a cable on J3. J1 is fine pitch (0.5 mm): flux, a fine tip, and the four shell
   pins first to hold it
@@ -197,13 +201,15 @@ round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
 - The logos' exposed ENIG copper is pad 1 of each logo footprint (`tools/logo/copper_pad.py`), tied
   to GND on the board and joined solidly by the pour, so no touchable copper floats.
 - Every reference designator is visible, placed by a script at the first spot beside its part that
-  clears pads, holes, vias, other text and the board edge. The three that find no room (C6, C11, R3,
-  in the tightest spot around the RP2350A) stay hidden; they are still in the assembly drawings.
+  clears pads, holes, vias, other text and the board edge. At 1.0 mm the eight that find no room (C3, C12,
+  C13, C16, C17, L1, R3, R6, all in the tightest spot around the RP2350A) stay hidden; they are still
+  in the assembly drawings.
 - Typography follows mechardo3d.xyz: Sora for "DS2000" and "mechardo labs", IBM Plex Mono for the
   key legends, references and debug labels. The fonts are embedded in the board file; `fonts/` has
-  them for editing. KiCad reports `text_thickness` on some characters (5, 6, 9, G, a, e): its check
-  measures the thinnest part of each glyph, where curves taper. The main strokes of Plex Mono Bold at
-  0.8 mm are about 0.16 mm, above JLC's 0.153 mm minimum.
+  them for editing. All silkscreen text is at least 1.0 mm tall, JLC's minimum: at 0.8 mm the
+  strokes measured about 0.14 mm, under JLC's 0.153 mm minimum line width. At 1.0 mm the mean stroke of
+  every text is 0.154-0.19 mm (measured on the glyph outlines, 2026-10-29). KiCad still reports
+  `text_thickness` on some of them: for TrueType text its check goes by size, not by the drawn stroke.
 - The DS2000 logo (back left) is the product logo from mechardo3d.xyz
   (`static/images/DS2000/logo/ds2000-logo.webp`), traced by `tools/logo/gen_ds2000_logo.py` into
   `DS2000.pretty/Logo_DS2000_8.6mm`: the white lettering is silkscreen, the blue arcs become ENIG
@@ -276,9 +282,11 @@ courtyards sit inside the switch courtyards. Net classes: *Plane* (GND, +3V3) re
 
 **Review (2026-09-28).** Every net was checked against Raspberry Pi's RP2350 minimal design and
 every footprint's pin mapping against its datasheet. No wrong connection was found. (2026-10-16: the
-SK6805-EC20 pinout, 1 VDD, 2 DOUT, 3 GND, 4 DIN, and its land pattern are taken from OPSCO's
-datasheet OSK-SPC-SK6805/12-EC20 rev A2; turned 270°, every net keeps the corner it had with the
-WS2812B-2020.)
+SK6805-EC20 land pattern is taken from OPSCO's datasheet; turned 270°, every net keeps the corner it
+had with the WS2812B-2020. 2026-10-29: the pins are numbered as the datasheet LCSC serves now,
+SK6805-EC20-001 Rev A1, 1 GND, 2 DIN, 3 VDD, 4 DOUT, with the silkscreen chamfer on GND. Rev A2
+numbered the same corners 1 VDD, 2 DOUT, 3 GND, 4 DIN, which put our pin-1 mark on the opposite corner
+from JLC's pin 1 and invited a 180° placement that reverse-powers the LED.)
 The review did find routing the autorouter had done poorly, since fixed: XIN was 14 mm with two
 vias and the QSPI clock 35.5 mm with four (now 7.4 mm with none, and 11 mm with two). The USB data
 lines ran ~25 mm from J3's old holes to U1; since 2026-10-23 J3 sits beside J1 and its branch is a
