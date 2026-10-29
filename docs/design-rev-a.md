@@ -258,6 +258,16 @@ MX pin 2 is GND, joined by the planes. With MX switches:
 - a 3-pin MX is meant to sit in a plate, which this board has none of: soldered, it holds, with a little play;
 - moving the +5V, LED data and BOOTSEL tracks around the new pins made BOOTSEL 53 → 63 mm.
 
+**Long runs redrawn by hand (2026-10-29):** straight lines and 45° corners only, nothing left from the
+autorouter's odd angles and jogs (`docs/img/production-review/08-hand-routes.png`).
+- +5V: J3 pin 1 drops into one 45° line that carries on as the left side of the ring. Under the LEDs the
+  ring is one straight bus on B.Cu; each LED's and capacitor's +5V via sits at 45° or straight below its pad.
+- LED row: the DIN, DOUT and GND vias are level with their pads, and D1 → D2 data runs straight beside
+  the +5V bus. The +5V run that crossed the face under SW2 is gone.
+- BOOTSEL: 63 → 55 mm with five vias. It crosses +5V and GPIO1 on F.Cu in two short hops, and runs
+  beside SWDIO into JP1.
+- MX pin 1 → Choc pin 1 under each key: a 45° and a straight run.
+
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
 JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge. `DS2000.kicad_dru` lets the LED
