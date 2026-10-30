@@ -1,5 +1,25 @@
 (version 1)
 
+# Both USB pairs use /USB_* net names, including the hierarchical slash.
+# Width accommodates connector and QFN escapes; this is not an impedance certification.
+(rule "USB trace width"
+  (condition "A.hasNetclass('USB')")
+  (constraint track_width (min 0.15mm) (opt 0.25mm) (max 0.25mm)))
+
+(rule "USB outer layers only"
+  (layer inner)
+  (condition "A.hasNetclass('USB')")
+  (constraint disallow track))
+
+# The short, unbranched resistor-to-MCU pair; connector-side J3 is a separate branch.
+(rule "USB MCU length"
+  (condition "A.NetName == '/USB_P' || A.NetName == '/USB_N'")
+  (constraint length (max 5mm)))
+
+(rule "USB MCU skew"
+  (condition "A.NetName == '/USB_P' || A.NetName == '/USB_N'")
+  (constraint skew (max 0.5mm)))
+
 # The WS2812B-2020 under each lit key sits inside the Choc V1's LED window, so its courtyard is inside
 # the switch's on purpose.
 (rule "LED in the Choc window"

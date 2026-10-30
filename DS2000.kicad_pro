@@ -583,7 +583,7 @@
       },
       {
         "netclass": "USB",
-        "pattern": "USB_*"
+        "pattern": "/USB_*"
       }
     ]
   },
