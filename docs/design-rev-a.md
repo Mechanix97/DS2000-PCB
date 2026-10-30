@@ -184,6 +184,19 @@ round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
   1.03 mm apart) so VREG_LX runs straight up between them to L1.
 - VREG_PGND (47) ties to both caps' ground pads on the top layer, with two vias beside them, as in
   the reference; VREG_FB (50) is taken at the output cap; VREG_AVDD runs clear of L1.
+- **Four-layer copper correction (2026-10-30):** the `VREG layer 2 copper cutout` rule area on
+  In1.Cu removes the plane immediately beneath L1 and the VREG_LX stem, following the
+  [RP2350 datasheet, section 6.3.8.1, figure 24](https://pip-assets.raspberrypi.com/categories/1214-rp2350/documents/RP-008373-DS-2-rp2350-datasheet.pdf?disposition=inline).
+  Its outline follows this board's output via and USB escape: it preserves the two PGND return
+  vias at (103.1, 79.3) / (103.1, 79.9), C5's separate ground return and the ground below the
+  top-layer USB tracks. It prohibits zone fills and tracks; vias/pads remain allowed because the
+  existing +1V1 output via crosses the cutout. In2.Cu and B.Cu retain their existing geometry.
+- A hole in the **board-wide F.Cu GND zone**, from (99.95, 76.45) to (103.65, 81.95), keeps that
+  pour from joining the local PGND copper or filling underneath L1. The four local regulator
+  pours remain intact: C3/C4 and pin 47 return through their two adjacent vias, while C5 uses
+  its own return. Do not replace this hole with a blanket top-layer keepout, which would also
+  remove the deliberate VREG pours. These edits live in the authoritative `.kicad_pcb`;
+  the historical PCB generator does not reproduce them.
 - The tracks are hand-placed by `preroute.py` and locked; `vreg_pours.py` adds the reference's four
   small pours (PGND, VREG_LX, the +1V1 node, VREG_VIN) after autorouting.
 - The reference's +3V3 pour under the package (joining VREG_VIN to pins 53/54) becomes a track in the
@@ -191,6 +204,26 @@ round as theirs, so every offset from VREG_LX (pin 48) carries over unchanged:
 - **Two departures**, both forced by the USB-C receptacle (J1) underneath: the whole RP2350A
   cluster sits 0.5 mm lower than first placed so L1 and C16 clear J1's plastic pegs, and R5 lies
   beside C5 instead of above it, where J1's shell pin comes through. R5 only feeds the 200 µA AVDD filter, away from L1's field.
+
+![Regulator copper before and after the four-layer correction](img/vreg-copper-review.png)
+
+Validation of the copper correction (KiCad 10.0.4): ERC has zero violations; DRC with freshly
+filled zones and schematic parity has zero errors, zero unconnected items and the same 17
+pre-existing warnings. Polygon intersection against the full top-layer LX copper (pads, tracks
+and zone) finds 2.369882 mm² of In1 copper underneath before the change and zero afterwards.
+No In1 GND area is removed beneath top-layer USB copper. The full F.Cu GND union puts
+pin 47, C3/C4 and their two vias on one island, separate from C5 and the exposed pad; they remain
+connected through In1. Footprints, pads, tracks, vias, nets, outline and stackup are unchanged.
+This verifies the geometry; startup and load-transient behaviour still need a physical board.
+
+**Power via junctions (2026-10-30).** The +3V3 branches now merge before reaching the vias at
+(101.6, 82.4) and (104.72, 81.8), with one shared approach from the MCU side. The right-hand
+branches use straight/45-degree segments instead of shallow diagonals brushing past the via.
+Via locations, diameters, drills and the C11-to-via connection remain unchanged, as do the
+regulator copper cutout and local ground return. ERC/DRC and schematic parity remain clean
+(the same 17 existing DRC warnings).
+
+![Power via junctions before and after](img/power-via-junctions.png)
 
 **Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run on the hand-edited board):
 
