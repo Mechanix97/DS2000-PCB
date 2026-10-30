@@ -216,6 +216,15 @@ pin 47, C3/C4 and their two vias on one island, separate from C5 and the exposed
 connected through In1. Footprints, pads, tracks, vias, nets, outline and stackup are unchanged.
 This verifies the geometry; startup and load-transient behaviour still need a physical board.
 
+**Power via junctions (2026-10-30).** The +3V3 branches now merge before reaching the vias at
+(101.6, 82.4) and (104.72, 81.8), with one shared approach from the MCU side. The right-hand
+branches use straight/45-degree segments instead of shallow diagonals brushing past the via.
+Via locations, diameters, drills and the C11-to-via connection remain unchanged, as do the
+regulator copper cutout and local ground return. ERC/DRC and schematic parity remain clean
+(the same 17 existing DRC warnings).
+
+![Power via junctions before and after](img/power-via-junctions.png)
+
 **Face and branding** (`tools/pcb-generator/branding.py`, safe to re-run on the hand-edited board):
 
 - F.Cu carries a GND pour as well, so all four layers are ground or +3V3 wherever there is no track,
