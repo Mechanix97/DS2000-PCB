@@ -47,8 +47,9 @@ minimal design uses an NCP1117, but its ~1.1 V dropout leaves little margin from
   XOUT, exactly as the reference. A cheaper basic crystal (YXC X322512MSB4SI with 33 pF) was tried in
   the cost-down, but JLC's design review flagged it against Raspberry Pi's guide; a crystal that does
   not start makes the whole batch useless, so the recommended part stays (one extended-part fee).
-- USB 27 Ω series resistors R3/R4 close to the chip; D+/D- as a 90 Ω differential pair over
-  unbroken GND.
+- USB 27 Ω series resistors R3/R4 close to the chip. The 90 Ω differential impedance is a
+  design target, not a measured or solver-verified property of the entire route; see
+  [USB layout review](usb-layout-review.md) for the actual geometry and remaining limitations.
 - Flash W25Q32JVSSIQ (4 MB, 208 mil SOIC-8), the RP2350-Zero's size: the firmware sees the same
   flash on the test module and on rev A, with room for A/B updates (DS2000-Firmware#15). The 2 MB
   W25Q16 of the cost-down saved cents, and both are JLC extended parts.
@@ -308,10 +309,14 @@ autorouter's odd angles and jogs (`docs/img/production-review/08-hand-routes.png
 - MX pin 1 → Choc pin 1 under each key: a 45° and a straight run.
 
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
-In1 is the GND plane, In2 the +3V3 plane, F.Cu and B.Cu GND pours (solid joins on B.Cu). Minimums set for
+In1 is the GND plane; In2 carries +3V3 with local GND reference zones beneath the USB bottom-layer
+escapes. F.Cu and B.Cu have GND pours (solid joins on B.Cu). Minimums set for
 JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge. `DS2000.kicad_dru` lets the LED
 courtyards sit inside the switch courtyards. Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
-+1V1, VBUS, VREG_LX) 0.4 mm, *USB* 0.2 mm tracks / 0.2 mm gap.
++1V1, VBUS, VREG_LX) 0.4 mm. The *USB* class matches `/USB_*`; router defaults are 0.25 mm
+tracks / 0.15 mm differential gap. Actual USB widths are 0.15–0.25 mm, including escapes.
+Custom rules enforce those width bounds, outer-layer routing, and a 5 mm length / 0.5 mm skew
+limit for the unbranched resistor-to-MCU pair. These are layout bounds, not USB compliance limits.
 
 **Review (2026-09-28).** Every net was checked against Raspberry Pi's RP2350 minimal design and
 every footprint's pin mapping against its datasheet. No wrong connection was found. (2026-10-16: the
@@ -322,8 +327,10 @@ numbered the same corners 1 VDD, 2 DOUT, 3 GND, 4 DIN, which put our pin-1 mark 
 from JLC's pin 1 and invited a 180° placement that reverse-powers the LED.)
 The review did find routing the autorouter had done poorly, since fixed: XIN was 14 mm with two
 vias and the QSPI clock 35.5 mm with four (now 7.4 mm with none, and 11 mm with two). The USB data
-lines ran ~25 mm from J3's old holes to U1; since 2026-10-23 J3 sits beside J1 and its branch is a
-coupled pair of ~12 mm (0.25 mm tracks, 0.15 mm gap, about 90 Ω on this stackup).
+lines ran ~25 mm from J3's old holes to U1; since 2026-10-23 J3 sits beside J1. Its branch has
+parallel portions with 0.25 mm tracks and 0.15 mm gap, plus uncoupled approaches. The complete
+route has not been verified as 90 Ω. The 2026-10-30 correction brings the J1 data connections
+to U1's pads before the protected exits, adds local In2 GND references and fixes the USB netclass.
 
 **Review before ordering:**
 
@@ -332,9 +339,10 @@ coupled pair of ~12 mm (0.25 mm tracks, 0.15 mm gap, about 90 Ω on this stackup
   ordering.
 - Core regulator: copied from the reference (see above). At assembly, check L1's dot sits on the
   left, towards +1V1 (the silkscreen dot marks it).
-- USB: confirm the 90 Ω pair geometry (0.25 / 0.15 mm on F.Cu over In1) with JLC's impedance
-  calculator for this stackup. The J1 → U1 → R3/R4 run is a few millimetres and cannot be a clean
-  pair (the USB-C's interleaved pins, the ESD part's pass-through), which is irrelevant at 12 Mbit/s.
+- USB: check impedance against the fabricated stackup and test enumeration/data transfer through
+  both J1 orientations and the J3 cable variant. The interleaved J1 contacts, U1 pad geometry and
+  unused connector branch introduce discontinuities; full-speed operation does not make them
+  irrelevant. See [USB layout review](usb-layout-review.md) for the scope of the correction.
 - Under the keycaps (outside each switch's 13.8 mm lower housing) parts are hidden but must stay under
   ~2 mm high: the switch flange is 2.2 mm up and a pressed Choc keycap comes down close to it.
 - Confirm the LED side against your switches: the footprint assumes the LED window is on the side
