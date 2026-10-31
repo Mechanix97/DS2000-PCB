@@ -4,6 +4,10 @@ Reviewed all 194 PCB vias on base `fb59f1f` (includes #34), using individual F.C
 
 92 vias have same-net track contacts; 102 have no track contacts and belong to GND plane stitching. These counts describe the reviewed base. Visual review covers both outer copper layers; electrical clearance and connectivity checks cover the complete board. This is layout verification, not hardware testing or a USB signal-integrity simulation.
 
+The inventory is a snapshot of that base. The USB correction that followed removed the two
+USB_CONN vias listed below, renamed the USB nets to `_P`/`_N`, and placed J1's data vias between
+U1's pad columns plus two In2 reference GND vias ([USB layout review](usb-layout-review.md)).
+
 ## Changes
 
 | Net | Via position (mm) | Cleanup |

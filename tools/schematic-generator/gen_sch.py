@@ -137,8 +137,8 @@ BOX(15.24, 30.48, 157.48, 111.76, "USB-C input, fuse, ESD and wire pads")
 J1 = part("J1", "Connector:USB_C_Receptacle_USB2.0_16P", "USB-C", "Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12",
           (40.64, 76.2), {"A1": "GND", "A12": "GND", "B1": "GND", "B12": "GND", "SH": "GND",
                           "A4": "VBUS", "A9": "VBUS", "B4": "VBUS", "B9": "VBUS",
-                          "A5": "CC1", "B5": "CC2", "A6": "USB_CONN_DP", "B6": "USB_CONN_DP",
-                          "A7": "USB_CONN_DM", "B7": "USB_CONN_DM", "A8": None, "B8": None},
+                          "A5": "CC1", "B5": "CC2", "A6": "USB_CONN_P", "B6": "USB_CONN_P",
+                          "A7": "USB_CONN_N", "B7": "USB_CONN_N", "A8": None, "B8": None},
           fields={"MPN": "TYPE-C-31-M-12", "Manufacturer": "Korean Hroparts Elec"})
 F1 = part("F1", "Device:Polyfuse_Small", "500mA hold", "Fuse:Fuse_1206_3216Metric", (71.12, 50.8),
           {"1": "VBUS", "2": "+5V"}, rot=90, fields={"MPN": "1206L050YR", "Manufacturer": "Littelfuse"})
@@ -152,22 +152,22 @@ W(R1.p("1"), (66.04, 58.42)); PWR("GND", (66.04, 58.42), (0, -1))
 W(R2.p("1"), (76.2, 60.96)); PWR("GND", (76.2, 60.96), (0, -1))
 W(J1.p("A1"), (40.64, 101.6)); PWR("GND", (40.64, 101.6)); W(J1.p("SH"), J1.p("A1"))
 U1 = part("U1", "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", "Package_TO_SOT_SMD:SOT-23-6", (99.06, 76.2),
-          {"1": "USB_CONN_DM", "6": "USB_CONN_DM", "3": "USB_CONN_DP", "4": "USB_CONN_DP", "2": "GND", "5": "+5V"},
+          {"1": "USB_CONN_N", "6": "USB_CONN_N", "3": "USB_CONN_P", "4": "USB_CONN_P", "2": "GND", "5": "+5V"},
           fields={"MPN": "USBLC6-2SC6", "Manufacturer": "STMicroelectronics"},
           props={"Reference": (99.06, 88.9), "Value": (99.06, 91.44)})
 W(J1.p("A7"), J1.p("B7")); W(J1.p("A6"), J1.p("B6"))
 W(J1.p("A7"), (88.9, 73.66), (88.9, 76.2), U1.p("1"))
 W(J1.p("B6"), (86.36, 81.28), (86.36, 78.74), U1.p("3"))
-R4 = R("R4", "27", "USB_CONN_DM", "USB_DM", (127.0, 76.2), rot=90, fields={"Note": "Place close to U3"})
-R3 = R("R3", "27", "USB_CONN_DP", "USB_DP", (137.16, 78.74), rot=90, fields={"Note": "Place close to U3"})
+R4 = R("R4", "27", "USB_CONN_N", "USB_N", (127.0, 76.2), rot=90, fields={"Note": "Place close to U3"})
+R3 = R("R3", "27", "USB_CONN_P", "USB_P", (137.16, 78.74), rot=90, fields={"Note": "Place close to U3"})
 W(U1.p("6"), R4.p("1")); W(U1.p("4"), R3.p("1"))
 # USBLC6 pins 1/6 and 3/4 are one line through the part: the two sides share a name
-LBL("USB_CONN_DM", (63.5, 73.66), (1, 0)); LBL("USB_CONN_DP", (63.5, 81.28), (1, 0))
-LBL("USB_CONN_DM", (106.68, 76.2), (1, 0)); LBL("USB_CONN_DP", (109.22, 78.74), (1, 0))
+LBL("USB_CONN_N", (63.5, 73.66), (1, 0)); LBL("USB_CONN_P", (63.5, 81.28), (1, 0))
+LBL("USB_CONN_N", (106.68, 76.2), (1, 0)); LBL("USB_CONN_P", (109.22, 78.74), (1, 0))
 # Solder holes for a hard-wired USB cable, used instead of J1. Upstream of the fuse and the ESD
 # so a soldered cable gets the same protection as the receptacle.
 part("J3", "Connector_Generic:Conn_01x04", "USB wire", "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-     (127.0, 96.52), {"1": "VBUS", "2": "USB_CONN_DM", "3": "USB_CONN_DP", "4": "GND"}, bom=False,
+     (127.0, 96.52), {"1": "VBUS", "2": "USB_CONN_N", "3": "USB_CONN_P", "4": "GND"}, bom=False,
      fields={"Note": "SMD wire pads on the bottom: solder a USB cable here instead of fitting J1 (red, white, green, black)"},
      props={"Reference": (129.54, 95.25), "Value": (129.54, 97.79)})
 TEXT((20.32, 110.49), "CC 5.1k: USB device (UFP). U1 at the connector, R3/R4 next to the RP2350. J3: optional soldered cable.")
@@ -215,7 +215,7 @@ MCU_CONN = {"1": "+3V3", "11": "+3V3", "20": "+3V3", "30": "+3V3", "38": "+3V3",
             "44": "+3V3", "53": "+3V3", "54": "+3V3", "49": "+3V3",
             "46": "VREG_AVDD", "48": "VREG_LX", "47": "GND", "61": "GND",
             "21": "XIN", "22": "XOUT", "24": "SWCLK", "25": "SWDIO", "26": "RUN",
-            "51": "USB_DM", "52": "USB_DP",
+            "51": "USB_N", "52": "USB_P",
             "60": "QSPI_SS", "56": "QSPI_SCLK", "57": "QSPI_SD0", "59": "QSPI_SD1", "58": "QSPI_SD2", "55": "QSPI_SD3",
             "2": "KEY_MUTE", "3": "KEY_DEAFEN", "4": "KEY_DISCONNECT", "8": "LED_DIN_3V3"}
 for p_ in pins("MCU_RaspberryPi:RP2350A"): MCU_CONN.setdefault(p_[0], None)
