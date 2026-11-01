@@ -1,8 +1,8 @@
-(footprint "QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.25mm"
+(footprint "QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.3mm"
 	(version 20260206)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
-	(descr "QFN, 60 Pin (https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf). KiCad's ThermalVias footprint with 0.25 mm via drills instead of 0.2 mm, so the board stays in JLCPCB's 0.25 mm via class")
+	(descr "QFN, 60 Pin (https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf). KiCad's ThermalVias footprint with 0.3 mm via drills instead of 0.2 mm, so the board stays in JLCPCB's standard 0.3 mm via class")
 	(tags "QFN NoLead")
 	(property "Reference" "REF**"
 		(at 0 -4.8 0)
@@ -714,7 +714,7 @@
 	(pad "61" thru_hole circle
 		(at -1.45 -1.45)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -722,7 +722,7 @@
 	(pad "61" thru_hole circle
 		(at -1.45 0)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -730,7 +730,7 @@
 	(pad "61" thru_hole circle
 		(at -1.45 1.45)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -738,7 +738,7 @@
 	(pad "61" thru_hole circle
 		(at 0 -1.45)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -746,7 +746,7 @@
 	(pad "61" thru_hole circle
 		(at 0 0)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -768,7 +768,7 @@
 	(pad "61" thru_hole circle
 		(at 0 1.45)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -776,7 +776,7 @@
 	(pad "61" thru_hole circle
 		(at 1.45 -1.45)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -784,7 +784,7 @@
 	(pad "61" thru_hole circle
 		(at 1.45 0)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)
@@ -792,7 +792,7 @@
 	(pad "61" thru_hole circle
 		(at 1.45 1.45)
 		(size 0.5 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
 		(remove_unused_layers no)

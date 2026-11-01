@@ -9700,7 +9700,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.25mm"
+		(property "Footprint" "DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.3mm"
 			(at 182.88 195.58 0)
 			(hide yes)
 			(show_name no)
