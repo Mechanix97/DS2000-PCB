@@ -8015,7 +8015,7 @@
 				)
 			)
 		)
-		(property "MPN" "74AHCT1G125GW,125"
+		(property "MPN" "SN74AHCT1G125DCKR"
 			(at 243.84 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -8026,7 +8026,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "Texas Instruments"
 			(at 243.84 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -8037,7 +8037,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C12495"
+		(property "LCSC" "C350557"
 			(at 243.84 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -17287,7 +17287,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C82344"
+		(property "LCSC" "C179173"
 			(at 86.36 208.28 0)
 			(hide yes)
 			(show_name no)

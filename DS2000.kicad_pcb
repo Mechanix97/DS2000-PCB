@@ -3718,7 +3718,7 @@
 				)
 			)
 		)
-		(property "MPN" "74AHCT1G125GW,125"
+		(property "MPN" "SN74AHCT1G125DCKR"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -3730,7 +3730,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Nexperia"
+		(property "Manufacturer" "Texas Instruments"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -3742,7 +3742,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C12495"
+		(property "LCSC" "C350557"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -8168,7 +8168,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C82344"
+		(property "LCSC" "C179173"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
