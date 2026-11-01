@@ -133,6 +133,9 @@ works as well:
 - 4 layers, 1.6 mm, **black** mask, white silk, **ENIG**, JLC04161H-7628 stackup; minimum via hole 0.3mm/(0.4/0.45mm)
 - economic: assembly on the **top side only** (Economic PCBA); standard: both sides (Standard PCBA)
 - JLC prints its order number where the bottom silkscreen says `JLCJLCJLCJLC`, not on the face
+- the CPL needs no hand edits: U1 (SOT-23-6), U3 (QFN-60) and U5 (SC-70-5) carry a
+  `JLCPCB Rotation Offset` field (270, 0, 270) that replaces KiBot's table correction, which put
+  all three 90° off in JLC's placement preview (checked 2026-11-01)
 - JLC's BOM page shows which lines are basic or extended parts (extended ones add a setup fee each)
 - check the placement preview against #31, above all U1, J1 (standard), L1's polarity and D1/D2
   (pin 1 = GND, as in the current datasheet; the GND pad is top-right of each LED as placed), before
