@@ -18,7 +18,7 @@ b = pcbnew.LoadBoard(PCB)
 mm, tomm = pcbnew.FromMM, pcbnew.ToMM
 PLANES = {"GND", "+3V3"}
 MCU = "U3"
-VIA_D, VIA_DRILL = 0.5, 0.25
+VIA_D, VIA_DRILL = 0.5, 0.3
 CLEAR, HOLE_CLEAR, HOLE_TO_HOLE, EDGE_CLEAR = 0.15, 0.2, 0.25, 0.35
 RAD = 3.0
 

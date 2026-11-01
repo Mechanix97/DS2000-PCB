@@ -12,7 +12,7 @@ import pcbnew
 
 PCB = sys.argv[1]
 PITCH = float(sys.argv[2]) if len(sys.argv) > 2 else 3.5
-VIA_D, VIA_DRILL = 0.5, 0.25
+VIA_D, VIA_DRILL = 0.5, 0.3
 CLEAR, EDGE = 0.3, 1.2
 b = pcbnew.LoadBoard(PCB)
 mm, tomm = pcbnew.FromMM, pcbnew.ToMM

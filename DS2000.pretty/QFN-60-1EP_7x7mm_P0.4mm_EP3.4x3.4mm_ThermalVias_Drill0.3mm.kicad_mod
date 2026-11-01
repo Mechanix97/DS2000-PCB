@@ -798,7 +798,7 @@
 		(remove_unused_layers no)
 	)
 	(embedded_fonts no)
-	(model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm.step"
+	(model "${KIPRJMOD}/3dmodels/DS2000.3dshapes/QFN-60-1EP_7x7mm_P0.4mm.step"
 		(offset
 			(xyz 0 0 0)
 		)

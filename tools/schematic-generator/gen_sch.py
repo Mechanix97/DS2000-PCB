@@ -219,7 +219,7 @@ MCU_CONN = {"1": "+3V3", "11": "+3V3", "20": "+3V3", "30": "+3V3", "38": "+3V3",
             "60": "QSPI_SS", "56": "QSPI_SCLK", "57": "QSPI_SD0", "59": "QSPI_SD1", "58": "QSPI_SD2", "55": "QSPI_SD3",
             "2": "KEY_MUTE", "3": "KEY_DEAFEN", "4": "KEY_DISCONNECT", "8": "LED_DIN_3V3"}
 for p_ in pins("MCU_RaspberryPi:RP2350A"): MCU_CONN.setdefault(p_[0], None)
-U3 = part("U3", "MCU_RaspberryPi:RP2350A", "RP2350A", "Package_DFN_QFN:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias",
+U3 = part("U3", "MCU_RaspberryPi:RP2350A", "RP2350A", "DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.3mm",
           (182.88, 195.58), MCU_CONN, fields={"MPN": "RP2350A", "Manufacturer": "Raspberry Pi"},
           props={"Reference": (201.93, 243.84), "Value": (201.93, 246.38)})
 for n in ["53", "44", "54", "1", "49"]:

@@ -314,7 +314,7 @@ escapes. F.Cu and B.Cu have GND pours (solid joins on B.Cu). Minimums set for
 JLC: 0.1 mm track and clearance, 0.3 mm drill, 0.3 mm copper to edge. The drill minimum is 0.3 mm,
 not JLC's 0.2 mm: any smaller via (0.25 mm included) moves the order into a dearer class, which adds
 a via surcharge and forces a 4-wire Kelvin test and TG155 (about $37 more on five boards). Every via
-is 0.5 mm with a 0.3 mm drill, and U1 uses
+is 0.5 mm with a 0.3 mm drill, and the RP2350A (U3) uses
 `DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.3mm`, KiCad's thermal-via footprint
 with its nine 0.5 mm vias drilled at 0.3 mm. Order with *Min via hole size* 0.3mm/(0.4/0.45mm). `DS2000.kicad_dru` lets the LED
 courtyards sit inside the switch courtyards. Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
