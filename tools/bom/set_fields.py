@@ -41,8 +41,8 @@ PARTS = {
     "U1": ("USBLC6-2SC6", "UMW", "C2687116"),                                                     # same part, second source, 1/4 the price
     "U2": ("XC6206P332MR-G", "Torex", "C5446"),                                                   # 200 mA LDO, basic
     "U3": ("RP2350A", "Raspberry Pi", "C42411118"),
-    "U4": ("W25Q32JVSSIQ", "Winbond", "C82344"),                                                  # 4 MB, as the RP2350-Zero
-    "U5": ("74AHCT1G125GW,125", "Nexperia", "C12495"),
+    "U4": ("W25Q32JVSSIQ", "Winbond", "C179173"),                                                   # 4 MB, as the RP2350-Zero
+    "U5": ("SN74AHCT1G125DCKR", "Texas Instruments", "C350557"),
     "Y1": ("ABM8-272-T3", "Abracon", "C20625731"),                                                # 12 MHz, 10 pF, 50 ohm ESR: the RP2350 guide's crystal
     "L1": ("AOTA-B201610S3R3-101-T", "Abracon", "C42411119"),
     **{r: ("SK6805-EC20", "OPSCO Optoelectronics", "C2890036") for r in ("D1", "D2")},            # top side, in the Choc LED window; Economic PCBA (the WS2812B-2020 is Standard only)

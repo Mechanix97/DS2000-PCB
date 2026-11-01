@@ -315,7 +315,7 @@ TEXT((227.33, 149.86), "GP0-GP2, internal pull-ups")
 BOX(213.36, 167.64, 322.58, 228.6, "Key LEDs: 3.3 V -> 5 V level shift, SK6812MINI-E")
 U5 = part("U5", "74xGxx:74AHCT1G125", "74AHCT1G125", "Package_TO_SOT_SMD:SOT-353_SC-70-5", (238.76, 190.5),
           {"1": "GND", "2": "LED_DIN_3V3", "3": "GND", "4": "LED_DIN_5V", "5": "+5V"},
-          fields={"MPN": "74AHCT1G125GW", "Manufacturer": "Nexperia"},
+          fields={"MPN": "SN74AHCT1G125DCKR", "Manufacturer": "Texas Instruments"},
           props={"Reference": (243.84, 198.12), "Value": (243.84, 203.2)})
 W(U3.p("8"), (210.82, U3.p("8")[1]), (210.82, 190.5), U5.p("2"))
 W(U5.p("1"), (238.76, 177.8)); PWR("GND", (238.76, 177.8), (0, -1))

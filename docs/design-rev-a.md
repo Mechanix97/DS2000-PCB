@@ -97,12 +97,12 @@ part there and re-run it.
 | Refs | Value | MPN | LCSC | Footprint |
 |---|---|---|---|---|
 | U3 | RP2350A | RP2350A | C42411118 | QFN-60 7×7 mm, thermal vias |
-| U4 | Flash 4 MB | W25Q32JVSSIQ | C82344 | SOIC-8 5.3 mm |
+| U4 | Flash 4 MB | W25Q32JVSSIQ | C179173 | SOIC-8 5.3 mm |
 | Y1 | 12 MHz, 10 pF | ABM8-272-T3 | C20625731 | 3225 4-pin, as the reference |
 | L1 | 3.3 µH | AOTA-B201610S3R3-101-T | C42411119 | 2016, polarity dot on pad 1 = +1V1 |
 | U2 | 3.3 V LDO, 200 mA | XC6206P332MR-G | C5446 | SOT-23-3, **basic** |
 | U1 | USB ESD | USBLC6-2SC6 (UMW) | C2687116 | SOT-23-6 |
-| U5 | Buffer, TTL in | 74AHCT1G125GW,125 | C12495 | SOT-353 |
+| U5 | Buffer, TTL in | SN74AHCT1G125DCKR (TI) | C350557 | SOT-353 (SC-70-5), same pinout as Nexperia 74AHCT1G125GW |
 | D1, D2 | RGB LED | SK6805-EC20 (OPSCO) | C2890036 | 2.0×2.0×0.65 mm, top, in the switch LED window; own footprint and symbol (`DS2000.pretty`, `DS2000.kicad_sym`) |
 | C1, C2 | 4.7 µF 25 V X5R | CL21A475KAQNNNE | C1779 | 0805, **basic** |
 | C3-C5 | 4.7 µF 10 V X5R | CL05A475MP5NRNC | C23733 | 0402 (C3/C4 wide land), **basic** |
