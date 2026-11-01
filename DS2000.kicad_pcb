@@ -5991,7 +5991,7 @@
 			)
 		)
 	)
-	(footprint "Package_DFN_QFN:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias"
+	(footprint "DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.25mm"
 		(layer "F.Cu")
 		(uuid "8b27142c-71ac-475c-b8a4-deefe63fa312")
 		(at 100 84.8)
@@ -6965,7 +6965,7 @@
 		(pad "61" thru_hole circle
 			(at -1.45 -1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -6976,7 +6976,7 @@
 		(pad "61" thru_hole circle
 			(at -1.45 0)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -6987,7 +6987,7 @@
 		(pad "61" thru_hole circle
 			(at -1.45 1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -6998,7 +6998,7 @@
 		(pad "61" thru_hole circle
 			(at 0 -1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7009,7 +7009,7 @@
 		(pad "61" thru_hole circle
 			(at 0 0)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7038,7 +7038,7 @@
 		(pad "61" thru_hole circle
 			(at 0 1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7049,7 +7049,7 @@
 		(pad "61" thru_hole circle
 			(at 1.45 -1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7060,7 +7060,7 @@
 		(pad "61" thru_hole circle
 			(at 1.45 0)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7071,7 +7071,7 @@
 		(pad "61" thru_hole circle
 			(at 1.45 1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.25)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
