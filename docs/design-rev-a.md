@@ -130,7 +130,7 @@ edge, none beside J3, U1 or the back-edge MLCCs), top stencil only; its BOM and 
 the silkscreen keeps the board's references. Ordering single boards and letting JLC panelise them
 works as well:
 
-- 4 layers, 1.6 mm, **black** mask, white silk, **ENIG**, JLC04161H-7628 stackup
+- 4 layers, 1.6 mm, **black** mask, white silk, **ENIG**, JLC04161H-7628 stackup; minimum via hole 0.3mm/(0.4/0.45mm)
 - economic: assembly on the **top side only** (Economic PCBA); standard: both sides (Standard PCBA)
 - JLC prints its order number where the bottom silkscreen says `JLCJLCJLCJLC`, not on the face
 - JLC's BOM page shows which lines are basic or extended parts (extended ones add a setup fee each)
@@ -311,12 +311,19 @@ autorouter's odd angles and jogs (`docs/img/production-review/08-hand-routes.png
 **Stackup and rules:** JLCPCB JLC04161H-7628, 4 layers, 1.6 mm, black mask, white silk, ENIG.
 In1 is the GND plane; In2 carries +3V3 with local GND reference zones beneath the USB bottom-layer
 escapes. F.Cu and B.Cu have GND pours (solid joins on B.Cu). Minimums set for
-JLC: 0.1 mm track and clearance, 0.2 mm drill, 0.3 mm copper to edge. `DS2000.kicad_dru` lets the LED
+JLC: 0.1 mm track and clearance, 0.3 mm drill, 0.3 mm copper to edge. The drill minimum is 0.3 mm,
+not JLC's 0.2 mm: any smaller via (0.25 mm included) moves the order into a dearer class, which adds
+a via surcharge and forces a 4-wire Kelvin test and TG155 (about $37 more on five boards). Every via
+is 0.5 mm with a 0.3 mm drill, and the RP2350A (U3) uses
+`DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.3mm`, KiCad's thermal-via footprint
+with its nine 0.5 mm vias drilled at 0.3 mm. Order with *Min via hole size* 0.3mm/(0.4/0.45mm). `DS2000.kicad_dru` lets the LED
 courtyards sit inside the switch courtyards. Net classes: *Plane* (GND, +3V3) reached by vias, *Power* (+5V,
 +1V1, VBUS, VREG_LX) 0.4 mm. The *USB* class matches `/USB_*`; router defaults are 0.25 mm
 tracks / 0.15 mm differential gap. Actual USB widths are 0.15–0.25 mm, including escapes.
 Custom rules enforce those width bounds, outer-layer routing, and a 5 mm length / 0.5 mm skew
 limit for the unbranched resistor-to-MCU pair. These are layout bounds, not USB compliance limits.
+
+![Via drills before and after the move to 0.3 mm](img/via-drill-0.3mm.png)
 
 **Review (2026-09-28).** Every net was checked against Raspberry Pi's RP2350 minimal design and
 every footprint's pin mapping against its datasheet. No wrong connection was found. (2026-10-16: the

@@ -93,10 +93,10 @@ rroute("+1V1", [(-0.8, 0), (-0.825, -0.013), (-0.825, -0.675), (-1.075, -0.925),
 rroute("+3V3", [(-0.4, 0), (-0.4, -0.6), (-0.515, -0.85), (-0.515, -1.16)], 0.2)   # VREG_VIN -> input cap
 rroute("GND", [(0.4, 0), (0.4, -0.5), (0.515, -0.7), (0.515, -1.16)], 0.2)         # VREG_PGND -> both caps' ground
 rroute("GND", [(0.515, -1.16), (0.515, -2.1)], 0.3)
-rroute("GND", [(0.515, -1.45), (1.1, -1.45)], 0.3); via("GND", 1.1, -1.45, 0.25)
-rroute("GND", [(0.515, -2.05), (1.1, -2.05)], 0.3); via("GND", 1.1, -2.05, 0.25)
+rroute("GND", [(0.515, -1.45), (1.1, -1.45)], 0.3); via("GND", 1.1, -1.45, 0.3)
+rroute("GND", [(0.515, -2.05), (1.1, -2.05)], 0.3); via("GND", 1.1, -2.05, 0.3)
 rroute(AVDD, [(0.8, 0), (0.8, -0.15), (1.64, -0.99), (1.64, -1.52), (2.2, -2.08), (3.14, -2.08)], 0.15)
-rroute("GND", [(2.2, -1.12), (2.2, -0.75), (1.85, -0.4)], 0.4); via("GND", 1.85, -0.4, 0.25)
+rroute("GND", [(2.2, -1.12), (2.2, -0.75), (1.85, -0.4)], 0.4); via("GND", 1.85, -0.4, 0.3)
 rroute("+3V3", [(4.16, -2.08), (4.8, -2.08)], 0.3); via("+3V3", 4.8, -2.08)               # R5 lies beside C5: J1's shell pin is above it
 # +3V3 under the package, between the pin row and the exposed pad, joining VREG_VIN to USB_OTP_VDD
 # and QSPI_IOVDD (53, 54) as the reference's pour does, with one via to the In2 plane
@@ -105,7 +105,7 @@ rroute("+3V3", [(-2.0, 0), (-2.0, 0.75)], 0.2); rroute("+3V3", [(-2.4, 0), (-2.4
 rroute("+3V3", [(-2.0, 0.75), (-2.0, 1.05), (-0.4, 1.05)], 0.2)
 rroute("+3V3", [(-2.0, 0), (-2.0, -0.45), (-2.4, -0.85)], 0.15)
 rroute("+3V3", [(-2.4, 0), (-2.4, -0.85), (-4.1, -2.55), (-4.1, -3.47)], 0.2)     # to C16
-rroute("GND", [(-4.1, -4.43), (-4.1, -5.9)], 0.3); via("GND", -4.1, -5.9, 0.25)          # clear of J1's peg
+rroute("GND", [(-4.1, -4.43), (-4.1, -5.9)], 0.3); via("GND", -4.1, -5.9, 0.3)          # clear of J1's peg
 # USB from the series resistors into pins 51/52, threading between the regulator and the QSPI fan
 # (0.15 mm as in the reference: the pair squeezes past VREG_FB here for 3 mm)
 rroute(DM, [(-1.2, 0), (-1.225, -0.013), (-1.225, -0.651), (-2.1, -1.526), (-2.1, -3.44)], 0.15)

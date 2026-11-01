@@ -118,13 +118,13 @@ ds.SetGridOrigin(pcbnew.VECTOR2I(mm((X0 + X1) / 2), mm((Y0 + Y1) / 2)))   # boar
 ds.m_MinClearance = mm(0.1)
 ds.m_TrackMinWidth = mm(0.1)
 ds.m_ViasMinSize = mm(0.4)
-ds.m_MinThroughDrill = mm(0.2)
+ds.m_MinThroughDrill = mm(0.3)
 ds.m_HoleClearance = mm(0.2)
 ds.m_HoleToHoleMin = mm(0.25)
 ds.m_CopperEdgeClearance = mm(0.3)   # the reverse-mount LED cut-out sits close to its pads
 ns = ds.m_NetSettings
 dflt = ns.GetDefaultNetclass()
-dflt.SetTrackWidth(mm(0.2)); dflt.SetClearance(mm(0.15)); dflt.SetViaDiameter(mm(0.5)); dflt.SetViaDrill(mm(0.25))
+dflt.SetTrackWidth(mm(0.2)); dflt.SetClearance(mm(0.15)); dflt.SetViaDiameter(mm(0.5)); dflt.SetViaDrill(mm(0.3))
 # GND and +3V3 are planes (In1, In2) reached by fanout vias; the autorouter ignores the "Plane" class.
 for cname, width, pattern in [("Plane", 0.3, ["GND", "+3V3"]),
                               ("Power", 0.4, ["+5V", "+1V1", "VBUS", "/VREG_LX"]),

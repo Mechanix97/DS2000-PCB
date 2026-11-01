@@ -5991,7 +5991,7 @@
 			)
 		)
 	)
-	(footprint "Package_DFN_QFN:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias"
+	(footprint "DS2000:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm_ThermalVias_Drill0.3mm"
 		(layer "F.Cu")
 		(uuid "8b27142c-71ac-475c-b8a4-deefe63fa312")
 		(at 100 84.8)
@@ -6965,7 +6965,7 @@
 		(pad "61" thru_hole circle
 			(at -1.45 -1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -6976,7 +6976,7 @@
 		(pad "61" thru_hole circle
 			(at -1.45 0)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -6987,7 +6987,7 @@
 		(pad "61" thru_hole circle
 			(at -1.45 1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -6998,7 +6998,7 @@
 		(pad "61" thru_hole circle
 			(at 0 -1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7009,7 +7009,7 @@
 		(pad "61" thru_hole circle
 			(at 0 0)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7038,7 +7038,7 @@
 		(pad "61" thru_hole circle
 			(at 0 1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7049,7 +7049,7 @@
 		(pad "61" thru_hole circle
 			(at 1.45 -1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7060,7 +7060,7 @@
 		(pad "61" thru_hole circle
 			(at 1.45 0)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -7071,7 +7071,7 @@
 		(pad "61" thru_hole circle
 			(at 1.45 1.45)
 			(size 0.5 0.5)
-			(drill 0.2)
+			(drill 0.3)
 			(property pad_prop_heatsink)
 			(layers "*.Cu")
 			(remove_unused_layers no)
@@ -18657,7 +18657,7 @@
 	(via
 		(at 91.25 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18675,7 +18675,7 @@
 	(via
 		(at 133.25 108)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18684,7 +18684,7 @@
 	(via
 		(at 84.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18701,7 +18701,7 @@
 	(via
 		(at 66.75 83.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18710,7 +18710,7 @@
 	(via
 		(at 103.1 79.3)
 		(size 0.6)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18727,7 +18727,7 @@
 	(via
 		(at 73.75 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18736,7 +18736,7 @@
 	(via
 		(at 97.9 75.45)
 		(size 0.6)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18745,7 +18745,7 @@
 	(via
 		(at 108.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18772,7 +18772,7 @@
 	(via
 		(at 108.75 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18781,7 +18781,7 @@
 	(via
 		(at 129.75 108)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18790,7 +18790,7 @@
 	(via
 		(at 73.75 104.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18799,7 +18799,7 @@
 	(via
 		(at 133.25 104.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18808,7 +18808,7 @@
 	(via
 		(at 80.75 76.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18817,7 +18817,7 @@
 	(via
 		(at 73.75 76.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18826,7 +18826,7 @@
 	(via
 		(at 84.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18844,7 +18844,7 @@
 	(via
 		(at 112.25 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18853,7 +18853,7 @@
 	(via
 		(at 103.1 79.9)
 		(size 0.6)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18862,7 +18862,7 @@
 	(via
 		(at 80.75 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18871,7 +18871,7 @@
 	(via
 		(at 87.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18880,7 +18880,7 @@
 	(via
 		(at 94.75 73)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18889,7 +18889,7 @@
 	(via
 		(at 70.25 101)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18898,7 +18898,7 @@
 	(via
 		(at 66.75 101)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18916,7 +18916,7 @@
 	(via
 		(at 119.25 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18925,7 +18925,7 @@
 	(via
 		(at 66.75 108)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18942,7 +18942,7 @@
 	(via
 		(at 80.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18951,7 +18951,7 @@
 	(via
 		(at 112.25 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18960,7 +18960,7 @@
 	(via
 		(at 112.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18969,7 +18969,7 @@
 	(via
 		(at 112.25 83.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18978,7 +18978,7 @@
 	(via
 		(at 129.75 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -18996,7 +18996,7 @@
 	(via
 		(at 107.9 104.62)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "GND")
 		(uuid "49ee9786-2f7f-4d36-86ee-65fad95d2055")
@@ -19004,7 +19004,7 @@
 	(via
 		(at 133.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19013,7 +19013,7 @@
 	(via
 		(at 112.25 80)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19022,7 +19022,7 @@
 	(via
 		(at 129.75 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19031,7 +19031,7 @@
 	(via
 		(at 122.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19040,7 +19040,7 @@
 	(via
 		(at 66.75 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19057,7 +19057,7 @@
 	(via
 		(at 70.25 108)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19066,7 +19066,7 @@
 	(via
 		(at 126.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19075,7 +19075,7 @@
 	(via
 		(at 73.75 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19084,7 +19084,7 @@
 	(via
 		(at 66.75 104.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19093,7 +19093,7 @@
 	(via
 		(at 129.75 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19102,7 +19102,7 @@
 	(via
 		(at 115.75 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19111,7 +19111,7 @@
 	(via
 		(at 66.75 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19120,7 +19120,7 @@
 	(via
 		(at 115.75 80)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19129,7 +19129,7 @@
 	(via
 		(at 129.75 104.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19146,7 +19146,7 @@
 	(via
 		(at 70.25 97.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19155,7 +19155,7 @@
 	(via
 		(at 133.25 97.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19172,7 +19172,7 @@
 	(via
 		(at 70.25 104.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19181,7 +19181,7 @@
 	(via
 		(at 89.9 104.62)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "GND")
 		(uuid "78ef13a3-f103-4410-8ad0-6e51a96075eb")
@@ -19206,7 +19206,7 @@
 	(via
 		(at 66.75 97.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19215,7 +19215,7 @@
 	(via
 		(at 103.85 80.95)
 		(size 0.6)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19224,7 +19224,7 @@
 	(via
 		(at 129.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19233,7 +19233,7 @@
 	(via
 		(at 108.75 73)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19242,7 +19242,7 @@
 	(via
 		(at 122.75 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19251,7 +19251,7 @@
 	(via
 		(at 133.25 83.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19260,7 +19260,7 @@
 	(via
 		(at 91.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19269,7 +19269,7 @@
 	(via
 		(at 92.2 75.4)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19287,7 +19287,7 @@
 	(via
 		(at 129.75 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19296,7 +19296,7 @@
 	(via
 		(at 73.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19305,7 +19305,7 @@
 	(via
 		(at 73.75 108)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19322,7 +19322,7 @@
 	(via
 		(at 105.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19331,7 +19331,7 @@
 	(via
 		(at 87.7 72.4)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(free yes)
 		(net "GND")
@@ -19349,7 +19349,7 @@
 	(via
 		(at 70.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19358,7 +19358,7 @@
 	(via
 		(at 98.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19367,7 +19367,7 @@
 	(via
 		(at 77.25 76.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19394,7 +19394,7 @@
 	(via
 		(at 115.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19403,7 +19403,7 @@
 	(via
 		(at 129.75 73)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19412,7 +19412,7 @@
 	(via
 		(at 112.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19421,7 +19421,7 @@
 	(via
 		(at 133.25 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19430,7 +19430,7 @@
 	(via
 		(at 73.75 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19439,7 +19439,7 @@
 	(via
 		(at 122.75 73)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19448,7 +19448,7 @@
 	(via
 		(at 129.75 97.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19457,7 +19457,7 @@
 	(via
 		(at 91.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19466,7 +19466,7 @@
 	(via
 		(at 73.75 97.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19475,7 +19475,7 @@
 	(via
 		(at 129.75 101)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19484,7 +19484,7 @@
 	(via
 		(at 133.25 80)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19502,7 +19502,7 @@
 	(via
 		(at 126.25 73)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19519,7 +19519,7 @@
 	(via
 		(at 126.25 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19528,7 +19528,7 @@
 	(via
 		(at 87.75 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19537,7 +19537,7 @@
 	(via
 		(at 133.25 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19546,7 +19546,7 @@
 	(via
 		(at 126.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19555,7 +19555,7 @@
 	(via
 		(at 126.25 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19564,7 +19564,7 @@
 	(via
 		(at 66.75 80)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19573,7 +19573,7 @@
 	(via
 		(at 119.25 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19582,7 +19582,7 @@
 	(via
 		(at 122.75 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19591,7 +19591,7 @@
 	(via
 		(at 133.25 101)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19600,7 +19600,7 @@
 	(via
 		(at 94.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19609,7 +19609,7 @@
 	(via
 		(at 70.25 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19618,7 +19618,7 @@
 	(via
 		(at 119.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19635,7 +19635,7 @@
 	(via
 		(at 105.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19653,7 +19653,7 @@
 	(via
 		(at 70.25 80)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19662,7 +19662,7 @@
 	(via
 		(at 70.25 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19671,7 +19671,7 @@
 	(via
 		(at 102.35 73.6)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(free yes)
 		(net "GND")
@@ -19688,7 +19688,7 @@
 	(via
 		(at 66.75 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19705,7 +19705,7 @@
 	(via
 		(at 101.75 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19714,7 +19714,7 @@
 	(via
 		(at 73.75 101)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19723,7 +19723,7 @@
 	(via
 		(at 70.25 83.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19732,7 +19732,7 @@
 	(via
 		(at 129.75 83.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19741,7 +19741,7 @@
 	(via
 		(at 73.75 90.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19750,7 +19750,7 @@
 	(via
 		(at 126.25 87)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19768,7 +19768,7 @@
 	(via
 		(at 108.75 94)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19777,7 +19777,7 @@
 	(via
 		(at 77.25 115)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19786,7 +19786,7 @@
 	(via
 		(at 77.25 111.5)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "GND")
@@ -19963,7 +19963,7 @@
 	(via
 		(at 100 72.9401)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "+5V")
 		(uuid "055d34d9-c472-463e-bd7f-b9e2cde79c0b")
@@ -20474,7 +20474,7 @@
 	(via
 		(at 88.97 72.4)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "/USB_CONN_N")
 		(uuid "534da934-1600-4a99-b1b3-285a330a4ac1")
@@ -20482,7 +20482,7 @@
 	(via
 		(at 100 72.25)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "/USB_CONN_N")
 		(uuid "5e5439f8-98d2-4cd5-b26e-5824cefe56c7")
@@ -21231,7 +21231,7 @@
 	(via
 		(at 97.6206 87.2222)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-GPIO2)")
 		(uuid "317a847b-df5d-495c-90f9-914babeae2d7")
@@ -21297,7 +21297,7 @@
 	(via
 		(at 94.58 74.65)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(locked yes)
 		(net "/CC1")
@@ -21374,7 +21374,7 @@
 	(via
 		(at 85.4458 86.4036)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(D1-DIN)")
 		(uuid "a43f860d-8be6-4716-9a5c-386364e01910")
@@ -21459,7 +21459,7 @@
 	(via
 		(at 88.9505 82.6603)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-GPIO0)")
 		(uuid "33bb7120-181e-4732-810e-16cc3e6a60b8")
@@ -21525,7 +21525,7 @@
 	(via
 		(at 97.3621 82.8)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-GPIO1)")
 		(uuid "8e6bc57e-ec44-483a-aeb5-cf4ca4558617")
@@ -21661,7 +21661,7 @@
 	(via
 		(at 112.4492 81.8418)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-SWCLK)")
 		(uuid "16863a59-f2d7-43e1-bcaa-3556add676da")
@@ -21669,7 +21669,7 @@
 	(via
 		(at 97.8427 83.3237)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-SWCLK)")
 		(uuid "2cba652b-4d71-46aa-b47d-cea9657e4924")
@@ -21677,7 +21677,7 @@
 	(via
 		(at 103.6419 88.8273)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-SWCLK)")
 		(uuid "92c53f93-4600-4ce7-98d8-51ea6b2815b4")
@@ -21797,7 +21797,7 @@
 	(via
 		(at 114.9389 89.832)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-SWDIO)")
 		(uuid "3b53ce50-ac4a-4740-b53b-bdac1ea7fdcb")
@@ -21805,7 +21805,7 @@
 	(via
 		(at 100.6817 89.1191)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-SWDIO)")
 		(uuid "7b958e38-db18-4732-a27e-8619da0f25c0")
@@ -21813,7 +21813,7 @@
 	(via
 		(at 107.5388 91.5935)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-SWDIO)")
 		(uuid "bf8d0c7d-2a64-4413-bb22-4e0e85a61e71")
@@ -21949,7 +21949,7 @@
 	(via
 		(at 117.5618 89.1366)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "/RUN")
 		(uuid "af228f5d-b004-41df-b0f0-3b06a4f30326")
@@ -22229,7 +22229,7 @@
 	(via
 		(at 98.1561 82.5687)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-QSPI_SD2)")
 		(uuid "12236325-0b5c-4952-b043-04d9dbf475de")
@@ -22237,7 +22237,7 @@
 	(via
 		(at 92.7237 80.206)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-QSPI_SD2)")
 		(uuid "586cb4b4-0578-4d3e-bb1b-c50fb0124910")
@@ -22333,7 +22333,7 @@
 	(via
 		(at 95.8988 80.8782)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-QSPI_SD1)")
 		(uuid "63ea16e8-cebb-4d58-a144-cf706122080c")
@@ -22341,7 +22341,7 @@
 	(via
 		(at 95.0439 79.0055)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "Net-(U3-QSPI_SD1)")
 		(uuid "66ddeace-a0a0-4982-b5c3-28331e0bdba0")
@@ -22437,7 +22437,7 @@
 	(via
 		(at 86.43 72.4)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "/USB_CONN_P")
 		(uuid "1f127651-11d3-43b1-9a7b-fae86432e82b")
@@ -22445,7 +22445,7 @@
 	(via
 		(at 100.0045 74.15)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "/USB_CONN_P")
 		(uuid "4352f392-e719-4532-8595-3e163815eb3f")
@@ -22517,7 +22517,7 @@
 	(via
 		(at 103.4418 74.3906)
 		(size 0.5)
-		(drill 0.25)
+		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "/CC2")
 		(uuid "58fc1332-feb5-405f-aebc-5c379d6a430b")
