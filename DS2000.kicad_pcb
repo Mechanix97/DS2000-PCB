@@ -3754,6 +3754,18 @@
 				)
 			)
 		)
+		(property "JLCPCB Rotation Offset" "270"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f44207af-90ed-41dd-b65d-16f980e8fd99")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property "KiLib_Generator" "package/gullwing"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -6115,6 +6127,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "bb618325-150d-47e1-ad54-6d9baa61a719")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Rotation Offset" "0"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e4c9f52a-d0a6-486a-bbab-802ceafe7ac7")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8594,6 +8618,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "f1cf70c8-3f9c-4ddf-9a7a-7dc92644205f")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Rotation Offset" "270"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "994a56a9-d731-4728-9fe5-659c7bf6919d")
 			(effects
 				(font
 					(size 1.27 1.27)
